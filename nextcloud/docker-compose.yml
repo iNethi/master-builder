@@ -1,0 +1,35 @@
+version: '2'
+
+services:
+  mariadb:
+    image: mariadb
+    container_name: inethi-mariadb
+    domainname: mariadb.inethi.net
+    hostname: mariadb
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: always
+    volumes:
+      - "${MARIADB_VOLUME}:/var/lib/mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=iNethi#2018
+      - MYSQL_PASSWORD=inethi2018
+      - MYSQL_DATABASE=inethi_nextcloud
+      - MYSQL_USER=inethi
+
+  nextcloud:
+    image: nextcloud
+    container_name: inethi-nextcloud
+    domainname: nextcloud.inethi.net
+    hostname: nextcloud
+    ports:
+      - "${NEXTCLOUD_PORT}:80"
+    links:
+      - mariadb 
+    volumes:
+      - "${NEXTCLOUD_VOLUME}:/var/www/html"
+    restart: always
+
+networks:
+  default:
+    external:
+      name: "${NEXTCLOUD_NETWORK}"
