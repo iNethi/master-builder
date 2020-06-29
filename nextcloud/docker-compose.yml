@@ -15,6 +15,9 @@ services:
       - MYSQL_PASSWORD=inethi2018
       - MYSQL_DATABASE=inethi_nextcloud
       - MYSQL_USER=inethi
+    networks:
+      default:
+        ipv4_address: "${MARIADB_IPV4}" 
 
   nextcloud:
     image: nextcloud
@@ -28,6 +31,10 @@ services:
     volumes:
       - "${NEXTCLOUD_VOLUME}:/var/www/html"
     restart: always
+    networks:
+      default:
+        ipv4_address: "${NEXTCLOUD_IPV4}" 
+
 
 networks:
   default:
