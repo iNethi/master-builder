@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: inethi-mysql
+    domainname: mysql.inethi.net
+    hostname: mysql
+    restart: always
+    environment:
+      MYSQL_USER: inethi
+      MYSQL_PASSWORD: inethi2018
+      MYSQL_ROOT_PASSWORD: iNethi#2018
+    volumes:
+      - "${MYSQLDB_VOLUME}:/var/lib/mysql"
+    networks:
+      default:
+        ipv4_address: "${MYSQLDB_IPV4}" 
+
+networks:
+  default:
+    external:
+      name: "${MYSQLDB_NETWORK}"
