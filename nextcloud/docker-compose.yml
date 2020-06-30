@@ -30,6 +30,8 @@ services:
       - mariadb 
     volumes:
       - "${NEXTCLOUD_VOLUME}:/var/www/html"
+      - "${NEXTCLOUD_RSHARE_VOLUME}:/mnt/Rshare"
+      - "${NEXTCLOUD_RWSHARE_VOLUME}:/mnt/RWshare"
     restart: always
     networks:
       default:
