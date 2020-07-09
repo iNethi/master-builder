@@ -3,7 +3,7 @@
 All the docker compose files to build iNethi-related dockers live here
 
 # Usage
-This is an open source solution that is freely available to everyone. With iNethi you can build a set of local services to share content amongst your local community and build a small ISP to sell Internet vouchers. [[more detail...](https://inethi.net)
+This is an open source solution that is freely available to everyone. With iNethi you can build a set of local services to share content amongst your local community and build a small ISP to sell Internet vouchers. [more detail...](https://inethi.net)
 
 # How to use
 
@@ -11,8 +11,15 @@ You can either run the master build script to build all the dockers linked to iN
 
 To build the whole system on a local server simply run
 ```
-./local_build_all.sh
+./local_build_all.sh <network interface connected to internet> <plex claim token>
 ```
+To get your plex claim token go to [plex claim](https://www.plex.tv/claim/) 
+
+Example if eth0 is WAN interface connected to network and your plex claim is claim-xZ4QYD4rJnpVyLWoKgzA
+```
+./local_build_all.sh eth0 claim-xZ4QYD4rJnpVyLWoKgzA
+```
+
 To build the whole system on a AWS simply run
 ```
 ./aws_build_all.sh
