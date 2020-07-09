@@ -5,14 +5,14 @@ services:
     image: linuxserver/plex
     restart: unless-stopped
     environment:
-      - PUID=1000
-      - PGID=1000
-      - VERSION=docker 
-      - TZ=Europe/London
-      - PLEX_CLAIM=claim-gnQn4-hMhuTo_HnEj2UY
+      - PUID=${PLEX_PUID}
+      - PGID=${PLEX_PGID}
+      - VERSION=${PLEX_VERSION}
+      - TZ=${PLEX_TZ}
+      - PLEX_CLAIM=${PLEX_CLAIM}
     networks:
       default:
-        ipv4_address: 10.2.1.53
+        ipv4_address: "${PLEX_IPV4}"
     hostname: inethi-plex
 
     ports:
@@ -27,13 +27,15 @@ services:
       - 32413:32413/udp
       - 32414:32414/udp
       - 32469:32469
-    volumes:
-      - /mnt/data/plex/database:/config
-      - /mnt/data/plex/tvseries:/tv
-      - /mnt/data/plex/movies:/movies
 
+    volumes:
+      - "${PLEX_CONFIG_VOLUME}:/config"
+      - "${PLEX_TV_VOLUME}:/tv"
+      - "${PLEX_MOVIE_VOLUME}:/movies"
+      - "${PLEX_PHOTO_VOLUME}:/photos"
 
 networks:
   default:
     external:
-      name: inethi-bridge
+      name: "${PLEX_NETWORK}"
+
