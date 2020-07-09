@@ -16,6 +16,23 @@ services:
       default:
         ipv4_address: "${MYSQLDB_IPV4}" 
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: inethi-phpmyadmin
+    ports:
+      - "8080:80"
+    links:
+      - mysql
+    restart: always
+    hostname: phpmyadmin
+    environment:
+      PMA_HOST: mysql.inethi.net
+      PMA_USER: root
+      PMA_PASSWORD: iNethi#2018
+    networks:
+      default:
+        ipv4_address: "${PHPMYADMIN_IPV4}"
+
 networks:
   default:
     external:

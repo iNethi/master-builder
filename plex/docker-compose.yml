@@ -1,0 +1,39 @@
+version: '2.1'
+services:
+  plex:
+    container_name: inethi-plex
+    image: linuxserver/plex
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker 
+      - TZ=Europe/London
+      - PLEX_CLAIM=claim-gnQn4-hMhuTo_HnEj2UY
+    networks:
+      default:
+        ipv4_address: 10.2.1.53
+    hostname: inethi-plex
+
+    ports:
+      - "22:22"
+      - 32400:32400
+      - 1900:1900/udp
+      - 3005:3005
+      - 5353:5353/udp
+      - 8324:8324
+      - 32410:32410/udp
+      - 32412:32412/udp
+      - 32413:32413/udp
+      - 32414:32414/udp
+      - 32469:32469
+    volumes:
+      - /mnt/data/plex/database:/config
+      - /mnt/data/plex/tvseries:/tv
+      - /mnt/data/plex/movies:/movies
+
+
+networks:
+  default:
+    external:
+      name: inethi-bridge

@@ -1,0 +1,20 @@
+version: '2'
+services:
+  plex:
+    container_name: inethi-plex
+    image: plexinc/pms-docker
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/London
+    networks:
+      default:
+        ipv4_address: 10.2.1.53
+    hostname: inethi-plex
+    volumes:
+      - /mnt/data/plex/database:/config
+      - /mnt/data/plex/tmp:/transcode
+      - /mnt/data/plex/media:/data
+networks:
+  default:
+    external:
+      name: inethi-bridge
