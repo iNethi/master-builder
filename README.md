@@ -36,8 +36,8 @@ AWS dockers are built with the following command in each docker folder
 
 # Network notes
 
-- `Local server bridge: ` 10.2.1.1/16
-- `AWS EC2 bridge using macvlan:` 172.18.0.1/16
+- `Local server bridge using macvlan: ` 10.2.1.1/16
+- `AWS EC2 bridge:` 172.18.0.1/16
 
 
 ## Base dockers:
