@@ -10,3 +10,14 @@ cd ../avideo
 ./local_build.sh
 cd ../plex
 ./localbuild.sh $2
+
+
+sleep 10
+
+chown -R www-data:www-data /mnt/data/nextcloud
+
+sudo cp ./nextcloud_clone.sh /usr/local/bin
+sudo chmod +x /usr/local/bin/nextcloud_clone.sh
+
+sudo cp ./rclone /etc/cron.d
+
