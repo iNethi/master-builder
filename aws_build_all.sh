@@ -5,9 +5,12 @@ sudo docker network create --attachable -d bridge --subnet=172.18.0.0/16  inethi
 # Need to add HA Proxy here
 
 
-./mysql/aws_build.sh
-./nextcloud/aws_build.sh
-./avideo/aws_build.sh
-./plex/aws_build.sh
-
+cd ./mysql
+./aws_build.sh
+cd ../nextcloud
+./aws_build.sh
+cd ../avideo
+./aws_build.sh
+cd ../plex
+./aws_build.sh $2
 
