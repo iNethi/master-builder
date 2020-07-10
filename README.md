@@ -59,3 +59,30 @@ AWS dockers are built with the following command in each docker folder
 - avideo-encoder: x.x.1.52
 - plex: x.x.1.53
 
+
+# Post docker installation steps
+
+Once all the docker are running there are some remaining configurations steps
+
+## Nextcloud
+
+Set up the connection to the database
+
+- user: admin
+- password: iNethi#2018
+
+### Select MySQL
+- user: inethi
+- password: inethi2018
+- database name: inethi_nextcloud
+- database: mariadb
+
+Once Nextcloud launches login as administrator
+
+- Select Apps from top right icon
+- Select Disabled Apps
+- Enable External storage support
+
+
+
+
