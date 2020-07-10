@@ -15,7 +15,7 @@ cd ../plex
 sleep 10
 
 sudo apt-get update
-sudo apt install rclone
+curl https://rclone.org/install.sh | sudo bash
 
 mkdir ~/.config/rclone
 sudo cp ./rclone.conf ~/.config/rclone
