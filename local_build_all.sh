@@ -14,6 +14,12 @@ cd ../plex
 
 sleep 10
 
+sudo apt-get update
+sudo apt install rclone
+
+mkdir ~/.config/rclone
+sudo cp ./rclone.conf ~/.config/rclone
+
 chown -R www-data:www-data /mnt/data/nextcloud
 
 sudo cp ./nextcloud_clone.sh /usr/local/bin
