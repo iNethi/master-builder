@@ -31,11 +31,16 @@ services:
     volumes:
       - "${PLEX_CONFIG_VOLUME}:/config"
       - "${PLEX_TV_VOLUME}:/tv"
-      - "${PLEX_MOVIE_VOLUME}:/movies"
+      - "${PLEX_MOVIES_VOLUME}:/movies"
       - "${PLEX_PHOTO_VOLUME}:/photos"
+      - "${NEXTCLOUD_RVIDEO_VOLUME}:/mnt/data/nextcloud/Rvideo"
+      - "${NEXTCLOUD_RWVIDEO_VOLUME}:/mnt/data/nextcloud/RWvideo"
+      - "${NEXTCLOUD_RPHOTO_VOLUME}:/mnt/data/nextcloud/Rphoto"
+      - "${NEXTCLOUD_RWPHOTO_VOLUME}:/mnt/data/nextcloud/RWphoto"
+      - "${NEXTCLOUD_RMUSIC_VOLUME}:/mnt/data/nextcloud/Rmusic"
+      - "${NEXTCLOUD_RWMUSIC_VOLUME}:/mnt/data/nextcloud/RWmusic"
 
 networks:
   default:
     external:
       name: "${PLEX_NETWORK}"
-

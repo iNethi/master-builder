@@ -32,6 +32,13 @@ services:
       - "${NEXTCLOUD_VOLUME}:/var/www/html"
       - "${NEXTCLOUD_RSHARE_VOLUME}:/mnt/Rshare"
       - "${NEXTCLOUD_RWSHARE_VOLUME}:/mnt/RWshare"
+      - "${NEXTCLOUD_RVIDEO_VOLUME}:/mnt/Rvideo"
+      - "${NEXTCLOUD_RWVIDEO_VOLUME}:/mnt/RWvideo"
+      - "${NEXTCLOUD_RPHOTO_VOLUME}:/mnt/Rphoto"
+      - "${NEXTCLOUD_RWPHOTO_VOLUME}:/mnt/RWphoto"
+      - "${NEXTCLOUD_RMUSIC_VOLUME}:/mnt/Rmusic"
+      - "${NEXTCLOUD_RWMUSIC_VOLUME}:/mnt/RWmusic"
+        
     restart: always
     networks:
       default:
