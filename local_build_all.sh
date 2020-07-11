@@ -18,6 +18,8 @@ sudo apt-get update
 curl https://rclone.org/install.sh | sudo bash
 
 mkdir ~/.config/rclone
+mkidr /root/.config/rclone
+sudo cp ./rclone.conf /root/.config/rclone/
 sudo cp ./rclone.conf ~/.config/rclone
 
 chown -R www-data:www-data /mnt/data/nextcloud
