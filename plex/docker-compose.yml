@@ -13,7 +13,7 @@ services:
     networks:
       default:
         ipv4_address: "${PLEX_IPV4}"
-    hostname: inethi-plex
+    hostname: plex.${DOMAIN}
 
     ports:
       - "22:22"
