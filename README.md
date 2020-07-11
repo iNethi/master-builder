@@ -71,8 +71,8 @@ Set up the connection to the database
 - user: admin
 - password: iNethi#2018
 
-### Select MySQL
-- user: inethi
+### Select MySQL/MariaDB (under configure the database)
+- Database user: inethi
 - password: inethi2018
 - database name: inethi_nextcloud
 - database: mariadb
@@ -83,6 +83,20 @@ Once Nextcloud launches login as administrator
 - Select Disabled Apps
 - Enable External storage support
 
+Add a Public Group
+
+- Select Users option when clicking on Administator user icon
+- Select Add Group - Enter Public
+
+Add External storages
+
+- Select Administator user
+- Bottom left - select External storages
+
+Add the following: 
+- Folder name: Share, External storage: Local, Configuration /mnt/Rshare
+- Folder name: Shared Videos, External storage: Local, Configuration /mnt/Rvideos
+- Folder name: Shared Music, External storage: Local, Configuration /mnt/Rmusic 
 
 
 
