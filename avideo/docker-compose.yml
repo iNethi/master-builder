@@ -20,7 +20,7 @@ services:
       - inethi-mysql
     restart: always
     volumes:
-      - "${ENCODER_VOLUME}:/var/www/"
+      - "${ENCODER_VOLUME}:/var/www/localhost/htdocs/videos"
     networks:
       default:
         ipv4_address: "${ENCODER_IPV4}"
@@ -46,7 +46,7 @@ services:
       - inethi-mysql
     restart: always
     volumes:
-      - "${AVIDEO_VOLUME}:/var/www/"
+      - "${AVIDEO_VOLUME}:/var/www/localhost/htdocs/videos"
     networks:
       default:
         ipv4_address: "${AVIDEO_IPV4}"
