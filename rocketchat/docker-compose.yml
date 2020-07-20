@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+
+  rocketchat:
+    image: rocket.chat
+    container_name: inethi-rocketchat
+    ports:
+      - ${ROCKETCHAT_PORT}:3000
+    depends_on:
+      - mongo
+    links:
+      - mongo
+    environment:
+      ROOT_URL: http://localhost
+      MONGO_URL: mongodb://inethi-mongo:27017/meteor
+    networks:
+      default:
+        ipv4_address: "${ROCKETCHAT_IPV4}" 
+    restart: always
+
+  mongo:
+    image: mongo
+    container_name: inethi-mongo
+    volumes:
+      - /mnt/data/rocketchat/mongo/data:/data/db
+      - "${MONGO_VOLUME}:/data/db"
+    command: --smallfiles
+    networks:
+      default:
+        ipv4_address: "${MONGO_IPV4}" 
+    network_mode: "bridge"
+    restart: always
+
+networks:
+  default:
+    external:
+      name: "${ROCKETCHAT_NETWORK}"
