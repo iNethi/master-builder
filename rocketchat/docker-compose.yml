@@ -23,7 +23,6 @@ services:
     image: mongo
     container_name: inethi-mongo
     volumes:
-      - /mnt/data/rocketchat/mongo/data:/data/db
       - "${MONGO_VOLUME}:/data/db"
     command: --smallfiles
     networks:
