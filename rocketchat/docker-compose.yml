@@ -29,7 +29,6 @@ services:
     networks:
       default:
         ipv4_address: "${MONGO_IPV4}" 
-    network_mode: "bridge"
     restart: always
 
 networks:
