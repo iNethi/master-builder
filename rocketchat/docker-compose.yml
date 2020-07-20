@@ -24,7 +24,6 @@ services:
     container_name: inethi-mongo
     volumes:
       - "${MONGO_VOLUME}:/data/db"
-    command: --smallfiles
     networks:
       default:
         ipv4_address: "${MONGO_IPV4}" 
