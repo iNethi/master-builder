@@ -22,6 +22,10 @@ mkidr /root/.config/rclone
 sudo cp ./rclone.conf /root/.config/rclone/
 sudo cp ./rclone.conf ~/.config/rclone
 
+sudo mkdir /etc/inethi
+sudo mkdir /etc/inethi/rclone
+sudo cp ./exclude-file.txt /etc/inethi/rclone
+
 chown -R www-data:www-data /mnt/data/nextcloud
 
 sudo cp ./nextcloud_clone.sh /usr/local/bin

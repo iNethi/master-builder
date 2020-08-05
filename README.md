@@ -43,7 +43,7 @@ AWS dockers are built with the following command in each docker folder
 
 # Network notes
 
-- `Local server bridge using macvlan: ` 10.2.1.1/16
+- `Local server bridge using macvlan: ` 10.2.1.1/16 (linternal network 172.17.0.1/16)
 - `AWS EC2 bridge:` 172.18.0.1/16
 
 
@@ -51,13 +51,14 @@ AWS dockers are built with the following command in each docker folder
 - mariadb: x.x.1.20
 - mysql: x.x.1.22
 - phpmyadmin: x.x.1.23
-
+- mongo: x.x.1.24
 
 ## App dockers:
-- nextcloud: x.x.1.50
-- avideo: x.x.1.51
-- avideo-encoder: x.x.1.52
-- plex: x.x.1.53
+- nextcloud: x.x.1.50 (depends (mariadb))
+- avideo: x.x.1.51 (depends mysql)
+- avideo-encoder: x.x.1.52 (depends mysql)
+- plex: x.x.1.53 
+- Rocketchat: x.x.1.54 (depends mongo)
 
 
 # Post docker installation steps
@@ -99,4 +100,6 @@ Add the following:
 - Folder name: Shared Music, External storage: Local, Configuration /mnt/Rmusic 
 
 
+## Other notes 
 
+- AVideo mounts a Volume for /var/www/localhost/htdocs/videos
