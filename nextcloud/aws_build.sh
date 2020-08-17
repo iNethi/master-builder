@@ -1,3 +1,3 @@
 #!/bin/sh
 
-NEXTCLOUD_IPV4=172.18.0.50  docker-compose up -d
+NEXTCLOUD_IPV4=172.18.0.50 MARIADB_IPV4=172.18.0.20  NEXTCLOUD_PORT=5000  docker-compose up -d

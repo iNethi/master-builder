@@ -19,7 +19,6 @@ services:
     external_links:
       - inethi-mysql
     restart: always
-   
     networks:
       default:
         ipv4_address: "${ENCODER_IPV4}"
@@ -44,7 +43,6 @@ services:
     external_links:
       - inethi-mysql
     restart: always
-   
     networks:
       default:
         ipv4_address: "${AVIDEO_IPV4}"
