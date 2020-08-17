@@ -32,4 +32,4 @@ services:
 networks:
   default:
     external:
-      name: "${HAPROXYSSL_NETWORK}"
+      name: "${INETHI_NETWORK}"
