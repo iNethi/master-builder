@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  haproxy:
+      image: 'tomdess/haproxy-certbot:latest'
+      container_name: inethi-haproxyssl
+      restart: always
+      environment:
+          - CERTS="${HAPROXYSSL_DOMAIN}" 
+          - EMAIL="${HAPROXYSSL_EMAIL}"
+      volumes:
+          - '${HAPROXYSSL_VOLUME}/data/letsencrypt:/etc/letsencrypt'
+          - '${HAPROXYSSL_VOLUME}/data/haproxy.cfg:/etc/haproxy/haproxy.cfg'
+      networks:
+        default:
+          ipv4_address: "${HAPROXYSSL_IPV4}" 
+      ports:
+          - '80:80'
+          - '443:443'
+      
+  nginx:
+      image: nginx
+      container_name: inethi-nginx
+      restart: always
+      networks:
+        default:
+          ipv4_address: "${NGINX_IPV4}"
+      volumes:
+        - '${NGINX_VOLUME}/html:/usr/share/nginx/html'
+        - '${NGINX_VOLUME}/etc:/etc/nginx'
+      
+networks:
+  default:
+    external:
+      name: "${HAPROXYSSL_NETWORK}"
