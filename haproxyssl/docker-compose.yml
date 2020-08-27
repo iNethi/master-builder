@@ -10,7 +10,7 @@ services:
           - EMAIL="${HAPROXYSSL_EMAIL}"
       volumes:
           - '${HAPROXYSSL_VOLUME}/data/letsencrypt:/etc/letsencrypt'
-          - '${HAPROXYSSL_VOLUME}/data/haproxy.cfg:/etc/haproxy/haproxy.cfg'
+          - '${HAPROXYSSL_VOLUME}/data/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg'
       networks:
         default:
           ipv4_address: "${HAPROXYSSL_IPV4}" 
