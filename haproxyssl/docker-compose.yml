@@ -9,8 +9,8 @@ services:
           - CERTS="${HAPROXYSSL_DOMAIN}" 
           - EMAIL="${HAPROXYSSL_EMAIL}"
       volumes:
-          - '${HAPROXYSSL_VOLUME}/data/letsencrypt:/etc/letsencrypt'
-          - '${HAPROXYSSL_VOLUME}/data/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg'
+          - '${HAPROXYSSL_VOLUME}/letsencrypt:/etc/letsencrypt'
+          - '${HAPROXYSSL_VOLUME}/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg'
       networks:
         default:
           ipv4_address: "${HAPROXYSSL_IPV4}" 
