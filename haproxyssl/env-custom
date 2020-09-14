@@ -1,0 +1,9 @@
+HAPROXYSSL_IPV4=10.2.1.5
+HAPROXYSSL_DOMAIN=*.inethi.net 
+HAPROXYSSL_EMAIL=inethi4us@gmail.com
+HAPROXYSSL_VOLUME=/mnt/data/haproxyssl
+
+NGINX_IPV4=10.2.1.26
+NGINX_VOLUME=/mnt/data/nginx
+
+INETHI_NETWORK=inethi-bridge

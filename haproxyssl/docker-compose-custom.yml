@@ -2,7 +2,7 @@ version: '3'
 
 services:
   haproxy:
-      image: 'tomdess/haproxy-certbot:latest'
+      image: 'djohnson/haproxy-certbot-wildcard'
       container_name: inethi-haproxyssl
       restart: always
       environment:
