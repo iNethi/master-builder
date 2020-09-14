@@ -43,7 +43,7 @@ backend web_musicshare
 
 ```
 
-## Check the .env sectup
+## Check the .env setup
 
 Make sure the ip address is correct and in the right subnet and that the INETHI_NETWORK points to your network bridge
 
