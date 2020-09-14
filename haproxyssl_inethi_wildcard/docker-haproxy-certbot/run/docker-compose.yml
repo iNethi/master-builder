@@ -1,0 +1,35 @@
+version: '3'
+services:
+    haproxy:
+        container_name: lb
+        environment:
+            - CERTS=my.domain
+            - EMAIL=my.mail
+        volumes:
+            - '$PWD/data/letsencrypt:/etc/letsencrypt'
+            - '$PWD/data/haproxy.cfg:/etc/haproxy/haproxy.cfg'
+        networks:
+            - lbnet
+        ports:
+            - '80:80'
+            - '443:443'
+        image: 'tomdess/haproxy-certbot:latest'
+    nginx:
+        container_name: www
+        networks:
+            - lbnet
+        image: nginx
+    rsyslog:
+        container_name: rsyslog
+        environment:
+            - TZ=UTC
+        volumes:
+            - '$PWD/data/rsyslog/config:/config'
+        networks:
+            - lbnet
+        ports:
+            - '514:514'
+        image: 'rsyslog/syslog_appliance_alpine'
+
+networks:
+  lbnet:
