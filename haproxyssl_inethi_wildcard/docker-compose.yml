@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  haproxy:
+      image: 'djohnson/haproxy-certbot-wildcard'
+      container_name: inethi-haproxyssl
+      restart: always
+      environment:
+          - CERTS="${HAPROXYSSL_DOMAIN}" 
+          - EMAIL="${HAPROXYSSL_EMAIL}"
+      volumes:
+          - '${HAPROXYSSL_VOLUME}/letsencrypt:/etc/letsencrypt'
+          - '${HAPROXYSSL_VOLUME}/haproxy.cfg:/etc/haproxy/haproxy.cfg'
+      networks:
+        default:
+          ipv4_address: "${HAPROXYSSL_IPV4}" 
+      ports:
+          - '80:80'
+          - '443:443'
+           
+          
+networks:
+  default:
+    external:
+      name: "${INETHI_NETWORK}"
