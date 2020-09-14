@@ -6,6 +6,6 @@ for site in `ls -1 /etc/letsencrypt/live | grep -v ^README$`; do
         /etc/letsencrypt/live/$site/fullchain.pem \
         | tee /etc/haproxy/certs/haproxy-"$site".pem >/dev/null
 done
-echo Copied all certificates ...
+#echo Copied all certificates ...
 
 exit 0

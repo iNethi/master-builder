@@ -31,17 +31,6 @@ RUN apt-get update \
 COPY conf/supervisord.conf /etc/supervisord.conf
 # haproxy configuration
 COPY conf/haproxy.cfg /etc/haproxy/haproxy.cfg
-# renewal script
-COPY scripts/cert-renewal-haproxy.sh /
-# renewal cron job
-COPY conf/crontab.txt /var/crontab.txt
-# install cron job and remove useless ones
-RUN crontab /var/crontab.txt && chmod 600 /etc/crontab \
-    && rm -f /etc/cron.d/certbot \
-    && rm -f /etc/cron.hourly/* \
-    && rm -f /etc/cron.daily/* \
-    && rm -f /etc/cron.weekly/* \
-    && rm -f /etc/cron.monthly/*
 
 # cert creation script & bootstrap
 COPY scripts/certs.sh /
