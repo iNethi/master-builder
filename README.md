@@ -46,6 +46,11 @@ AWS dockers are built with the following command in each docker folder
 - `Local server bridge using macvlan: ` 10.2.1.1/16 (linternal network 172.17.0.1/16)
 - `AWS EC2 bridge:` 172.18.0.1/16
 
+## Low level dockers
+- radiusdesk3: x.x.1.2
+- splash/nginx: x.x.1.3
+- haproxyssl: x.x.1.5
+
 
 ## Base dockers:
 - mariadb: x.x.1.20
@@ -59,7 +64,8 @@ AWS dockers are built with the following command in each docker folder
 - avideo-encoder: x.x.1.52 (depends mysql)
 - plex: x.x.1.53 
 - Rocketchat: x.x.1.54 (depends mongo)
-
+- Unifi Controller: x.x.1.55
+- UNMS: x.x.1.56
 
 # Post docker installation steps
 
