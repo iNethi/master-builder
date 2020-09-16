@@ -57,6 +57,7 @@ AWS dockers are built with the following command in each docker folder
 - mysql: x.x.1.22
 - phpmyadmin: x.x.1.23
 - mongo: x.x.1.24
+- nginx: x.x.1.26
 
 ## App dockers:
 - nextcloud: x.x.1.50 (depends (mariadb))
