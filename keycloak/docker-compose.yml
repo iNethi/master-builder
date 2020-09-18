@@ -1,17 +1,37 @@
-version: '2'
+version: '3'
 
 services:
+  mysql:
+      image: mysql:5.7
+      container_name: inethi-mysql
+      volumes:
+        - mysql_data:/var/lib/mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: iNethi#2018
+        MYSQL_DATABASE: keycloak
+        MYSQL_USER: keycloak
+        MYSQL_PASSWORD: inethi2018
+
   keycloak:
-    image: quay.io/keycloak/keycloak:11.0.2
-    container_name: inethi-keycloak
-    environment:
-      - KEYCLOAK_USER="${KEYCLOAK_USER}" 
-      - KEYCLOAK_PASSWORD="${KEYCLOAK_PASSWORD}"
-    ports:
-      - '5006:8080'
-    networks:
-      default:
-        ipv4_address: "${KEYCLOAK_IPV4}" 
+      image: quay.io/keycloak/keycloak:latest
+      container_name: inethi-keycloak
+      environment:
+        KEYCLOAK_USER: "${KEYCLOAK_USER}" 
+        KEYCLOAK_PASSWORD: "${KEYCLOAK_PASSWORD}"
+        DB_VENDOR: MYSQL
+        DB_ADDR: inethi-mysql
+        DB_DATABASE: keycloak
+        DB_USER: keycloak
+        DB_PASSWORD: inethi2018
+        # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the MySQL JDBC driver documentation in order to use it.
+        #JDBC_PARAMS: "connectTimeout=30000"
+      ports:
+        - 20061:8080
+      external_links:
+        - inethi-mysql
+      networks:
+        default:
+          ipv4_address: "${KEYCLOAK_IPV4}" 
 
 networks:
   default:
