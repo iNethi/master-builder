@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta charset="utf-8" />
+    <title>Inethi Network</title>
+
+    <style>
+        #content,
+        .login,
+        .login-card h1,
+        .login-help {
+            text-align: center
+        }
+
+
+
+        #content {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: #1C1275;
+            background: linear-gradient(135deg, #1475CF, #2B40B5, #1C1275);
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            display: table-cell;
+            vertical-align: middle
+        }
+
+        .body {
+            text-align: center;
+        }
+
+        .img.center {
+            display: block;
+            width: 100%;
+            height: auto;
+            align-content: center;
+            align-items: center;
+        }
+
+        .h1 {
+            font-family: "Helvetica Neue";
+            color: rgba(0, 0, 0, 0.5);
+            font-style: normal;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: blink;
+            font-size: 35px;
+        }
+
+        .h2 {
+            font-family: "Helvetica Neue";
+            font-style: thin;
+            color: rgba(86, 88, 237, 0.71);
+            /*font-style: !important; */
+            font-weight: 500;
+            text-align: center;
+            text-decoration: underline;
+        }
+
+        .login-card {
+            padding: 40px;
+            width: 300px;
+            background-color: #F7F7F7;
+            margin: auto;
+            border-radius: 2px;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
+            overflow: hidden;
+
+            position: absolute;
+            z-index: 100;
+            right: 20px;
+            top: 100px;
+            display: none
+        }
+
+        .login-card h1 {
+            font-weight: 400;
+            font-size: 2.3em;
+            color: #1383c6
+        }
+
+        .login-card h1 span {
+            color: #f26721
+        }
+
+        .login-card img {
+            width: 70%;
+            height: 70%
+        }
+
+        .login-card input[type=submit] {
+            width: 100%;
+            display: block;
+            margin-bottom: 10px;
+            position: relative
+        }
+
+        .login-card input[type=text],
+        input[type=password] {
+            height: 44px;
+            font-size: 16px;
+            width: 100%;
+            margin-bottom: 10px;
+            -webkit-appearance: none;
+            background: #fff;
+            border: 1px solid #d9d9d9;
+            border-top: 1px solid silver;
+            padding: 0 8px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box
+        }
+
+        .login-card input[type=text]:hover,
+        input[type=password]:hover {
+            border: 1px solid #b9b9b9;
+            border-top: 1px solid #a0a0a0;
+            -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+            -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1)
+        }
+
+        .login {
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            font-weight: 700;
+            height: 36px;
+            padding: 0 8px
+        }
+
+        .login-submit {
+            cursor: pointer;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: 0;
+            color: #fff;
+            text-shadow: 0 1px rgba(0, 0, 0, .1);
+            background-color: #2d48a1
+        }
+
+
+
+        .login-submit:disabled {
+            background-color: #cecece
+        }
+
+        .login-submit:disabled:hover {
+            background-color: #727272
+        }
+
+
+
+        .login-submit:hover {
+            border: 0;
+            text-shadow: 0 1px rgba(0, 0, 0, .3);
+            background-color: #5b6ca3
+        }
+
+
+        .login-cancel {
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            font-weight: 700;
+            width: 100%;
+            height: 36px;
+            padding: 0 8px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: 0;
+            color: #fff;
+            cursor: pointer;
+            text-shadow: 0 1px rgba(0, 0, 0, .1);
+            background-color: #cecece
+        }
+
+
+        .login-cancel:hover {
+            border: 0;
+            text-shadow: 0 1px rgba(0, 0, 0, .3);
+            background-color: #727272
+        }
+
+        .login-card a {
+            text-decoration: none;
+            color: #222;
+            font-weight: 400;
+            display: inline-block;
+            opacity: .6;
+            transition: opacity ease .5s
+        }
+
+        .login-card a:hover {
+            opacity: 1
+        }
+
+        .login-help {
+            width: 100%;
+            font-size: 12px
+        }
+
+        .login-help a {
+            color: black;
+
+        }
+
+        .list {
+            list-style-type: none;
+            padding: 0
+        }
+
+        .list__item {
+            margin: 0 0 .7rem;
+            padding: 0
+        }
+
+        label {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        input[type=checkbox] {
+            -webkit-box-flex: 0;
+            -webkit-flex: none;
+            -ms-flex: none;
+            flex: none;
+            margin-right: 10px;
+            float: left
+        }
+
+        @media screen and (max-width:450px) {
+            .login-card {
+                width: 70% !important
+            }
+
+            .login-card img {
+                width: 30%;
+                height: 30%
+            }
+        }
+
+        textarea {
+            width: 66%;
+            margin: auto;
+            height: 120px;
+            max-height: 120px;
+            background-color: #f7f7f7;
+            padding: 20px
+        }
+
+        #terms {
+            display: none;
+            padding-top: 100px;
+            padding-bottom: 300px;
+        }
+
+        .auth_source {
+            border: 1px solid lightgray;
+            padding: 20px 8px 0px 8px;
+            margin-top: -2em;
+            border-radius: 2px;
+        }
+
+        .auth_head {
+            background-color: #f7f7f7;
+            display: inline-block;
+        }
+
+        .auth_head_div {
+            text-align: left;
+        }
+
+        #error-message {
+            text-align: center;
+            color: #ff3e3e;
+            font-style: italic;
+        }
+
+
+
+        .button {
+            background-color: #2d48a1;
+            ;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .loginform {
+            width: 280px;
+            display: inline-block;
+        }
+
+        .voucher {
+            width: 300px;
+            display: inline-block;
+        }
+
+        .warning {
+            margin: 4px 2px;
+            color: blue;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+
+
+
+
+
+
+        .floatButton {
+            position: absolute;
+            z-index: 100;
+            top: 20px;
+            right: 20px;
+            background-color: #2d48a1;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            font-size: 16px;
+            margin: 4px 2px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+
+        .floatButton:hover {
+            background-color: #5b6ca3
+        }
+
+
+
+
+        .floatDiv {
+            position: absolute;
+            z-index: 100;
+            width: 200px;
+            height: 200px;
+            right: 20px;
+            top: 200px;
+            background-color: #dddddd;
+            display: none
+        }
+
+        .banner {
+            padding: 10px;
+            background-color: #e0e0e0;
+
+            width: 100%;
+            align-items: center
+        }
+
+
+
+        .getvoucher {
+            padding: 10px;
+            width: 100%;
+            border: 1px solid rgb(63, 63, 63);
+            background-color: lightgrey;
+            color: black;
+            text-align: left;
+            font-size: 10px;		    
+
+        }
+
+        .footer {
+            padding: 10px;
+            width: 100%;
+            background-color: #e0e0e0;
+            color: black;
+            text-align: center;
+	    font-size: 10px
+        }
+
+        .warning2 {
+            padding: 10px;
+            width: 100%;
+            background-color: #e81a4b;
+            color: white;
+            text-align: left;
+            font-size: 8px;  		    
+
+        }
+
+        /* unvisited link */
+        .warning2 a:link {
+            color: white;
+            text-decoration: underline
+        }
+
+        /* visited link */
+        .warning2 a:visited {
+            color: white;
+            text-decoration: underline
+        }
+
+        /* mouse over link */
+        .warning2 a:hover {
+            color: blue;
+            text-decoration: underline
+        }
+
+        /* selected link */
+        .warning2 a:active {
+            color: blue;
+            text-decoration: underline
+        }
+
+        .desktop {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .videoTicker {
+            background-color: #eeeeee;
+            overflow: auto;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+        }
+
+	#vid {
+		margin: 50 auto;
+		display: block;
+	}
+
+
+
+
+
+        .videoItem {
+            margin: 10px;
+        }
+
+
+
+
+        .desktopItem {
+            width: 150px;
+            height: 150px;
+            margin-left: 15px;
+            margin-right: 15px;
+            margin-bottom: 60px;
+            margin-top: 30px;
+        }
+
+	.desktopItem p {
+		font-size: 20px;
+	}
+
+        .videoFooter {
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .videoItem {
+            height: 150px;
+            margin: 5px;
+        }
+
+        .lineText {
+            text-align: center;
+            margin: 10px;
+        }
+
+        .lineText span {
+            font-size: 12px;
+            padding: 0 10px;
+        }
+    </style>
+</head>
+
+
+<!--
+<header><img src="img/social-networking-banner.jpg" width="1000"></dheader>
+-->
+
+<body class="body">
+
+    <div class="banner">
+        <img src="captiveportal-social-networking-banner.png" style="width: 100%; max-width: 800px;">
+    </div>
+
+
+
+    <div class="warning2">
+        <div>
+            <b> IMPORTANT INFORMATION ON COVID-19</b>
+            <ul>
+                <li>Wash your hand regularly with plenty of soap and water.</li>
+                <li>Don’t touch your eyes, mouth or nose with unclean hands.</li>
+                <li>Keep a distance of at least 1 meter from anyone coughing or sneezing.</li>
+                <li>Follow the elbow touch and foot touch greeting to avoid spreading germs.</li>
+            </ul>
+            <b>FOR MORE INFORMATION</b>
+            <ul>
+                <li><a href="https://coronavirus.datafree.co/">Covid-19 Corona Virus South African Portal</a></li>
+                <li><a href="http://splash.inethi.net/COVID-19.pdf">The Cononavirus: No-Panic Helpguide</a></li>
+
+            </ul>
+
+        </div>
+
+
+    </div>
+
+    <div class="getvoucher">
+        Contact OVCOMM Dynamic on <b>076 039 8538</b> (between 8h00 and 20h00) to obtain a voucher or OwnCloud login
+    </div>
+
+
+
+    <div class="login-card" , id="logincard">
+
+        <span> <i>To access the Internet enter your username and password or voucher number. </i></span>
+        <br />
+
+        <br />
+        <div class="loginform">
+            <div id="error-message">
+                #PORTAL_MESSAGE#
+            </div>
+            <form name="login_form" method="post" action="#PORTAL_ACTION#">
+                <input type="text" name="auth_user" placeholder="User" id="auth_user">
+                <input type="password" name="auth_pass" placeholder="Password" id="auth_pass">
+                <br />
+                <input onkeyup="copyFunction()" type="text" name="auth_voucher" placeholder="Voucher" id="auth_voucher">
+
+                <div class="login-help">
+                    <ul class="list">
+                        <li class="list__item">
+                            <label class="label--checkbox">
+                                <input type="checkbox" class="checkbox"
+                                    onchange="document.getElementById('login').disabled = !this.checked;">
+                                <span>I agree with the <a href="http://10.2.0.10/iNethi_AUP.pdf">Acceptance User
+                                        Policy</a> </span>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <input name="redirurl" type="hidden" value="http://splash.inethi.net">
+                <input type="submit" name="accept" class="login login-submit" value="Login" id="login" disabled>
+                <button type="button" class="login-cancel" onclick="hidediv('logincard')" id="cancel">Cancel </button>
+            </form>
+        </div>
+
+
+
+
+    </div>
+
+
+    <div class="lineText" >
+	    <span><b>Free local services test</b></span>
+    </div>
+    <div class="desktop">
+
+        <!--<div class=desktopItem>
+            <a href="https://diaspora.inethi.net">
+                <img src="icons/diaspora.png" height="80">
+                <p></p>
+            </a>
+            <p>Disapora</p> 
+        </div>-->
+
+        <div class=desktopItem>
+            <a href="http://owncloud.inethi.net">
+                <img src="captiveportal-owncloud.ico" height="120">
+                <p></p>
+            </a>
+            <p> OwnCloud <i>user:inethi password: inethi</i></p>
+        </div>
+        <div class=desktopItem>
+            <a href="http://chat.inethi.net:3000">
+                <img src="captiveportal-rocketchat.ico" height="120">
+                <p></p>
+            </a>
+            <p>Rocket Chat</p>
+        </div>
+        <div class=desktopItem>
+            <a href="http://inethibox.inethi.net">
+                <img src="captiveportal-wikifundi.ico" height="120">
+                <p></p>
+            </a>
+            <p>Internet in a box </p>
+        </div>
+        <div class=desktopItem>
+            <a href="http://inethibox.inethi.net/kiwix/wikipedia_en_simple_all_novid_2018-06/">
+                <img src="captiveportal-wikipedia.png" height="120">
+                <p></p>
+            </a>
+            <p>Wikipedia</p>
+        </div>
+        <div class=desktopItem>
+            <a href="http://inethibox.inethi.net/kiwix/ted_en_science_2018-07/">
+                <img src="captiveportal-TEDtalk.png" height="120">
+                <p></p>
+            </a>
+            <p>TED Talks Science</p>
+        </div>
+        <div class=desktopItem>
+            <a href="http://inethibox.inethi.net/kiwix/teded_en_all_2017-10/">
+                <img src="captiveportal-TEDtalk.png" height="120">
+                <p></p>
+            </a>
+            <p>TED Talks Education</p>
+        </div>
+        <div class=desktopItem>
+            <a href="http://inethibox.inethi.net/kiwix/ted_en_global_issues_2018-07/">
+                <img src="captiveportal-TEDtalk.png" height="120">
+                <p></p>
+            </a>
+            <p>TED Talks Global issues</p>
+        </div>
+
+    </div>
+
+
+    <div class="lineText" >
+	    <span><b>Free Internet services</b></span>
+    </div>
+    <div class="desktop">
+        <div class=desktopItem>
+            <a href="https://coronavirus.datafree.co">
+                <img src="captiveportal-covid19.png" height="120">
+                <p></p>
+            </a>
+            <p>COVID-19 Info</p>
+        </div>
+        <div class=desktopItem>
+            <a href="http://easyclass.com">
+                <img src="captiveportal-easyclass.png" height="120">
+                <p></p>
+            </a>
+            <p>EasyClass</p>
+        </div>
+        <!--<div class=desktopItem>
+            <a href="http://wikifundi.inethi.net">
+                <img src="icons/googleclass.png" height="80">
+                <p></p>
+            </a>
+            <p>Google classroom</p>
+        </div>-->
+
+
+    </div>
+
+
+    <div class="lineText" >
+	    <span><b>Latest popular videos</b></span>
+    </div>
+
+    <div class="videoTicker">
+        <video id="vid" height="300" controls poster="http://splash.inethi.net/images/noedy.jpg">
+            <source src="http://splash.inethi.net/videos/noedy.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <video id="vid" height="300"  controls poster="http://splash.inethi.net/images/cameron.jpg">
+            <source src="http://splash.inethi.net/videos/cameron.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <video id="vid" height="300"   controls poster="http://splash.inethi.net/images/ovnews1.jpg">
+            <source src="http://splash.inethi.net/videos/ovnews1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <video id="vid" height="300"  controls poster="http://splash.inethi.net/images/workshop1.jpg">
+            <source src="http://splash.inethi.net/videos/workshop1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
+    </div>
+
+    <br />
+    <!--<h3 className="lineText">
+        <span>Top local video uploads</span>
+    </h3>
+    <div class="videoFooter">
+        <div class=videoItem>
+            <a href="http://wikifundi.inethi.net">
+                <img src="icons/video1.png" height="150">
+                <p></p>
+            </a>
+        </div>
+        <div class=videoItem>
+            <a href="http://wikifundi.inethi.net">
+                <img src="icons/video2.png" height="150">
+                <p></p>
+            </a>
+        </div>
+        <div class=videoItem>
+            <a href="http://wikifundi.inethi.net">
+                <img src="icons/video3.png" height="150">
+                <p></p>
+            </a>
+        </div>
+        <div class=videoItem>
+            <a href="http://wikifundi.inethi.net">
+                <img src="icons/video4.png" height="150">
+                <p></p>
+            </a>
+        </div>
+    </div>
+
+    <br />-->
+
+    <div class="footer">
+        <span> <i>Operated by </i> <strong>OVCOMM DYNAMIC</strong></span>
+        <br />
+        <br />
+        <span> <i> Internet link sponsored by </i> </span>
+        <br />
+        <br />
+        <img style="width:200px;" src="captiveportal-herotell.png" /><br>
+    </div>
+
+
+    <script>
+        function copyFunction() {
+            document.getElementById("auth_user").value = document.getElementById("auth_voucher").value;
+            document.getElementById("auth_pass").value = document.getElementById("auth_voucher").value;
+        }
+
+        function viewdiv(id) {
+            var div = document.getElementById(id);
+            div.style.display = "block"
+        }
+
+        function hidediv(id) {
+            var div = document.getElementById(id);
+            div.style.display = "none"
+        }
+
+
+    </script>
+
+
+</body>
+
+
+
+</html>
