@@ -51,13 +51,14 @@ AWS dockers are built with the following command in each docker folder
 - splash (nginx1): x.x.1.3
 - nginx (nginx2): x.x.1.4
 - haproxyssl: x.x.1.5
-
+- keycloak: x.x.1.6
 
 ## Base dockers:
 - mariadb: x.x.1.20
 - mysql: x.x.1.22
 - phpmyadmin: x.x.1.23
 - mongo: x.x.1.24
+- mysql-keycloak: x.x.1.25
 
 ## App dockers:
 - nextcloud: x.x.1.50 (depends (mariadb))
