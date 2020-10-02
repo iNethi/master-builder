@@ -8,8 +8,8 @@ services:
       container_name: inethi-haproxyssl-test
       restart: always
       environment:
-          - CERTS=*.inethi.net
-          - EMAIL=inethi4us@gmail.com
+          - CERTS="${HAPROXYSSL_DOMAIN}" 
+          - EMAIL="${HAPROXYSSL_EMAIL}"
       volumes:
           - '${HAPROXYSSL_VOLUME}/letsencrypt:/etc/letsencrypt'
           - '${HAPROXYSSL_VOLUME}/haproxy.cfg:/etc/haproxy/haproxy.cfg'
