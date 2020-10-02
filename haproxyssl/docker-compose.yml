@@ -3,7 +3,7 @@ version: '3'
 services:
   haproxy:
       image: 'djohnson/haproxy-certbot-wildcard-test'
-      container_name: inethi-haproxyssl
+      container_name: inethi-haproxyssl-test
       restart: always
       environment:
           - CERTS="${HAPROXYSSL_DOMAIN}" 
