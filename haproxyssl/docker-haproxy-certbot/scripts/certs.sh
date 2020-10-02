@@ -3,8 +3,8 @@
 
 if [ -n "$CERTS" ]; then
     certbot certonly --manual --no-self-upgrade --keep \
-    --preferred-challenges=dns --email "$EMAIL"  \
-    --server https://acme-v02.api.letsencrypt.org/directory --agree-tos -d "$CERTS" \
+    --preferred-challenges=dns --email $EMAIL  \
+    --server https://acme-v02.api.letsencrypt.org/directory --agree-tos -d $CERTS \
     || exit 1
     
     mkdir -p /etc/haproxy/certs
