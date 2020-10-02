@@ -2,6 +2,8 @@ version: '3'
 
 services:
   haproxy:
+      stdin_open: true
+      tty: true
       image: 'djohnson/haproxy-certbot-wildcard-test'
       container_name: inethi-haproxyssl-test
       restart: always
