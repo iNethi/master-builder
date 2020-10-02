@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Build local docker of haproxy-cert
-docker build ./docker-haproxy-certbot -t djohnson/haproxy-certbot-wildcard2
+docker build ./docker-haproxy-certbot -t djohnson/haproxy-certbot-wildcard-test
 
 # Build the docker container (dont run in background)
 docker-compose up 
