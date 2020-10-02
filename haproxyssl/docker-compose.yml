@@ -2,7 +2,7 @@ version: '3'
 
 services:
   haproxy:
-      image: 'tomdess/haproxy-certbot:latest'
+      image: 'djohnson/haproxy-certbot-wildcard2'
       container_name: inethi-haproxyssl
       restart: always
       environment:
@@ -17,8 +17,7 @@ services:
       ports:
           - '80:80'
           - '443:443'
-           
-          
+
 networks:
   default:
     external:
