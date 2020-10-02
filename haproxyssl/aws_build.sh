@@ -9,5 +9,5 @@ cp ./haproxy.cfg /mnt/data/haproxyssl_test
 
 # Build the docker container (dont run in background)
 HAPROXYSSL_IPV4=172.18.0.60 docker-compose up -d
-docker exec -it inethi-haproxyssl-test /certs.sh
+docker exec -it -e CERTS='*.inethi.net' -e EMAIL='inethi4us@gmail.com' inethi-haproxyssl-test /certs.sh
 
