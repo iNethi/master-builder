@@ -7,8 +7,6 @@ docker build ./docker-haproxy-certbot -t djohnson/haproxy-certbot-wildcard-test
 mkdir -p /mnt/data/haproxyssl_test
 cp ./haproxy.cfg /mnt/data/haproxyssl_test
 
-
-
 # Build the docker container (dont run in background)
 HAPROXYSSL_IPV4=172.18.0.60 docker-compose up 
 
