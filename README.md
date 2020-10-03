@@ -51,7 +51,8 @@ AWS dockers are built with the following command in each docker folder
 - splash (nginx1): x.x.1.3
 - nginx (nginx2): x.x.1.4
 - haproxyssl: x.x.1.5
-- keycloak: x.x.1.6
+- musicshare-mariadb: x.x.1.6
+- keycloak: x.x.1.7
 
 ## Base dockers:
 - mariadb: x.x.1.20
