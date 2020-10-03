@@ -1,6 +1,6 @@
 # iNethi Wildcard haproxy ssl 
 
-This docker builds uses an exisiting certificate setup for *.inethi.net for you to deploy on your local server
+This docker builds uses an exisiting certificate setup for *.inethi.net for you to deploy on your local server. Contact the author for certificates before building: inethi4us@gmail.com
 
 # Usage
 Make sure you do the following before running the docker build
