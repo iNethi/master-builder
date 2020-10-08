@@ -69,6 +69,7 @@ AWS dockers are built with the following command in each docker folder
 - Rocketchat: x.x.1.54 (depends mongo)
 - Unifi Controller: x.x.1.55
 - UNMS: x.x.1.56
+- Jellyfin: x.x.1.57
 
 # Post docker installation steps
 
