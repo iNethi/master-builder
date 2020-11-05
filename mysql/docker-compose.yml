@@ -20,7 +20,7 @@ services:
     image: phpmyadmin/phpmyadmin
     container_name: inethi-phpmyadmin
     ports:
-      - "8080:80"
+      - "${PHPMYADMIN_PORT}:80"
     links:
       - mysql
     restart: always
