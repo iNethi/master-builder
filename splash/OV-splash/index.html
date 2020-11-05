@@ -151,7 +151,7 @@
         }
 
         .login-submit:disabled:hover {
-            background-color:#727272
+            background-color: #727272
         }
 
 
@@ -159,7 +159,7 @@
         .login-submit:hover {
             border: 0;
             text-shadow: 0 1px rgba(0, 0, 0, .3);
-            background-color:  #5b6ca3
+            background-color: #5b6ca3
         }
 
 
@@ -294,7 +294,7 @@
 
         .button {
             background-color: #2d48a1;
-;
+            ;
             border: none;
             color: white;
             padding: 15px 32px;
@@ -569,14 +569,14 @@
                 <img src="captiveportal-owncloud.ico" height="80">
                 <p></p>
             </a>
-            <p> OwnCloud <i>user:inethi</i><br/><i>pass: inethi</i></p>
+            <p> OwnCloud <i>user:inethi</i><br /><i>pass: inethi</i></p>
         </div>
         <div class=desktopItem>
             <a href="http://nextcloud.inethi.net">
                 <img src="captiveportal-nextcloud.png" height="80">
                 <p></p>
             </a>
-            <p> Nextcloud <i>user:inethi</i><br/><i>pass: inethirocks</i></p>
+            <p> Nextcloud <i>user:inethi</i><br /><i>pass: inethirocks</i></p>
         </div>
         <div class=desktopItem>
             <a href="http://plex.inethi.net:32400/web">
@@ -648,7 +648,7 @@
                 <p></p>
             </a>
             <p>OV High Grade 8</p>
-            
+
         </div>
         <div class=desktopItem>
             <a href="http://nextcloud.inethi.net/s/WSbWowqZHoQxiYA">
@@ -678,7 +678,7 @@
             </a>
             <p>OV High Grade 12</p>
         </div>
-       
+
 
 
     </div>
@@ -758,8 +758,24 @@
         <img style="width:200px;" src="captiveportal-herotell.png" /><br>
     </div>
 
-
+    <!--<script src="https://keycloak.inethi.net/auth/js/keycloak.js"> </script>-->
     <script>
+
+        /*var keycloak = new Keycloak({
+            "realm": "inethi",
+            "auth-server-url": "https://keycloak.inethi.net/auth/",
+            "ssl-required": "external",
+            "resource": "inethisplash",
+            "public-client": true,
+            "confidential-port": 0,
+            "clientId": "inethisplash"
+        });
+        keycloak.init( {onLoad: 'login-required'} ).then(function (authenticated) {
+            console.log(authenticated ? 'authenticated' : 'not authenticated');
+        }).catch(function () {
+            console.log('failed to initialize');
+        });*/
+
         function copyFunction() {
             document.getElementById("auth_user").value = document.getElementById("auth_voucher").value;
             document.getElementById("auth_pass").value = document.getElementById("auth_voucher").value;
