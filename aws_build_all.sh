@@ -42,29 +42,34 @@ sudo docker network create --attachable -d bridge --subnet=172.18.0.0/16  inethi
     printf "Building Ubiquity UNMS docker ... "
     cd ./unms
     ./aws_build.sh
+    cd ..
 }
 
 [[ "${choices[1]}" ]] && {
     printf "Building Ubiquity Unifi Controller docker ... "
     cd ./unificontroller
     ./aws_build.sh
+    cd ..
 }
 
 [[ "${choices[2]}" ]] && {
     printf "Building avideo docker ... "
     cd ./avideo
     ./aws_build.sh
+    cd ..
 }
 
 [[ "${choices[3]}" ]] && {
     printf "Building nextcloud docker ... "
     cd ./nextcloud
     ./aws_build.sh
+    cd ..
 }
 
 [[ "${choices[4]}" ]] && {
     printf "Building jellyfin docker ... "
     cd ./jellyfin
     ./aws_build.sh
+    cd ..
 }
 
