@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # customize with your own.
-options=("Ubiquity unifi" "Ubiquity unnms" "avideo" "nextcloud" "jellyfin")
+options=("Ubiquity unifi" "Ubiquity unnms" "avideo" "jellyfin" "plex" "nextcloud" "matrix" "keycloak" "wordpress" "nginx(splash)")
 
 menu() {
     echo "Avaliable options:"
@@ -59,17 +59,24 @@ sudo docker network create --attachable -d bridge --subnet=172.18.0.0/16  inethi
     cd ..
 }
 
-[[ "${choices[3]}" ]] && {
-    printf "Building nextcloud docker ... "
-    cd ./nextcloud
-    ./aws_build.sh
-    cd ..
-}
 
-[[ "${choices[4]}" ]] && {
+[[ "${choices[3]}" ]] && {
     printf "Building jellyfin docker ... "
     cd ./jellyfin
     ./aws_build.sh
     cd ..
 }
 
+[[ "${choices[4]}" ]] && {
+    printf "Building jellyfin docker ... "
+    cd ./plex
+    ./aws_build.sh
+    cd ..
+}
+
+[[ "${choices[5]}" ]] && {
+    printf "Building nextcloud docker ... "
+    cd ./nextcloud
+    ./aws_build.sh
+    cd ..
+}
