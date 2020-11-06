@@ -8,8 +8,8 @@ services:
     restart: always
     environment:
       MYSQL_USER: inethi
-      MYSQL_PASSWORD: inethi2018
-      MYSQL_ROOT_PASSWORD: iNethi#2018
+      - "MYSQL_PASSWORD: ${MYSQL_USER_PASSWORD}"
+      - "MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}"
     volumes:
       - "${MYSQLDB_VOLUME}:/var/lib/mysql"
     networks:
@@ -28,7 +28,7 @@ services:
     environment:
       PMA_HOST: mysql
       PMA_USER: root
-      PMA_PASSWORD: iNethi#2018
+      "PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}"
     networks:
       default:
         ipv4_address: "${PHPMYADMIN_IPV4}"
