@@ -11,10 +11,10 @@ services:
     volumes:
       - "${MARIADB_VOLUME}:/var/lib/mysql"
     environment:
-      - MYSQL_ROOT_PASSWORD=iNethi#2018
-      - MYSQL_PASSWORD=inethi2018
-      - MYSQL_DATABASE=inethi_nextcloud
-      - MYSQL_USER=inethi
+      - "MYSQL_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}"
+      - "MYSQL_PASSWORD: ${MARIADB_USER_PASSWORD}"
+      - "MYSQL_DATABASE: inethi_nextcloud"
+      - "MYSQL_USER: inethi"
     networks:
       default:
         ipv4_address: "${MARIADB_IPV4}" 
