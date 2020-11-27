@@ -1,4 +1,4 @@
-version: "2.1"
+version: "3"
 
 services:
   grafana-pfSense:
@@ -6,6 +6,7 @@ services:
       container_name: inethi-grafana
       hostname: inethi-influxdb
       mem_limit: 2gb
+      user: "${UID}"
       ports:
         - "${GRAFANA_PORT1}:3000"
       environment:
