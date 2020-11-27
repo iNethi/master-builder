@@ -26,7 +26,7 @@ services:
         default:
           ipv4_address: "${GRAFANA_IPV4}"
 
-    influxdb-pfsense:
+  influxdb-pfsense:
       image: "influxdb:1.7.10-alpine"
       container_name: inethi-influxdb
       hostname: inethi-influxdb
