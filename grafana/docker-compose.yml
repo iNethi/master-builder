@@ -6,7 +6,7 @@ services:
       container_name: inethi-grafana
       hostname: inethi-influxdb
       
-      user: "${UID}"
+      user: "${UID}:${GID}"
       ports:
         - "${GRAFANA_PORT1}:3000"
       environment:
