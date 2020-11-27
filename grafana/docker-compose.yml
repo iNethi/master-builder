@@ -1,0 +1,63 @@
+version: "2.1"
+
+services:
+  grafana-pfSense:
+      image: "grafana/grafana:6.7.2"
+      container_name: inethi-grafana
+      hostname: inethi-influxdb
+      mem_limit: 2gb
+      ports:
+        - "${GRAFANA_PORT1}:3000"
+      environment:
+        TZ: "Africa/Johannesburg"
+        GF_INSTALL_PLUGINS: "grafana-clock-panel,grafana-simple-json-datasource,grafana-piechart-panel,grafana-worldmap-panel"
+        GF_PATHS_DATA: "/var/lib/grafana"
+        GF_DEFAULT_INSTANCE_NAME: "home"
+        GF_ANALYTICS_REPORTING_ENABLED: "false"
+        GF_SERVER_ENABLE_GZIP: "true"
+        GF_SERVER_DOMAIN: "grafana.inethi.net"
+      volumes:
+        - "${GRAFANA_VOLUME}:/var/lib/grafana"
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "100M"
+      networks:
+        default:
+          ipv4_address: "${GRAFANA_IPV4}"
+
+    influxdb-pfsense:
+      image: "influxdb:1.7.10-alpine"
+      container_name: inethi-influxdb
+      hostname: inethi-influxdb
+      mem_limit: 2gb
+      ports:
+        - "2003:2003"
+        - "8086:8086"
+      environment:
+        TZ: "America/New_York"
+        INFLUXDB_DATA_QUERY_LOG_ENABLED: "false"
+        INFLUXDB_REPORTING_DISABLED: "true"
+        INFLUXDB_ADMIN_USER: "admin"
+        INFLUXDB_ADMIN_PASSWORD: "iNethi#2018"
+        INFLUXDB_USER: "pfsense"
+        INFLUXDB_USER_PASSWORD: "iNethi#2018"
+        INFLUXDB_DB: "pfsense"
+      volumes:
+        - "${INFLUXDB_VOLUME}:/var/lib/influxdb"
+      
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "100M"
+
+      networks:
+        default:
+          ipv4_address: "${INFLUXDB_IPV4}"
+
+networks:
+  default:
+    external:
+      name: "${INETHI_NETWORK}"
+
+
