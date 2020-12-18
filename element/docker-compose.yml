@@ -1,0 +1,18 @@
+version: "2.1"
+services:
+  jellyfin:
+    image: vectorim/element-web
+    container_name: inethi-element
+    
+    ports:
+      - "${ELEMENT_PORT1}:80"
+    
+    restart: always
+    networks:
+      default:
+        ipv4_address: "${ELEMENT_IPV4}"
+
+networks:
+  default:
+    external:
+      name: "${INETHI_NETWORK}"
