@@ -70,6 +70,8 @@ AWS dockers are built with the following command in each docker folder
 - Unifi Controller: x.x.1.55
 - UNMS: x.x.1.56
 - Jellyfin: x.x.1.57
+- Grafana: x.x.1.58
+- OnlyOffice: x.x.1.58
 
 # Post docker installation steps
 
