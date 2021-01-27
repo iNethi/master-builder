@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  grafana-pfSense:
+      image: "onlyoffice/documentserver"
+      container_name: inethi-openoffice
+      hostname: inethi-openoffice
+      ports:
+        - "${ONLYOFFICE_PORT1}:80"
+      volumes:
+        - "${ONLYOFFICE_VOLUME}/lib:/var/lib"
+        - "${ONLYOFFICE_VOLUME}/log:/var/log"
+      networks:
+        default:
+          ipv4_address: "${ONLYOFFICE_IPV4}"
+
+networks:
+  default:
+    external:
+      name: "${INETHI_NETWORK}"
+
+
