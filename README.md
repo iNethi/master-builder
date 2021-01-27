@@ -47,11 +47,9 @@ AWS dockers are built with the following command in each docker folder
 - `AWS EC2 bridge:` 172.18.0.1/16
 
 ## Low level dockers
-- radiusdesk3: x.x.1.2
 - splash (nginx1): x.x.1.3
 - nginx (nginx2): x.x.1.4
 - haproxyssl: x.x.1.5
-- musicshare-mariadb: x.x.1.6
 - keycloak: x.x.1.7
 
 ## Base dockers:
@@ -60,6 +58,9 @@ AWS dockers are built with the following command in each docker folder
 - phpmyadmin: x.x.1.23
 - mongo: x.x.1.24
 - mysql-keycloak: x.x.1.25
+- influxDB: x.x.1.26
+- musicshare-mariadb: x.x.1.27 **
+
 
 ## App dockers:
 - nextcloud: x.x.1.50 (depends (mariadb))
@@ -70,6 +71,10 @@ AWS dockers are built with the following command in each docker folder
 - Unifi Controller: x.x.1.55
 - UNMS: x.x.1.56
 - Jellyfin: x.x.1.57
+- Grafana: x.x.1.58
+- radiusdesk3: x.x.1.59 **
+- Musicshare: x.x.1.60 **
+- Musicshare-adminer: x.x.1.61 **
 
 # Post docker installation steps
 
