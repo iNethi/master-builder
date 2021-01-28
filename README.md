@@ -72,13 +72,11 @@ AWS dockers are built with the following command in each docker folder
 - UNMS: x.x.1.56
 - Jellyfin: x.x.1.57
 - Grafana: x.x.1.58
-<<<<<<< HEAD
 - radiusdesk3: x.x.1.59 **
 - Musicshare: x.x.1.60 **
 - Musicshare-adminer: x.x.1.61 **
-=======
-- OnlyOffice: x.x.1.58
->>>>>>> 272354831a1d684d3ff5d1c01d4d911d40275689
+- OnlyOffice: x.x.1.62
+- Callobora: x.x.1.63
 
 # Post docker installation steps
 
