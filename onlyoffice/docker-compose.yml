@@ -3,8 +3,8 @@ version: "3"
 services:
   onlyoffice:
       image: "onlyoffice/documentserver"
-      container_name: inethi-openoffice
-      hostname: inethi-openoffice
+      container_name: inethi-onlyoffice
+      hostname: inethi-onlyoffice
       tty: true
       restart: always
       ports:
