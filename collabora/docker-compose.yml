@@ -1,12 +1,10 @@
 version: "3"
 
 services:
-  onlyoffice:
+  grafana-pfSense:
       image: "onlyoffice/documentserver"
       container_name: inethi-openoffice
       hostname: inethi-openoffice
-      tty: true
-      restart: always
       ports:
         - "${ONLYOFFICE_PORT1}:80"
       volumes:
