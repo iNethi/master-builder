@@ -13,11 +13,11 @@ services:
       - "${JELLYFIN_VOLUME}/tvseries:/data/tvshows"
       - "${JELLYFIN_VOLUME}/movies:/data/movies"
       - "${JELLYFIN_VOLUME}/opt/vc/lib:/opt/vc/lib"
-    ports:
-      - "${JELLYFIN_PORT1}:8096"
-      - "${JELLYFIN_PORT2}:8920"
-      - "${JELLYFIN_PORT3}:7359/udp"
-      - "${JELLYFIN_PORT4}:1900/udp"
+    #ports:
+    #  - "${JELLYFIN_PORT1}:8096"
+    #  - "${JELLYFIN_PORT2}:8920"
+    #  - "${JELLYFIN_PORT3}:7359/udp"
+    #  - "${JELLYFIN_PORT4}:1900/udp"
     #devices:
       #- /dev/dri:/dev/dri #optional
       #- /dev/vcsm:/dev/vcsm #optional
