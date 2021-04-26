@@ -2,7 +2,7 @@ version: "2.1"
 services:
   jellyfin:
     image: linuxserver/jellyfin
-    container_name: inethi-jellyfin
+    container_name: inethi-traefik-jellyfin
     environment:
       - PUID=1000
       - PGID=1000
@@ -26,11 +26,13 @@ services:
       #- /dev/video11:/dev/video11 #optional
       #- /dev/video12:/dev/video12 #optional
     restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jellyfin.rule=${TRAEFIK_RULE}"
+      - "traefik.http.routers.jellyfin.entrypoints=${TRAEFIK_ENTRYPOINT}"
     networks:
-      default:
-        ipv4_address: "${JELLYFIN_IPV4}"
-
+      - "${INETHI_NETWORK}"
+    
 networks:
-  default:
-    external:
-      name: "${INETHI_NETWORK}"
+  web:
+    external: true
