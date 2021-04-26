@@ -2,7 +2,8 @@ version: '2'
 
 services:
   rocketchat:
-    image: rocketchat/rocket.chat
+    image: rocketchat/rocket.chat:latest
+    container_name: inethi-rocketchat
     command: >
       bash -c
         "for i in `seq 1 30`; do
@@ -11,12 +12,12 @@ services:
           echo \"Tried $$i times. Waiting 5 secs...\";
           sleep 5;
         done; (exit $$s)"
-    restart: unless-stopped
+    restart: always
     volumes:
-      - ./uploads:/app/uploads
+      - "${ROCKETCHAT_VOLUME}:/app/uploads"
     environment:
       - PORT=3000
-      - ROOT_URL=http://10.2.0.10:3000
+      - ROOT_URL=http://localhost:3000
       - MONGO_URL=mongodb://mongo:27017/rocketchat
       - MONGO_OPLOG_URL=mongodb://mongo:27017/local
       - MAIL_URL=smtp://smtp.email
@@ -26,17 +27,24 @@ services:
       - mongo
     ports:
       - 3000:3000
+    networks:
+      default:
+        ipv4_address: "${ROCKETCHAT_IPV4}" 
     labels:
       - "traefik.backend=rocketchat"
       - "traefik.frontend.rule=Host: your.domain.tld"
 
   mongo:
     image: mongo:4.0
-    restart: unless-stopped
+    container_name: inethi-mongo
+    restart: always
     volumes:
-     - ./data/db:/data/db
+     - "${MONGO_VOLUME}:/data/db"
      #- ./data/dump:/dump
     command: mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1
+    networks:
+      default:
+        ipv4_address: "${MONGO_IPV4}" 
     labels:
       - "traefik.enable=false"
 
@@ -61,9 +69,10 @@ services:
   # hubot, the popular chatbot (add the bot user first and change the password before starting this image)
   hubot:
     image: rocketchat/hubot-rocketchat:latest
-    restart: unless-stopped
+    container_name: inethi-hubot
+    restart: always
     environment:
-      - ROCKETCHAT_URL=http://10.2.0.10:3000
+      - ROCKETCHAT_URL=rocketchat:3000
       - ROCKETCHAT_ROOM=GENERAL
       - ROCKETCHAT_USER=bot
       - ROCKETCHAT_PASSWORD=botpassword
@@ -79,6 +88,15 @@ services:
   # this is used to expose the hubot port for notifications on the host on port 3001, e.g. for hubot-jenkins-notifier
     ports:
       - 3001:8080
+    networks:
+      default:
+        ipv4_address: "${HUBOT_IPV4}" 
+
+
+networks:
+  default:
+    external:
+      name: "${ROCKETCHAT_NETWORK}"
 
   #traefik:
   #  image: traefik:latest
