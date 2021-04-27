@@ -9,11 +9,11 @@ services:
         - "${NGINX_VOLUME}/html:/usr/share/nginx/html"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.splash.rule=${TRAEFIK_RULE}"
+      - "traefik.http.routers.splash.rule=Host(`${TRAEFIK_API_RULE}`)"
       - "traefik.http.routers.splash.entrypoints=${TRAEFIK_ENTRYPOINT}"
-    networks:
-      - "${INETHI_NETWORK}"
+    
 
 networks:
-    web:
-        external: true
+  default:
+    external:
+      name: "${INETHI_NETWORK}"
