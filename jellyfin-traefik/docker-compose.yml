@@ -28,11 +28,12 @@ services:
     restart: always
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.jellyfin.rule=${TRAEFIK_RULE}"
+      - "traefik.http.routers.jellyfin.rule=Host(`${TRAEFIK_API_RULE}`)"
       - "traefik.http.routers.jellyfin.entrypoints=${TRAEFIK_ENTRYPOINT}"
-    networks:
-      - "${INETHI_NETWORK}"
+    
     
 networks:
-  web:
-    external: true
+  default:
+    external:
+      name: "${INETHI_NETWORK}"
+

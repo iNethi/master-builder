@@ -1,9 +1,11 @@
 #!/bin/bash
 
 # customize with your own.
-options=("Ubiquity unifi" "Ubiquity unnms" "avideo" "jellyfin" "plex" "nextcloud" "matrix" "keycloak" "wordpress" "nginx(splash)")
+options=("jellyfin" "keycloak" "nginx(splash)")
 
 menu() {
+    echo "iNethi (Traefik) version 0.0.1 builder"
+    echo
     echo "Avaliable options:"
     for i in ${!options[@]}; do 
         printf "%3d%s) %s\n" $((i+1)) "${choices[i]:- }" "${options[i]}"
@@ -50,48 +52,30 @@ echo
 #docker network create web
 sudo docker network create --attachable -d bridge inethi-bridge-traefik
 #
-# Build traefik
+# Build traefik - compulsory docker
+printf "Building Traefik docker ... "
+    cd ./traefik
+    ./local_build.sh
+    cd ..
 
 
 [[ "${choices[0]}" ]] && {
-    printf "Building Ubiquity UNMS docker ... "
-    cd ./unms
-    ./aws_build.sh
+    printf "Building jellyfin docker ... "
+    cd ./jellyfin-traefik
+    ./local_build.sh
     cd ..
 }
 
 [[ "${choices[1]}" ]] && {
-    printf "Building Ubiquity Unifi Controller docker ... "
-    cd ./unificontroller
-    ./aws_build.sh
+    printf "Building keycloak docker ... "
+    cd ./keycloak-docker
+     ./local_build.sh
     cd ..
 }
 
 [[ "${choices[2]}" ]] && {
-    printf "Building avideo docker ... "
-    cd ./avideo
-    ./aws_build.sh
-    cd ..
-}
-
-
-[[ "${choices[3]}" ]] && {
-    printf "Building jellyfin docker ... "
-    cd ./jellyfin
-    ./aws_build.sh
-    cd ..
-}
-
-[[ "${choices[4]}" ]] && {
-    printf "Building jellyfin docker ... "
-    cd ./plex
-    ./aws_build.sh
-    cd ..
-}
-
-[[ "${choices[5]}" ]] && {
-    printf "Building nextcloud docker ... "
-    cd ./nextcloud
-    ./aws_build.sh
+    printf "Building nginx(splash) docker ... "
+    cd ./nginx-docker
+    ./local_build.sh
     cd ..
 }
