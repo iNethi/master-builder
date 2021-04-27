@@ -41,11 +41,6 @@ echo
 # Send the environmental variables to other scripts
 echo export inethiDN=$domainName > ./root.conf
 
-cd ./traefik
-./test.sh
-exit
-
-
 printf "Create docker traefik bridge: traefik-bridge ..."
 echo 
 #sudo docker network create --attachable -d bridge --subnet=172.19.0.0/16  inethi-bridge-traefik
