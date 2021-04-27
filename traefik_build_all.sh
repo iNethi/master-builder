@@ -63,14 +63,14 @@ printf "Building Traefik docker ... "
 
 [[ "${choices[1]}" ]] && {
     printf "Building keycloak docker ... "
-    cd ./keycloak-docker
+    cd ./keycloak-traefik
      ./local_build.sh
     cd ..
 }
 
 [[ "${choices[2]}" ]] && {
     printf "Building nginx(splash) docker ... "
-    cd ./nginx-docker
+    cd ./nginx-traefik
     ./local_build.sh
     cd ..
 }
