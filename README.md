@@ -9,20 +9,9 @@ This is an open source solution that is freely available to everyone. With iNeth
 
 You can either run the master build script to build all the dockers linked to iNethi or you can build individual dockers that you need
 
-To build the whole system on a local server simply run
+To build the whole system on a  server simply run
 ```
-./local_build_all.sh <network interface connected to internet> <plex claim token>
-```
-To get your plex claim token go to [plex claim](https://www.plex.tv/claim/) 
-
-Example if eth0 is WAN interface connected to network and your plex claim is claim-xZ4QYD4rJnpVyLWoKgzA
-```
-./local_build_all.sh eth0 claim-xZ4QYD4rJnpVyLWoKgzA
-```
-
-To build the whole system on a AWS simply run
-```
-./aws_build_all.sh
+./traefik_build_all
 ```
 
 # Important notes
@@ -35,48 +24,47 @@ Local dockers on local server machine are build with the following command in ea
 ./local_build.sh
 ```
 
-AWS dockers are built with the following command in each docker folder
-
-```
-./aws_build.sh
-```
-
 # Network notes
 
-- `Local server bridge using macvlan: ` 10.2.1.1/16 (linternal network 172.17.0.1/16)
-- `AWS EC2 bridge:` 172.18.0.1/16
+- iNethi makes use of traefik as a reverse proxy to route hosts to a specific docker container
+- Docker will automatically create a bridged network which bridges traefik to the host Ethernet interface on your computer
+- After installing check the ip address of the traefik container by running
+```
+docker inspect inethi-traefik | grep IPAddress
+```
+- Make sure you create a wildcard rule on your DNS server that points all traffic on the domain your choose to this traefik container. e.g. if inethi-traefik's IP address is 172.23.0.2 and your domain is inethihome.net
+- Create a DNS entry that points *.inethihome.net to 172.23.0.2
 
-## Low level dockers
-- splash (nginx1): x.x.1.3
-- nginx (nginx2): x.x.1.4
-- haproxyssl: x.x.1.5
-- keycloak: x.x.1.7
+## Core docker containers
+- nginx: runs splash page
+- traefik: reverse proxy)
+- keycloak: single sign on tool
 
-## Base dockers:
-- mariadb: x.x.1.20
-- mysql: x.x.1.22
-- phpmyadmin: x.x.1.23
-- mongo: x.x.1.24
-- mysql-keycloak: x.x.1.25
-- influxDB: x.x.1.26
-- musicshare-mariadb: x.x.1.27 **
+## Dependency dockers:
+- mariadb: database
+- mysql: database
+- phpmyadmin: database management 
+- mongo: database
+- mysql-keycloak: database - seperate mysql for keycloak
+- influxDB: database for real time stream
+- musicshare-mariadb: database - seperate database for musicshare
 
 
-## App dockers:
-- nextcloud: x.x.1.50 (depends (mariadb))
-- avideo: x.x.1.51 (depends mysql)
-- avideo-encoder: x.x.1.52 (depends mysql)
-- plex: x.x.1.53 
-- Rocketchat: x.x.1.54 (depends mongo)
-- Unifi Controller: x.x.1.55
-- UNMS: x.x.1.56
-- Jellyfin: x.x.1.57
-- Grafana: x.x.1.58
-- radiusdesk3: x.x.1.59 **
-- Musicshare: x.x.1.60 **
-- Musicshare-adminer: x.x.1.61 **
-- OnlyOffice: x.x.1.62
-- Callobora: x.x.1.63
+## Elective dockers:
+- nextcloud: File sharing system and collaboration platform
+- avideo: Local video sharing system similar to Youtube
+- avideo-encoder: Encoder for avideo
+- plex: Video and music streaming service
+- Rocketchat: Local Chat server
+- Unifi Controller: Ubiquity Unifi WiFi hotspot managmenet 
+- UNMS: Ubiquity WiFi backhaul management system
+- Jellyfin: video streaming platform
+- Grafana: Graphing dashboard
+- radiusdesk3: Voucher management system
+- Musicshare: Music sharing platform
+- Musicshare-adminer: Ad mining for music sharing platform
+- OnlyOffice: Open Source office colalbortive platform 
+- Callobora: Open Source office colalbortive platform
 
 # Post docker installation steps
 
@@ -116,7 +104,3 @@ Add the following:
 - Folder name: Shared Videos, External storage: Local, Configuration /mnt/Rvideos
 - Folder name: Shared Music, External storage: Local, Configuration /mnt/Rmusic 
 
-
-## Other notes 
-
-- AVideo mounts a Volume for /var/www/localhost/htdocs/videos
