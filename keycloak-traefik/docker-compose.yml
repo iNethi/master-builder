@@ -14,8 +14,8 @@ services:
         - "${MYSQLDB_VOLUME}:/var/lib/mysql"
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.jellyfin.rule=Host(`${MYSQL_KEYCLOAK_TRAEFIK_API_RULE}`)"
-        - "traefik.http.routers.jellyfin.entrypoints=${TRAEFIK_ENTRYPOINT}"
+        - "traefik.http.routers.mysql-keycloak.rule=Host(`${MYSQL_KEYCLOAK_TRAEFIK_API_RULE}`)"
+        - "traefik.http.routers.mysql-keycloak.entrypoints=${TRAEFIK_ENTRYPOINT}"
 
   keycloak:
       image: quay.io/keycloak/keycloak:latest
@@ -35,8 +35,8 @@ services:
       
       labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.jellyfin.rule=Host(`${KEYCLOAK_TRAEFIK_API_RULE}`)"
-      - "traefik.http.routers.jellyfin.entrypoints=${TRAEFIK_ENTRYPOINT}"
+      - "traefik.http.routers.keycloak.rule=Host(`${KEYCLOAK_TRAEFIK_API_RULE}`)"
+      - "traefik.http.routers.keycloak.entrypoints=${TRAEFIK_ENTRYPOINT}"
 
 networks:
   default:
