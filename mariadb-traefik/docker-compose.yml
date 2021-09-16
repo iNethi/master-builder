@@ -1,0 +1,32 @@
+version: '3'
+services:
+  traefik-mariadb:
+      image: mariadb:latest
+      container_name: inethi-traefik-mariadb
+      volumes:
+        - "${MARIADB_MOUNT}:/var/lib/mysql"
+      environment:
+        - "MYSQL_ROOT_PASSWORD=${DB_PASSWORD}"
+        - "MYSQL_USER=${DB_USER}"
+        - "MYSQL_PASSWORD=${DB_PASSWORD}"
+        - "MYSQL_DATABASE=${DB_NAME}"
+      restart: always
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.traefikmariadb.rule=Host(`${TRAEFIK_API_RULE_MARIADB}`)"
+        - "traefik.http.routers.traefikmariadb.entrypoints=${TRAEFIK_ENTRYPOINT}"
+  traefik-adminer:
+      image: adminer
+      container_name: inethi-traefik-adminer
+      restart: always
+      links:
+        - traefik-mariadb
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.traefikadminer.rule=Host(`${TRAEFIK_API_RULE_ADMINER}`)"
+        - "traefik.http.routers.traefikadminer.entrypoints=${TRAEFIK_ENTRYPOINT}"
+
+networks:
+  default:
+    external:
+      name: "${INETHI_NETWORK}"
