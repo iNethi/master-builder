@@ -1,0 +1,49 @@
+version: '2'
+services:
+  mariadb:
+    container_name: inethi-traefik-mariadb-moodle
+    image: docker.io/bitnami/mariadb:10.5
+    restart: always
+    environment:
+      - 'ALLOW_EMPTY_PASSWORD=${ALLOW_EMPTY_PASSWORD}'
+      - 'MARIADB_USER=${MOODLE_DATABASE_USER}'
+      - 'MARIADB_DATABASE=${MOODLE_DATABASE_NAME}'
+      - MARIADB_CHARACTER_SET=utf8mb4
+      - MARIADB_COLLATE=utf8mb4_unicode_ci
+    volumes:
+      - '${MOODLE_VOLUME}/mariadb_data:/bitnami/mariadb'
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mariadb.rule=Host(`${TRAEFIK_API_RULE_MARIADB}`)"
+      - "traefik.http.routers.mariadb.entrypoints=${TRAEFIK_ENTRYPOINT}"
+
+  moodle:
+    container_name: inethi-traefik-moodle
+    image: docker.io/bitnami/moodle:3
+    environment:
+      - 'MOODLE_DATABASE_HOST=${MOODLE_DATABASE_HOST}'
+      - 'MOODLE_DATABASE_USER=${MOODLE_DATABASE_USER}'
+      - 'MOODLE_DATABASE_NAME=${MOODLE_DATABASE_NAME}'
+      - 'ALLOW_EMPTY_PASSWORD=${ALLOW_EMPTY_PASSWORD}'
+    volumes:
+      - '${MOODLE_VOLUME}/moodle_data:/bitnami/moodle'
+      - '${MOODLE_VOLUME}/moodledata_data:/bitnami/moodledata'
+    depends_on:
+      - mariadb
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.moodle.rule=Host(`${TRAEFIK_API_RULE_MOODLE}`)"
+      - "traefik.http.routers.moodle.entrypoints=${TRAEFIK_ENTRYPOINT}"
+
+volumes:
+  mariadb_data:
+    driver: local
+  moodle_data:
+    driver: local
+  moodledata_data:
+    driver: local
+
+networks:
+  default:
+    external:
+      name: "${INETHI_NETWORK}"
