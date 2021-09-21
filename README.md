@@ -21,7 +21,6 @@ sudo ./traefik_build_all
 ```
 Note root privileges will be necessary.
 
-A summary of what is happening in this build script. The docker images you choose are pulled first
 # Important notes
 
 If you want to build docker yourself, first build mysql docker and then build other dockers
