@@ -1,13 +1,14 @@
 #!/bin/bash
 
 # customize with your own.
+sudo mkdir /mnt/data
 options=("jellyfin" "keycloak" "nginx(splash)")
 
 menu() {
     echo "iNethi (Traefik) version 0.0.1 builder"
     echo
     echo "Avaliable options:"
-    for i in ${!options[@]}; do 
+    for i in ${!options[@]}; do
         printf "%3d%s) %s\n" $((i+1)) "${choices[i]:- }" "${options[i]}"
     done
     if [[ "$msg" ]]; then echo "$msg"; fi
@@ -18,7 +19,7 @@ while menu && read -rp "$prompt" num && [[ "$num" ]]; do
     [[ "$num" != *[![:digit:]]* ]] &&
     (( num > 0 && num <= ${#options[@]} )) ||
     { msg="Invalid option: $num"; continue; }
-    ((num--)); 
+    ((num--));
     [[ "${choices[num]}" ]] && choices[num]="" || choices[num]="+"
 done
 
@@ -27,29 +28,38 @@ read -p 'Doman name: ' domainName
 
 
 printf "You selected"; msg=" nothing"
-for i in ${!options[@]}; do 
-    [[ "${choices[i]}" ]] && { 
-        printf " %s" "[${options[i]}]"; msg=""; 
+for i in ${!options[@]}; do
+    [[ "${choices[i]}" ]] && {
+        printf " %s" "[${options[i]}]"; msg="";
     }
 done
 
 echo "$msg"
 echo You chose Domain Name: $domainName
-echo 
+echo
 printf "Starting to build dockers ... "
-echo 
+echo
 # Send the environmental variables to other scripts
 echo export inethiDN=$domainName > ./root.conf
 
 printf "Create docker traefik bridge: traefik-bridge ..."
-echo 
-#sudo docker network create --attachable -d bridge --subnet=172.19.0.0/16  inethi-bridge-traefik
-#docker network create web
+echo
 sudo docker network create --attachable -d bridge inethi-bridge-traefik
-#
+
+printf "Pulling dnsmasq and traefik..."
+echo
+sudo docker pull traefik
+sudo docker pull jpillora/dnsmasq
+
+# Disable current dns so dnsmasq can bind to 0.0.0.0:53
+printf "Disabling current system dns ..."
+echo
+sudo systemctl stop systemd-resolved
+sudo systemctl disable systemd-resolved
+
 # Build traefik - compulsory docker
-printf "Building Traefik docker ... "
-    cd ./traefik
+printf "Building Traefik and dnsmasq docker ... "
+    cd ./traefik-with-dnsmasq
     ./local_build.sh
     cd ..
 
