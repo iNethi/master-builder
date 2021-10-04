@@ -54,8 +54,9 @@ sudo docker pull jpillora/dnsmasq
 # Disable current dns so dnsmasq can bind to 0.0.0.0:53
 printf "Disabling current system dns ..."
 echo
-sudo systemctl stop systemd-resolved
-sudo systemctl disable systemd-resolved
+sudo systemctl disable systemd-resolved.service
+sudo service systemd-resolved stop
+sudo rm /etc/resolv.conf
 
 # Build traefik - compulsory docker
 printf "Building Traefik and dnsmasq docker ... "
