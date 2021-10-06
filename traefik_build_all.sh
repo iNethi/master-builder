@@ -48,15 +48,6 @@ sudo docker network create --attachable -d bridge inethi-bridge-traefik
 
 printf "Pulling dnsmasq and traefik..."
 echo
-sudo docker pull traefik
-sudo docker pull jpillora/dnsmasq
-
-# Disable current dns so dnsmasq can bind to 0.0.0.0:53
-printf "Disabling current system dns ..."
-echo
-sudo systemctl disable systemd-resolved.service
-sudo service systemd-resolved stop
-sudo rm /etc/resolv.conf
 
 # Build traefik - compulsory docker
 printf "Building Traefik and dnsmasq docker ... "
@@ -64,6 +55,12 @@ printf "Building Traefik and dnsmasq docker ... "
     ./local_build.sh
     cd ..
 
+# Disable current dns so dnsmasq can bind to 0.0.0.0:53
+printf "Disabling current system dns ..."
+echo
+sudo systemctl disable systemd-resolved.service
+sudo service systemd-resolved stop
+sudo rm /etc/resolv.conf
 
 [[ "${choices[0]}" ]] && {
     printf "Building jellyfin docker ... "
