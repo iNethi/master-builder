@@ -23,8 +23,8 @@ while menu && read -rp "$prompt" num && [[ "$num" ]]; do
     [[ "${choices[num]}" ]] && choices[num]="" || choices[num]="+"
 done
 
-# Select domain namec
-read -p 'Doman name: ' domainName
+# # Select domain namec
+# read -p 'Doman name: ' domainName
 
 
 printf "You selected"; msg=" nothing"
@@ -34,13 +34,13 @@ for i in ${!options[@]}; do
     }
 done
 
-echo "$msg"
-echo You chose Domain Name: $domainName
-echo
-printf "Starting to build dockers ... "
-echo
-# Send the environmental variables to other scripts
-echo export inethiDN=$domainName > ./root.conf
+# echo "$msg"
+# echo You chose Domain Name: $domainName
+# echo
+# printf "Starting to build dockers ... "
+# echo
+# # Send the environmental variables to other scripts
+# echo export inethiDN=$domainName > ./root.conf
 
 printf "Create docker traefik bridge: traefik-bridge ..."
 echo
