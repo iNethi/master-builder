@@ -46,11 +46,6 @@ printf "Create docker traefik bridge: traefik-bridge ..."
 echo
 sudo docker network create --attachable -d bridge inethi-bridge-traefik
 
-printf "Pulling dnsmasq and traefik..."
-echo
-sudo docker pull traefik
-sudo docker pull jpillora/dnsmasq
-
 # Disable current dns so dnsmasq can bind to 0.0.0.0:53
 printf "Disabling current system dns ..."
 echo
@@ -64,6 +59,10 @@ printf "Building Traefik and dnsmasq docker ... "
     ./local_build.sh
     cd ..
 
+printf "Pulling dnsmasq and traefik..."
+echo
+sudo docker pull traefik
+sudo docker pull jpillora/dnsmasq
 
 [[ "${choices[0]}" ]] && {
     printf "Building jellyfin docker ... "
