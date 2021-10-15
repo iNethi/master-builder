@@ -7,7 +7,7 @@ This is an open source solution that is freely available to everyone. With iNeth
 
 # How to use the Traefik build with Dnsmasq
 
-This build has been tested on both Ubuntu server and desktop. This is the new architecture that iNethi is adopting. Please make use of it. You can either run the master build script to build all the dockers linked to iNethi or you can build individual dockers that you need. Docker and docker compose need to be installed before running the build scrip.
+This build has been tested on both Ubuntu server and desktop. This is the new architecture that iNethi is adopting. Please make use of it. You can either run the master build script to build all the dockers linked to iNethi or you can build individual dockers that you need. Docker and docker compose need to be installed before running the build script.
 
 To build the whole system on a server simply run you can run the build script and follow the instructions displayed on screen. The majority of the process is automatic but there is one manual step. *Before* you run the build script navigate to docker-master/traefik-with-dnsmasq/dnsmasq/dnsmasq.conf and edit the 6th line of this file to read as follows:
   address=/inethihome.net/*the ip address of your server*
