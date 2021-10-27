@@ -3,7 +3,7 @@
 This is the starting place to build iNethi on your own server
 
 # Usage
-This is an open source solution that is freely available to everyone. With iNethi you can build a set of local services to share content amongst your local community and build a small ISP to sell Internet vouchers. [more detail...](https://inethi.net)
+This is an open source solution that is freely available to everyone. With iNethi you can build a set of local services to share content amongst your local community and build a small ISP to sell Internet vouchers. [more detail...](https://splashg.inethi.net)
 
 # How to use the Traefik build with Dnsmasq
 
