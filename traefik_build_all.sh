@@ -57,12 +57,12 @@ printf "Building Traefik and dnsmasq docker... "
 
 # Cannot start due to current bind
 printf "EXPECTED FAILIURE"
-
+echo
 # Disable current dns so dnsmasq can bind to 0.0.0.0:53
 printf "Disabling current system dns..."
 echo
-sudo systemctl enable systemd-resolved.service
-sudo service systemd-resolved start
+sudo systemctl disable systemd-resolved.service
+sudo service systemd-resolved stop
 sudo rm /etc/resolv.conf
 
 printf "Re-building Traefik and dnsmasq docker... "
@@ -70,8 +70,6 @@ printf "Re-building Traefik and dnsmasq docker... "
   cd ./traefik-with-dnsmasq
   ./local_build.sh
   cd ..
-
-
 
 printf "Disabling current system dns..."
 
