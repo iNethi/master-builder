@@ -13,3 +13,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.keycloakgatekeeper.rule=Host(`${KEYCLOAK_GATEKEEPER_TRAEFIK_API_RULE}`)"
       - "traefik.http.routers.keycloakgatekeeper.entrypoints=${TRAEFIK_ENTRYPOINT}"
+
+networks:
+  default:
+    external:
+      name: ${INETHI_NETWORK}
