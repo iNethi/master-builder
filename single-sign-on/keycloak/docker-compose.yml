@@ -13,8 +13,8 @@ services:
       - "${POSTGRESS_VOLUME}:/var/lib/postgresql/data"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.api.rule=Host(`${KEYCLOAK_DB_TRAEFIK_API_RULE}`)"
-      - "traefik.http.routers.api.entrypoints=${TRAEFIK_ENTRYPOINT}"
+      - "traefik.http.routers.keycloakdb.rule=Host(`${KEYCLOAK_DB_TRAEFIK_API_RULE}`)"
+      - "traefik.http.routers.keycloakdb.entrypoints=${TRAEFIK_ENTRYPOINT}"
 
   keycloak:
     image: jboss/keycloak:latest
@@ -33,8 +33,8 @@ services:
       - "KEYCLOAK_PASSWORD=${KEYCLOAK_PASSWORD}"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.api.rule=Host(`${KEYCLOAK_TRAEFIK_API_RULE}`)"
-      - "traefik.http.routers.api.entrypoints=${TRAEFIK_ENTRYPOINT}"
+      - "traefik.http.routers.keycloak.rule=Host(`${KEYCLOAK_TRAEFIK_API_RULE}`)"
+      - "traefik.http.routers.keycloak.entrypoints=${TRAEFIK_ENTRYPOINT}"
 
 networks:
   default:
