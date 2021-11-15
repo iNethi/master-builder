@@ -29,8 +29,8 @@ services:
       - "DB_PASSWORD=${KEYCLOAK_PASSWORD}"
       - "PROXY_ADDRESS_FORWARDING=true"
       - "KEYCLOAK_LOGLEVEL=INFO"
-      - "KEYCLOAK_USER: ${KEYCLOAK_USER}"
-      - "KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}"
+      - "KEYCLOAK_USER=${KEYCLOAK_USER}"
+      - "KEYCLOAK_PASSWORD=${KEYCLOAK_PASSWORD}"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.api.rule=Host(`${KEYCLOAK_TRAEFIK_API_RULE}`)"
