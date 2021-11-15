@@ -1,0 +1,43 @@
+version: "3.4"
+
+services:
+  postgress:
+    image: postgres:11.2-alpine
+    container_name: inethi-traefik-keycloak-db
+    environment:
+        - "POSTGRES_DB=${KEYCLOAK_DATABASE}"
+        - "POSTGRES_USER=${KEYCLOAK_USER}"
+        - "POSTGRES_PASSWORD=${KEYCLOAK_PASSWORD}"
+        - "POSTGRES_ROOT_PASSWORD=${KEYCLOAK_PASSWORD}"
+    volumes:
+      - "${POSTGRESS_VOLUME}:/var/lib/postgresql/data"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api.rule=Host(`${KEYCLOAK_DB_TRAEFIK_API_RULE}`)"
+      - "traefik.http.routers.api.entrypoints=${TRAEFIK_ENTRYPOINT}"
+
+  keycloak:
+    image: jboss/keycloak:latest
+    hostname: keycloak
+    container_name: inethi-traefik-keycloak
+    environment:
+      - "DB_VENDOR=POSTGRES"
+      - "DB_ADDR=inethi-traefik-keycloak-db"
+      - "DB_DATABASE=${KEYCLOAK_DATABASE}"
+      - "DB_USER=${KEYCLOAK_USER}"
+      - "DB_SCHEMA=public"
+      - "DB_PASSWORD=${KEYCLOAK_PASSWORD}"
+      - "PROXY_ADDRESS_FORWARDING=true"
+      - "KEYCLOAK_LOGLEVEL=INFO"
+      - "KEYCLOAK_USER: ${KEYCLOAK_USER}"
+      - "KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api.rule=Host(`${KEYCLOAK_TRAEFIK_API_RULE}`)"
+      - "traefik.http.routers.api.entrypoints=${TRAEFIK_ENTRYPOINT}"
+    command: ["-b", "0.0.0.0", "-Dkeycloak.profile.feature.docker=enabled"]
+
+networks:
+  default:
+    external:
+      name: ${INETHI_NETWORK}
