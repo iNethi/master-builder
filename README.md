@@ -1,6 +1,6 @@
 # iNethi Docker master file
 
-This is the starting place to build iNethi on your own server. 
+This is the starting place to build iNethi on your own server. [Join our iNethi discord](https://discord.gg/ZxTSu7kufr).
 
 # Usage
 This is an open source solution that is freely available to everyone. With iNethi you can build a set of local services to share content amongst your local community and build a small ISP to sell Internet vouchers. [More detail...](https://splashg.inethi.net)
