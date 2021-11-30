@@ -1,0 +1,53 @@
+version: '3'
+services:
+
+  wordpress:
+    image: wordpress:latest
+    container_name: inethi-wordpress
+    volumes:
+      - "${WORDPRESS_MOUNT}:/var/www/html"
+    environment:
+      - "WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}"
+      - "WORDPRESS_TABLE_PREFIX=${WORDPRESS_TABLE_PREFIX}"
+      - "WORDPRESS_DB_HOST=${WORDPRESS_DB_HOST}"
+      - "WORDPRESS_DB_USER=${WORDPRESS_DB_USER}"
+      - "WORDPRESS_DB_PASSWORD=${WORDPRESS_DB_PASSWORD}"
+    depends_on:
+      - mariadb
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wordpress.rule=Host(`${TRAEFIK_API_RULE_WORDPRESS}`)"
+      - "traefik.http.routers.wordpress.entrypoints=${TRAEFIK_ENTRYPOINT}"
+
+  mariadb:
+    image: mariadb:latest
+    container_name: inethi-mariadb
+    volumes:
+      - "${MARIADB_MOUNT}:/var/lib/mysql"
+    environment:
+      - "MYSQL_ROOT_PASSWORD=${WORDPRESS_DB_PASSWORD}"
+      - "MYSQL_USER=${WORDPRESS_DB_USER}"
+      - "MYSQL_PASSWORD=${WORDPRESS_DB_PASSWORD}"
+      - "MYSQL_DATABASE=${WORDPRESS_DB_NAME}"
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mariadb.rule=Host(`${TRAEFIK_API_RULE_MARIADB}`)"
+      - "traefik.http.routers.mariadb.entrypoints=${TRAEFIK_ENTRYPOINT}"
+
+  adminer:
+    image: adminer
+    container_name: inethi-adminer
+    restart: always
+    links:
+      - mariadb
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.adminer.rule=Host(`${TRAEFIK_API_RULE_ADMINER}`)"
+      - "traefik.http.routers.adminer.entrypoints=${TRAEFIK_ENTRYPOINT}"
+
+networks:
+  default:
+    external:
+      name: "${INETHI_NETWORK}"
