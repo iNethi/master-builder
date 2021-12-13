@@ -9,10 +9,10 @@ services:
     volumes:
       - "${MARIADB_VOLUME}:/var/lib/mysql"
     environment:
-      - "MYSQL_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}"
-      - "MYSQL_PASSWORD: ${MARIADB_USER_PASSWORD}"
-      - "MYSQL_DATABASE: inethi_nextcloud"
-      - "MYSQL_USER: inethi"
+      - "MYSQL_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}"
+      - "MYSQL_PASSWORD=${MARIADB_USER_PASSWORD}"
+      - "MYSQL_DATABASE=inethi_nextcloud"
+      - "MYSQL_USER=inethi"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.nextcloud.rule=Host(`${TRAEFIK_API_RULE}`)"
