@@ -1,7 +1,7 @@
 version: '2'
 services:
   mariadb:
-    container_name: inethi-traefik-mariadb-moodle
+    container_name: inethi-mariadb-moodle
     image: docker.io/bitnami/mariadb:10.5
     restart: always
     environment:
@@ -18,7 +18,7 @@ services:
       - "traefik.http.routers.mariadb.entrypoints=${TRAEFIK_ENTRYPOINT}"
 
   moodle:
-    container_name: inethi-traefik-moodle
+    container_name: inethi-moodle
     image: docker.io/bitnami/moodle:3
     environment:
       - 'MOODLE_DATABASE_HOST=${MOODLE_DATABASE_HOST}'

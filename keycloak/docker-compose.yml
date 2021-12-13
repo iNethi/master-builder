@@ -3,7 +3,7 @@ version: '3'
 services:
   mysql:
       image: mysql:5.7
-      container_name: inethi-traefik-mysql-keycloak
+      container_name: inethi-mysql-keycloak
       restart: always
       environment:
         MYSQL_ROOT_PASSWORD: iNethi#2018
@@ -19,7 +19,7 @@ services:
 
   keycloak:
       image: quay.io/keycloak/keycloak:latest
-      container_name: inethi-traefik-keycloak
+      container_name: inethi-keycloak
       environment:
         KEYCLOAK_USER: "${KEYCLOAK_USER}" 
         KEYCLOAK_PASSWORD: "${KEYCLOAK_PASSWORD}"

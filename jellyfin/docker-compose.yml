@@ -2,7 +2,7 @@ version: "2.1"
 services:
   jellyfin:
     image: linuxserver/jellyfin
-    container_name: inethi-traefik-jellyfin
+    container_name: inethi-jellyfin
     environment:
       - PUID=1000
       - PGID=1000
