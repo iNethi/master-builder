@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  mariadb:
+  mysql:
     image: mysql
     container_name: inethi-nextcloud-mysql
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
@@ -20,7 +20,7 @@ services:
     container_name: inethi-nextcloud
     restart: unless-stopped
     links:
-      - mariadb 
+      - mysql 
     volumes:
       - "${NEXTCLOUD_VOLUME}:/var/www/html"
     labels:
