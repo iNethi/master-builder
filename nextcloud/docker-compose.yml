@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  mariadb:
+    image: mariadb
+    container_name: inethi-nextcloud-mariadb
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: unless-stopped
+    volumes:
+      - "${MARIADB_VOLUME}:/var/lib/mysql"
+    environment:
+      - "MYSQL_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}"
+      - "MYSQL_PASSWORD: ${MARIADB_USER_PASSWORD}"
+      - "MYSQL_DATABASE: inethi_nextcloud"
+      - "MYSQL_USER: inethi"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nextcloud.rule=Host(`${TRAEFIK_API_RULE}`)"
+      - "traefik.http.routers.nextcloud.entrypoints=${TRAEFIK_ENTRYPOINT}"
+    
+
+  nextcloud:
+    image: nextcloud
+    container_name: inethi-nextcloud
+    restart: unless-stopped
+    links:
+      - mariadb 
+    volumes:
+      - "${NEXTCLOUD_VOLUME}:/var/www/html"
+
+networks:
+  default:
+    external:
+      name: "${INETHI_NETWORK}"
