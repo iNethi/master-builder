@@ -2,15 +2,15 @@ version: '3'
 
 services:
   mariadb:
-    image: mariadb
-    container_name: inethi-nextcloud-mariadb
+    image: mysql
+    container_name: inethi-nextcloud-mysql
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     restart: unless-stopped
     volumes:
-      - "${MARIADB_VOLUME}:/var/lib/mysql"
+      - "${MYSQL_VOLUME}:/var/lib/mysql"
     environment:
-      - "MYSQL_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}"
-      - "MYSQL_PASSWORD=${MARIADB_USER_PASSWORD}"
+      - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
+      - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
       - "MYSQL_DATABASE=inethi_nextcloud"
       - "MYSQL_USER=inethi"
     
