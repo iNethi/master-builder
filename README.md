@@ -6,7 +6,7 @@ This is the starting place to build iNethi on your own server. [Join our iNethi 
 This is an open source solution that is freely available to everyone. With iNethi you can build a set of local services to share content amongst your local community and build a small ISP to sell Internet vouchers. [More detail...](https://splashg.inethi.net)
 
 # How to build a server
-This process is similar to setting up a VM as detailed below. You can follow the [video](https://www.youtube.com/watch?v=EIt8GShQFlQ&ab_channel=KeeganWhite)) made for the VM set up and ignore the steps referencing dnsmasq.
+This process is similar to setting up a VM as detailed below. You can follow the [video](https://www.youtube.com/watch?v=EIt8GShQFlQ&ab_channel=KeeganWhite) made for the VM set up and ignore the steps referencing dnsmasq.
 
 ## Preparation
 Each folder contains a compose file and environment varaibles. View the environment variables in order to familiarise yourself with the folders the data will be mounted to and the URLs the services will be availible at.
