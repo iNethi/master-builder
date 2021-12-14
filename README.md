@@ -14,7 +14,7 @@ Each folder contains a compose file and environment varaibles. View the environm
 ## Build automatically
 To build a server and select the services you want to use, run the following from the root folder:
 ```
-sudo ./traefik_build_all.sh
+sudo ./build_all.sh
 ```
 Note root privileges will be necessary.
 
