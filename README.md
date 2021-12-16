@@ -124,6 +124,5 @@ Add the following:
 
 # Features in the works
 - Payment integrations
-- Nextcloud conversion to Traefik
 - Improved building mechanisms
 - Architecture diagrams
