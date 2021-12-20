@@ -1,20 +1,21 @@
 version: '2'
 services:
-  unms:
+  uisp:
     image: nico640/docker-unms:latest
-    container_name: inethi-unms
-    restart: always
-    ports:
+    container_name: inethi-uisp
+    #ports:
             #- 80:80
             #- 443:443
-      - 2055:2055/udp
+            #- 2055:2055/udp
     environment:
       - TZ=Africa/Johannesburg
     volumes:
-      - "${UNMS_VOLUME}:/config"
-    networks:
-      default:
-        ipv4_address: "${UNMS_IPV4}" 
+      - "${UISP_VOLUME}:/config"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.uisp.rule=Host(`${TRAEFIK_API_RULE_UISP}`)"
+      - "traefik.http.routers.uisp.entrypoints=${TRAEFIK_ENTRYPOINT}"
+    restart: always
 
 networks:
   default:
