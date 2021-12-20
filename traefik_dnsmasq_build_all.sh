@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # customize with your own.
-sudo mkdir -p /mnt/data
-options=("jellyfin" "keycloak" "nginx(splash)" "moodle" "nextcloud" "wordpress" "unifi")
+sudo mkdir /mnt/data
+options=("jellyfin" "keycloak" "nginx(splash)")
 
 menu() {
-    echo "iNethi (Traefik) version 0.1.0 builder"
+    echo "iNethi (Traefik) version 0.0.1 builder"
     echo
     echo "Avaliable options:"
     for i in ${!options[@]}; do
@@ -24,7 +24,7 @@ while menu && read -rp "$prompt" num && [[ "$num" ]]; do
 done
 
 # # Select domain namec
-read -p 'Doman name: ' domainName
+# read -p 'Doman name: ' domainName
 
 
 printf "You selected"; msg=" nothing"
@@ -34,14 +34,13 @@ for i in ${!options[@]}; do
     }
 done
 
-echo "$msg"
-echo You chose Domain Name: $domainName
-echo
-printf "Starting to build dockers ... "
-echo
-
+# echo "$msg"
+# echo You chose Domain Name: $domainName
+# echo
+# printf "Starting to build dockers ... "
+# echo
 # # Send the environmental variables to other scripts
-echo export inethiDN=$domainName > ./root.conf
+# echo export inethiDN=$domainName > ./root.conf
 
 printf "Create docker traefik bridge: traefik-bridge ..."
 echo
@@ -52,56 +51,45 @@ echo
 
 # Build traefik - compulsory docker
 printf "Building Traefik and dnsmasq docker... "
-    cd ./traefik
+    cd ./traefik-with-dnsmasq
     ./local_build.sh
     cd ..
 
+# Cannot start due to current bind
+printf "EXPECTED FAILIURE"
+echo
+# Disable current dns so dnsmasq can bind to 0.0.0.0:53
+printf "Disabling current system dns..."
+echo
+sudo systemctl disable systemd-resolved.service
+sudo service systemd-resolved stop
+sudo rm /etc/resolv.conf
+
+printf "Re-building Traefik and dnsmasq docker... "
+  docker restart inethi-dnsmasq
+  cd ./traefik-with-dnsmasq
+  ./local_build.sh
+  cd ..
+
+printf "Disabling current system dns..."
+
 [[ "${choices[0]}" ]] && {
     printf "Building jellyfin docker ... "
-    cd ./jellyfin
+    cd ./jellyfin-traefik
     ./local_build.sh
     cd ..
 }
 
 [[ "${choices[1]}" ]] && {
     printf "Building keycloak docker ... "
-    cd ./keycloak
+    cd ./keycloak-traefik
      ./local_build.sh
     cd ..
 }
 
 [[ "${choices[2]}" ]] && {
     printf "Building nginx(splash) docker ... "
-    cd ./nginx-splash
-    ./local_build.sh
-    cd ..
-}
-
-[[ "${choices[3]}" ]] && {
-    printf "Building Moodle docker ... "
-    cd ./moodle
-    ./local_build.sh
-    cd ..
-}
-
-
-[[ "${choices[4]}" ]] && {
-    printf "Building Nextcloud docker ... "
-    cd ./nextcloud
-    ./local_build.sh
-    cd ..
-}
-
-[[ "${choices[5]}" ]] && {
-    printf "Building wordpress docker ... "
-    cd ./wordpress
-    ./local_build.sh
-    cd ..
-}
-
-[[ "${choices[6]}" ]] && {
-    printf "Building Unifi Controller docker ... "
-    cd ./unificontroller
+    cd ./nginx-traefik
     ./local_build.sh
     cd ..
 }
