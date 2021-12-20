@@ -1,0 +1,24 @@
+version: '2'
+services:
+  unms:
+    image: nico640/docker-unms:latest
+    container_name: inethi-unms
+    restart: always
+    ports:
+            #- 80:80
+            #- 443:443
+      - 2055:2055/udp
+    environment:
+      - TZ=Africa/Johannesburg
+    volumes:
+      - "${UNMS_VOLUME}:/config"
+    networks:
+      default:
+        ipv4_address: "${UNMS_IPV4}" 
+
+networks:
+  default:
+    external:
+      name: "${INETHI_NETWORK}"
+      
+      

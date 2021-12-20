@@ -2,7 +2,7 @@
 
 # customize with your own.
 sudo mkdir /mnt/data
-options=("jellyfin" "keycloak" "nginx(splash) moodle mariadb")
+options=("jellyfin" "keycloak" "nginx(splash)" "moodle" "nextcloud" "wordpress" "unifi")
 
 menu() {
     echo "iNethi (Traefik) version 0.1.0 builder"
@@ -24,7 +24,7 @@ while menu && read -rp "$prompt" num && [[ "$num" ]]; do
 done
 
 # # Select domain namec
-# read -p 'Doman name: ' domainName
+read -p 'Doman name: ' domainName
 
 
 printf "You selected"; msg=" nothing"
@@ -34,13 +34,14 @@ for i in ${!options[@]}; do
     }
 done
 
-# echo "$msg"
-# echo You chose Domain Name: $domainName
-# echo
-# printf "Starting to build dockers ... "
-# echo
+echo "$msg"
+echo You chose Domain Name: $domainName
+echo
+printf "Starting to build dockers ... "
+echo
+
 # # Send the environmental variables to other scripts
-# echo export inethiDN=$domainName > ./root.conf
+echo export inethiDN=$domainName > ./root.conf
 
 printf "Create docker traefik bridge: traefik-bridge ..."
 echo
@@ -83,9 +84,24 @@ printf "Building Traefik and dnsmasq docker... "
     cd ..
 }
 
+
 [[ "${choices[4]}" ]] && {
-    printf "Building MariaDB docker ... "
-    cd ./mariadb
+    printf "Building Nextcloud docker ... "
+    cd ./nextcloud
+    ./local_build.sh
+    cd ..
+}
+
+[[ "${choices[5]}" ]] && {
+    printf "Building wordpress docker ... "
+    cd ./wordpress
+    ./local_build.sh
+    cd ..
+}
+
+[[ "${choices[6]}" ]] && {
+    printf "Building Unifi Controller docker ... "
+    cd ./unifi
     ./local_build.sh
     cd ..
 }

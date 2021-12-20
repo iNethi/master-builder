@@ -31,7 +31,6 @@ services:
       - "traefik.http.routers.jellyfin.rule=Host(`${TRAEFIK_API_RULE}`)"
       - "traefik.http.routers.jellyfin.entrypoints=${TRAEFIK_ENTRYPOINT}"
     
-    
 networks:
   default:
     external:
