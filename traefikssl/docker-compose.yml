@@ -4,12 +4,7 @@ services:
   traefik:
     image: traefik:v1.7
     container_name: inethi-traefikssl
-    command:
-      #- "--log.level=DEBUG"
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
+ 
     ports:
       - "80:80"
       - "443:443"
