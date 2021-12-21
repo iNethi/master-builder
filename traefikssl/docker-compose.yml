@@ -1,8 +1,8 @@
-version: "3.3"
+version: "2"
 
 services:
   traefik:
-    image: traefik:v2.4
+    image: traefik:<stable v1.7 from https://hub.docker.com/_/traefik>
     container_name: inethi-traefikssl
     command:
       #- "--log.level=DEBUG"
