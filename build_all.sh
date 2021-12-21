@@ -51,7 +51,7 @@ printf "Pulling dnsmasq and traefik..."
 echo
 
 # Build traefik - compulsory docker
-printf "Building Traefik and dnsmasq docker... "
+printf "Building Traefik docker... "
     cd ./traefik
     ./local_build.sh
     cd ..
