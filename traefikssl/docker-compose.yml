@@ -2,25 +2,25 @@ version: "2"
 
 services:
   traefik:
-    image: traefik:v1.7
+    image: traefik:v2.4
     container_name: inethi-traefikssl
-    env_file: "${TRAEFIKSSL_VOLUME}/traefikv2.env"
+    env_file: "./traefikv2.env"
     ports:
       - "80:80"
       - "443:443"
       - "8080:8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "${TRAEFIKSSL_VOLUME}/traefik.toml:/traefik.toml"
-      - "${TRAEFIKSSL_VOLUME}/acme.json:/acme.json"
+      - ./traefik.toml:/traefik.toml"
+      - ./acme.json:/acme.json"
     
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.api.rule=Host(`${TRAEFIK_API_RULE}`)"
       - "traefik.http.routers.api.service=${TRAEFIK_API_SERVICE}"
       - "traefik.http.routers.api.entrypoints=${TRAEFIK_API_ENTRYPOINT}"
-      - "traefik.http.routers.api.tls.domains[0].main=example.com"
-      - "traefik.http.routers.api.tls.domains[0].sans=*.example.com"        
+      - "traefik.http.routers.api.tls.domains[0].main=inethicloud.net"
+      - "traefik.http.routers.api.tls.domains[0].sans=*.inethicloud.net"        
       - "traefik.http.routers.api.tls=true"
       - "traefik.http.routers.api.tls.certresolver=main"
 
