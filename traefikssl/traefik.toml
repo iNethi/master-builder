@@ -1,29 +1,17 @@
-debug = false
-
-logLevel = "ERROR"
-defaultEntryPoints = ["https","http"]
-
-[entryPoints]
-  [entryPoints.http]
+[entryPoints.http]
   address = ":80"
-    [entryPoints.http.redirect]
-    entryPoint = "https"
-  [entryPoints.https]
+  [entryPoints.http.http.redirections.entryPoint]
+    to = "https"
+    scheme = "https"
+
+[entryPoints.https]
   address = ":443"
-  [entryPoints.https.tls]
+  [entryPoints.https.http.tls]
+    certResolver = "main"
 
-[retry]
-
-[docker]
-endpoint = "unix:///var/run/docker.sock"
-domain = "blackequations.co.za"
-watch = true
-exposedByDefault = false
-
-[acme]
-email = "inethi4us@gmail.com"
-storage = "acme.json"
-entryPoint = "https"
-onHostRule = true
-[acme.httpChallenge]
-entryPoint = "http"
+# Let's Encrypt
+[certificatesResolvers.main.acme]
+  email = "batman@example.com"
+  storage = "acme.json"
+  [certificatesResolvers.main.acme.dnsChallenge]
+    provider = "route53"
