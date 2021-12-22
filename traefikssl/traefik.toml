@@ -11,7 +11,7 @@
 
 # Let's Encrypt
 [certificatesResolvers.main.acme]
-  email = "batman@example.com"
+  email = "inethi4us@gmail.com"
   storage = "acme.json"
   [certificatesResolvers.main.acme.dnsChallenge]
     provider = "route53"
