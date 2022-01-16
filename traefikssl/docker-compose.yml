@@ -37,10 +37,10 @@ services:
       #- --providers.docker.exposedbydefault=false"
 
       # Set up the TLS configuration for our websecure listener
-      - --entrypoints.websecure.http.tls=true
-      - --entrypoints.websecure.http.tls.certResolver=letsencrypt
-      - --entrypoints.websecure.http.tls.domains[0].main=inethicloud.net
-      - --entrypoints.websecure.http.tls.domains[0].sans=*.inethicloud.net
+      - "--entrypoints.websecure.http.tls=true"
+      - "--entrypoints.websecure.http.tls.certResolver=letsencrypt"
+      - "--entrypoints.websecure.http.tls.domains[0].main=inethicloud.net"
+      - "--entrypoints.websecure.http.tls.domains[0].sans=*.inethicloud.net"
 
     ports:
       - 80:80
