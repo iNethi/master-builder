@@ -1,28 +1,74 @@
-version: "2"
+version: "3.3"
+
+secrets:
+  aws_access_key_id:
+    file: "./secrets/aws_access_key_id.secret"
+  aws_secret_access_key:
+    file: "./secrets/aws_secret_access_key.secret"
+  aws_hosted_zone_id:
+    file: "./secrets/aws_hosted_zone_id.secret"
+
 
 services:
   traefik:
-    image: traefik:v2.4
-    container_name: inethi-traefikssl
-    env_file: "./traefikv2.env"
+    image: "traefik:v2.5"
+    container_name: "inethi-traefikssl"
+    restart: unless-stopped
+    command:
+      #- "--log.level=DEBUG"
+      # Enable the Trafik dashboard
+      - --api.dashboard=true
+      # Allow dashboard to use insecure connection
+      - --api.insecure=true
+       # Tell Traefik to discover containers using the Docker API
+      - --providers.docker=true
+      # Set up Lets Encrypt
+      - --certificatesresolvers.letsencrypt.acme.dnschallenge=true
+      - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=route53
+      - --certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
+      - --certificatesresolvers.letsencrypt.acme.email=inethi4us@gmail.com
+      - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
+      # Set up an insecure listener that redirects all traffic to TLS
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --entrypoints.web.http.redirections.entrypoint.to=websecure
+      - --entrypoints.web.http.redirections.entrypoint.scheme=https
+
+      #- --providers.docker.exposedbydefault=false"
+
+      # Set up the TLS configuration for our websecure listener
+      - --entrypoints.websecure.http.tls=true
+      - --entrypoints.websecure.http.tls.certResolver=letsencrypt
+      - --entrypoints.websecure.http.tls.domains[0].main=inethicloud.net
+      - --entrypoints.websecure.http.tls.domains[0].sans=*.inethicloud.net
+
     ports:
-      - "80:80"
-      - "443:443"
-      - "8080:8080"
+      - 80:80
+      - 443:443
+      - 8080:8080
+
+    secrets:
+      - "aws_access_key_id"
+      - "aws_secret_access_key"
+      - "aws_hosted_zone_id"
+      
+    environment:
+      - "AWS_ACCESS_KEY_ID=/run/secrets/aws_access_key_id"
+      - "AWS_SECRET_ACCESS_KEY=/run/secrets/aws_secret_access_key"
+      - "AWS_HOSTED_ZONE_ID=/run/secrets/aws_hosted_zone_id"
+
     volumes:
+      - "/mnt/data/traefikssl/letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - ./traefik.toml:/traefik.toml"
-      - ./acme.json:/acme.json"
-    
+
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.api.rule=Host(`${TRAEFIK_API_RULE}`)"
       - "traefik.http.routers.api.service=${TRAEFIK_API_SERVICE}"
       - "traefik.http.routers.api.entrypoints=${TRAEFIK_API_ENTRYPOINT}"
-      - "traefik.http.routers.api.tls.domains[0].main=inethicloud.net"
-      - "traefik.http.routers.api.tls.domains[0].sans=*.inethicloud.net"        
-      - "traefik.http.routers.api.tls=true"
-      - "traefik.http.routers.api.tls.certresolver=main"
+      - "traefik.http.routers.traefik.tls.certresolver=letsencrypt"
+      - 'traefik.http.routers.traefik.middlewares=strip'
+      - 'traefik.http.middlewares.strip.stripprefix.prefixes=/traefik'
 
 networks:
   default:
