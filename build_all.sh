@@ -55,7 +55,7 @@ echo
 
 # # Send the environmental variables to other scripts
 echo export inethiDN=$domainName > ./root.conf
-echo export TRAEFIK_ENTRYPOINT=$entrypoint > ./root.conf
+echo export TRAEFIK_ENTRYPOINT=$entrypoint >> ./root.conf
 
 printf "Create docker traefik bridge: traefik-bridge ..."
 echo
