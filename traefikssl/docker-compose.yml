@@ -44,8 +44,8 @@ services:
       # Set up the TLS configuration for our websecure listener
       - "--entrypoints.websecure.http.tls=true"
       - "--entrypoints.websecure.http.tls.certResolver=letsencrypt"
-      - "--entrypoints.websecure.http.tls.domains[0].main=inethicloud.net"
-      - "--entrypoints.websecure.http.tls.domains[0].sans=*.inethicloud.net"
+      - "--entrypoints.websecure.http.tls.domains[0].main=${inethiDN}"
+      - "--entrypoints.websecure.http.tls.domains[0].sans=*.{inethiDN}"
 
     ports:
       - 80:80
@@ -68,9 +68,9 @@ services:
 
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik.rule=Host(`inethicloud.net`)"
+      - "traefik.http.routers.traefik.rule=Host(`${inethiDN}`)"
       - "traefik.http.routers.traefik.service=${TRAEFIK_API_SERVICE}"
-      - "traefik.http.routers.traefik.entrypoints=websecure"
+      - "traefik.http.routers.traefik.entrypoints=${TRAEFIK_API_ENTRYPOINT}"
       - "traefik.http.routers.traefik.tls.certresolver=letsencrypt"
       - "traefik.http.routers.traefik.middlewares=strip"
       - "traefik.http.middlewares.strip.stripprefix.prefixes=/traefik"

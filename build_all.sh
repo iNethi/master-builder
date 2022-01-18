@@ -3,6 +3,7 @@
 # customize with your own.
 sudo mkdir -p /mnt/data
 options=("jellyfin" "keycloak" "nginx(splash)" "moodle" "nextcloud" "wordpress" "unifi")
+entrypoint=web
 
 menu() {
     echo "iNethi (Traefik) version 0.1.0 builder"
@@ -23,9 +24,17 @@ while menu && read -rp "$prompt" num && [[ "$num" ]]; do
     [[ "${choices[num]}" ]] && choices[num]="" || choices[num]="+"
 done
 
-# # Select domain namec
+# Select domain namec
 read -p 'Doman name: ' domainName
 
+# Select https or http
+echo "Do you wish to deploy a secure site with https?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) entrypoint=websecure; break;;
+        No ) entrypoint=web; break;;
+    esac
+done
 
 printf "You selected"; msg=" nothing"
 for i in ${!options[@]}; do
@@ -35,13 +44,18 @@ for i in ${!options[@]}; do
 done
 
 echo "$msg"
-echo You chose Domain Name: $domainName
+if [ "$entrypoint" = websecure ]; then
+    echo You chose secure Domain Name: https://$domainName
+else
+    echo You chose insecure Domain Name: http://$domainName
+fi
 echo
 printf "Starting to build dockers ... "
 echo
 
 # # Send the environmental variables to other scripts
 echo export inethiDN=$domainName > ./root.conf
+echo export TRAEFIK_ENTRYPOINT=$entrypoint > ./root.conf
 
 printf "Create docker traefik bridge: traefik-bridge ..."
 echo
@@ -51,10 +65,20 @@ printf "Pulling dnsmasq and traefik..."
 echo
 
 # Build traefik - compulsory docker
-printf "Building Traefik docker... "
-    cd ./traefik
-    ./local_build.sh
-    cd ..
+
+[ "$secure" = true ] && {
+    printf "Building Traefik docker... "
+        cd ./traefikssl
+        ./local_build.sh
+        cd ..
+}
+
+[ "$secure" = false ] && {
+    printf "Building Traefik docker... "
+        cd ./traefik
+        ./local_build.sh
+        cd ..
+}
 
 [[ "${choices[0]}" ]] && {
     printf "Building jellyfin docker ... "
