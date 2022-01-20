@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source ../root.conf
-sudo mkdir -p /mnt/data/traefikssl
-export TRAEFIK_API_RULE=traefik.$inethiDN
+source ./.env
+sudo mkdir -p $TRAEFIKSSL_VOLUME
 docker-compose up -d
 #docker-compose config

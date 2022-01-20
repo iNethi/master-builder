@@ -9,7 +9,7 @@ services:
         - "${NGINX_VOLUME}/html:/usr/share/nginx/html"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.splash.rule=Host(`${TRAEFIK_API_RULE}`)"
+      - "traefik.http.routers.splash.rule=Host(`${TRAEFIK_API_RULE_HOST}.${inethiDN}`)"
       - "traefik.http.routers.splash.entrypoints=websecure"
       - "traefik.http.routers.splash.tls.certresolver=letsencrypt"
 
