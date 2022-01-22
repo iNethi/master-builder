@@ -58,9 +58,9 @@ services:
       - "aws_hosted_zone_id"
       
     environment:
-      - "AWS_ACCESS_KEY_ID=/run/secrets/aws_access_key_id"
-      - "AWS_SECRET_ACCESS_KEY=/run/secrets/aws_secret_access_key"
-      - "AWS_HOSTED_ZONE_ID=/run/secrets/aws_hosted_zone_id"
+      - "AWS_ACCESS_KEY_ID_FILE/run/secrets/aws_access_key_id"
+      - "AWS_SECRET_ACCESS_KEY_FILE=/run/secrets/aws_secret_access_key"
+      - "AWS_HOSTED_ZONE_ID_FILE=/run/secrets/aws_hosted_zone_id"
 
     volumes:
       - "/mnt/data/traefikssl/letsencrypt:/letsencrypt"
