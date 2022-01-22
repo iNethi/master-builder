@@ -68,7 +68,8 @@ services:
 
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik.rule=Host(`${TRAEFIK_API_RULE_HOST}.${inethiDN}`)"
+      #- "traefik.http.routers.traefik.rule=Host(`${TRAEFIK_API_RULE_HOST}.${inethiDN}`)"
+      - "traefik.http.routers.traefik.rule=Host(`${inethiDN}`)"
       - "traefik.http.routers.traefik.service=${TRAEFIK_API_SERVICE}"
       - "traefik.http.routers.traefik.entrypoints=${TRAEFIK_ENTRYPOINT}"
       - "traefik.http.routers.traefik.tls.certresolver=letsencrypt"
