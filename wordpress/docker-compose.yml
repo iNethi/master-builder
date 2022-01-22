@@ -6,6 +6,7 @@ services:
     container_name: inethi-wordpress
     volumes:
       - "${WORDPRESS_MOUNT}:/var/www/html"
+    env_file: "./secrets/secret_passwords.env"
     environment:
       - "WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}"
       - "WORDPRESS_TABLE_PREFIX=${WORDPRESS_TABLE_PREFIX}"
@@ -17,14 +18,16 @@ services:
     restart: always
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.wordpress.rule=Host(`${TRAEFIK_API_RULE_WORDPRESS}`)"
-      - "traefik.http.routers.wordpress.entrypoints=${TRAEFIK_ENTRYPOINT}"
+      - "traefik.http.routers.unifi.rule=Host(`${TRAEFIK_API_RULE_WORDPRESS}.${inethiDN}`)"
+      - "traefik.http.routers.unifi.entrypoints=${TRAEFIK_ENTRYPOINT}"
+      - "traefik.http.routers.unifi.tls.certresolver=letsencrypt"
 
   mariadb:
     image: mariadb:latest
     container_name: inethi-mariadb
     volumes:
       - "${MARIADB_MOUNT}:/var/lib/mysql"
+    env_file: "./secrets/secret_passwords.env"
     environment:
       - "MYSQL_ROOT_PASSWORD=${WORDPRESS_DB_PASSWORD}"
       - "MYSQL_USER=${WORDPRESS_DB_USER}"
@@ -33,8 +36,9 @@ services:
     restart: always
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.mariadb.rule=Host(`${TRAEFIK_API_RULE_MARIADB}`)"
-      - "traefik.http.routers.mariadb.entrypoints=${TRAEFIK_ENTRYPOINT}"
+      - "traefik.http.routers.unifi.rule=Host(`${TRAEFIK_API_RULE_MARIADB}.${inethiDN}`)"
+      - "traefik.http.routers.unifi.entrypoints=${TRAEFIK_ENTRYPOINT}"
+      - "traefik.http.routers.unifi.tls.certresolver=letsencrypt"
 
   adminer:
     image: adminer
@@ -44,8 +48,9 @@ services:
       - mariadb
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.adminer.rule=Host(`${TRAEFIK_API_RULE_ADMINER}`)"
+      - "traefik.http.routers.adminer.rule=Host(`${TRAEFIK_API_RULE_ADMINER}.${inethiDN}`)"
       - "traefik.http.routers.adminer.entrypoints=${TRAEFIK_ENTRYPOINT}"
+      - "traefik.http.routers.unifi.tls.certresolver=letsencrypt"
 
 networks:
   default:
