@@ -48,6 +48,9 @@ services:
       - "--entrypoints.websecure.http.tls.domains[0].main=${inethiDN}"
       - "--entrypoints.websecure.http.tls.domains[0].sans=*.${inethiDN}"
 
+      # Diabled certificate verification between traefik and servivces with ssl like Unifi
+      - "--serversTransport.insecureSkipVerify=true"
+      
     ports:
       - 80:80
       - 443:443
