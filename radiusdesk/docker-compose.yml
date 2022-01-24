@@ -1,0 +1,15 @@
+version: '3'
+services:
+  radiusdesk:
+    image: keegan337/radiusdesk:v3
+    container_name: inethi-radiusdesk
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.radiusdesk.rule=Host(`${TRAEFIK_API_RULE_HOST}.${inethiDN}`)"
+      - "traefik.http.routers.radiusdesk.entrypoints=${TRAEFIK_ENTRYPOINT}"
+      - "traefik.http.routers.unifi.tls.certresolver=letsencrypt"
+networks:
+  default:
+    external:
+      name: "${INETHI_NETWORK}"
