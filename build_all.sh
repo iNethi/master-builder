@@ -44,8 +44,22 @@ for i in ${!options[@]}; do
 done
 
 echo "$msg"
+
 if [ "$entrypoint" = websecure ]; then
     echo You chose secure Domain Name: https://$domainName
+    echo
+    echo API keys are needed to setup https certificates
+    if test -f traefikssl/secrets/secret_keys.env; then
+        echo API key file exists
+        cat traefikssl/secrets/secret_keys.env
+    else
+        read -p 'AWS_ACCESS_KEY_ID: '  AWS_ACCESS_KEY_ID
+        read -p 'AWS_SECRET_ACCESS_KEY: ' AWS_SECRET_ACCESS_KEY
+        read -p 'AWS_HOSTED_ZONE_ID: ' AWS_HOSTED_ZONE_ID
+        echo AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID > traefikssl/secrets/secret_keys.env
+        echo AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY >> traefikssl/secrets/secret_keys.env
+        echo AWS_HOSTED_ZONE_ID=$AWS_HOSTED_ZONE_ID >> traefikssl/secrets/secret_keys.env
+    fi
 else
     echo You chose insecure Domain Name: http://$domainName
 fi
