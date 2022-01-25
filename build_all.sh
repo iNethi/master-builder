@@ -80,14 +80,14 @@ echo
 
 # Build traefik - compulsory docker
 
-[ "$secure" = true ] && {
+[ "$entrypoint" = websecure ] && {
     printf "Building Traefik docker... "
         cd ./traefikssl
         ./local_build.sh
         cd ..
 }
 
-[ "$secure" = false ] && {
+[ "$entrypoint" = web ] && {
     printf "Building Traefik docker... "
         cd ./traefik
         ./local_build.sh

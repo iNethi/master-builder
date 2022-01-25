@@ -1,14 +1,5 @@
 version: "3.3"
 
-secrets:
-  aws_access_key_id:
-    file: "./secrets/aws_access_key_id.secret"
-  aws_secret_access_key:
-    file: "./secrets/aws_secret_access_key.secret"
-  aws_hosted_zone_id:
-    file: "./secrets/aws_hosted_zone_id.secret"
-
-
 services:
   traefik:
     image: "traefik:v2.5"
@@ -55,16 +46,7 @@ services:
       - 80:80
       - 443:443
       - 8080:8080
-
-    secrets:
-      - "aws_access_key_id"
-      - "aws_secret_access_key"
-      - "aws_hosted_zone_id"
-      
-    #environment:
-    #  - "AWS_ACCESS_KEY_ID_FILE=/run/secrets/aws_access_key_id"
-    #  - "AWS_SECRET_ACCESS_KEY_FILE=/run/secrets/aws_secret_access_key"
-    #  - "AWS_HOSTED_ZONE_ID_FILE=/run/secrets/aws_hosted_zone_id"
+  
 
     volumes:
       - "/mnt/data/traefikssl/letsencrypt:/letsencrypt"
