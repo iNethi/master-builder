@@ -2,7 +2,7 @@
 
 # customize with your own.
 sudo mkdir -p /mnt/data
-options=("jellyfin" "keycloak" "nginx(splash)" "moodle" "nextcloud" "wordpress" "unifi")
+options=("jellyfin" "keycloak" "nginx(splash)" "moodle" "nextcloud" "wordpress" "unifi" "radiusdesk")
 entrypoint=web
 
 menu() {
@@ -140,6 +140,13 @@ echo
 [[ "${choices[6]}" ]] && {
     printf "Building Unifi Controller docker ... "
     cd ./unificontroller
+    ./local_build.sh
+    cd ..
+}
+
+[[ "${choices[7]}" ]] && {
+    printf "Building Radiusdesk docker ... "
+    cd ./radiusdesk
     ./local_build.sh
     cd ..
 }
