@@ -6,7 +6,7 @@ services:
     restart: always
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.radiusdesk.rule=Host(`${TRAEFIK_API_RULE_HOST}.${inethiDN}`)"
+      - "traefik.http.routers.radiusdesk.rule=Host(`${TRAEFIK_API_RULE_RADIUSDESK}`)"
       - "traefik.http.routers.radiusdesk.entrypoints=${TRAEFIK_ENTRYPOINT}"
 networks:
   default:

@@ -24,7 +24,6 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.unifi.rule=Host(`${TRAEFIK_API_RULE_HOST}.${inethiDN}`)"
       - "traefik.http.routers.unifi.entrypoints=${TRAEFIK_ENTRYPOINT}"
-      - "traefik.http.routers.unifi.tls.certresolver=letsencrypt"
       - "traefik.http.services.unifi.loadbalancer.server.scheme=https"
       - "traefik.http.services.unifi.loadbalancer.server.port=8443"
     restart: always

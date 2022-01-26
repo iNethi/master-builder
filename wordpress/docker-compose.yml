@@ -20,7 +20,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.wordpress.rule=Host(`${TRAEFIK_API_RULE_WORDPRESS}.${inethiDN}`)"
       - "traefik.http.routers.wordpress.entrypoints=${TRAEFIK_ENTRYPOINT}"
-      - "traefik.http.routers.wordpress.tls.certresolver=letsencrypt"
+
 
   mariadb:
     image: mariadb:latest
@@ -38,7 +38,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.mariadb.rule=Host(`${TRAEFIK_API_RULE_MARIADB}.${inethiDN}`)"
       - "traefik.http.routers.mariadb.entrypoints=${TRAEFIK_ENTRYPOINT}"
-      - "traefik.http.routers.mariadb.tls.certresolver=letsencrypt"
+ 
 
   adminer:
     image: adminer
@@ -50,7 +50,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.adminer.rule=Host(`${TRAEFIK_API_RULE_ADMINER}.${inethiDN}`)"
       - "traefik.http.routers.adminer.entrypoints=${TRAEFIK_ENTRYPOINT}"
-      - "traefik.http.routers.adminer.tls.certresolver=letsencrypt"
+     
 
 networks:
   default:
