@@ -1,5 +1,4 @@
 #!/bin/bash
-
 source ../root.conf
 source ./.env
 sudo mkdir -p $JELLYFIN_VOLUME/html/
