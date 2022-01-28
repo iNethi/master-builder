@@ -4,6 +4,9 @@ services:
     image: keegan337/radiusdesk:v3
     container_name: inethi-radiusdesk
     restart: always
+    ports:
+      - 1812:1812/udp
+      - 1813:1813/udp
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.radiusdesk.rule=Host(`${TRAEFIK_API_RULE_HOST}.${inethiDN}`)"
