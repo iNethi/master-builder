@@ -26,7 +26,6 @@ services:
     container_name: inethi-mariadb
     volumes:
       - "${MARIADB_MOUNT}:/var/lib/mysql"
-    env_file: "./secrets/secret_passwords.env"
     environment:
       - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
       - "MYSQL_USER=${WORDPRESS_DB_USER}"
