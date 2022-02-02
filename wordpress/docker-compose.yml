@@ -19,6 +19,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.wordpress.rule=Host(`${TRAEFIK_API_RULE_WORDPRESS}.${inethiDN}`)"
       - "traefik.http.routers.wordpress.entrypoints=${TRAEFIK_ENTRYPOINT}"
+      - "traefik.http.routers.www.entrypoints: websecure"
+      - "traefik.http.routers.www.rule: Host(`www.inethicloud.net`)"
 
 
   mariadb:
