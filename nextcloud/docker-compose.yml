@@ -4,6 +4,7 @@ services:
   mysql:
     image: mysql
     container_name: inethi-nextcloud-mysql
+    env_file: "./secrets/secret_passwords.env"
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     restart: unless-stopped
     volumes:
@@ -14,7 +15,6 @@ services:
       - "MYSQL_DATABASE=inethi_nextcloud"
       - "MYSQL_USER=inethi"
    
-    
 
   nextcloud:
     image: nextcloud
