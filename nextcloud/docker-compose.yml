@@ -3,7 +3,7 @@ version: '3'
 services:
   mysql:
     image: mysql
-    container_name: inethi-nextcloud-mysql
+    container_name: inethi-mysql
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     restart: unless-stopped
     volumes:
