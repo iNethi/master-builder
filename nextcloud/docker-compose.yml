@@ -13,6 +13,10 @@ services:
       - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
       - "MYSQL_DATABASE=inethi_nextcloud"
       - "MYSQL_USER=inethi"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nextcloud.rule=Host(`${TRAEFIK_API_RULE_MYSQL}.${inethiDN}`)"
+      - "traefik.http.routers.nextcloud.entrypoints=${TRAEFIK_ENTRYPOINT}"
     
 
   nextcloud:
@@ -25,7 +29,7 @@ services:
       - "${NEXTCLOUD_VOLUME}:/var/www/html"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.nextcloud.rule=Host(`${TRAEFIK_API_RULE}`)"
+      - "traefik.http.routers.nextcloud.rule=Host(`${TRAEFIK_API_RULE_NEXTCLOUD}.${inethiDN}`)"
       - "traefik.http.routers.nextcloud.entrypoints=${TRAEFIK_ENTRYPOINT}"
 
 networks:
