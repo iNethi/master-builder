@@ -6,4 +6,4 @@ source ./secrets/secret_passwords.env
 sudo mkdir -p $MYSQL_VOLUME
 sudo mkdir -p $NEXTCLOUD_VOLUME
 docker-compose config
-#docker-compose up -d
+docker-compose up -d
