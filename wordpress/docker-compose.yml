@@ -6,7 +6,6 @@ services:
     container_name: inethi-wordpress
     volumes:
       - "${WORDPRESS_MOUNT}:/var/www/html"
-    env_file: "./secrets/secret_passwords.env"
     environment:
       - "WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}"
       - "WORDPRESS_TABLE_PREFIX=${WORDPRESS_TABLE_PREFIX}"
