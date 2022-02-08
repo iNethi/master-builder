@@ -1,0 +1,76 @@
+version: '3'
+services:
+  
+  database:
+    container_name: mysqldb
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+      - ./web/db-data/rd.sql:/docker-entrypoint-initdb.d/rd.sql
+      - ./web/confs/disable_strict_mode.cnf:/etc/mysql/conf.d/disable_strict_mode.cnf
+    environment:
+      MYSQL_ROOT_PASSWORD: rd
+      MYSQL_DATABASE: rd
+      MYSQL_USER: rd
+      MYSQL_PASSWORD: rd
+    ports:
+      - 6603:3306
+  web:
+    container_name: nginx
+    image: nginx:latest
+    ports:
+      - 8091:80
+    volumes:
+      - ./web/cron/rd:/etc/cron.d/rd
+      - ./web/db-data/:/usr/share/nginx/html/cake3/rd_cake/setup/db/
+      - ./web/cake2/:/usr/share/nginx/html/cake2/
+      - ./web/cake3/:/usr/share/nginx/html/cake3/
+      - ./web/rd/:/usr/share/nginx/html/rd/
+      - ./web/confs/site.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+      - database
+  freeradius:
+    container_name: freeradius
+    image: "tungs/freeradius"
+    ports:
+      - "1812:1812/udp"
+      - "1813:1813/udp"
+    #volumes:
+      #- "./configs/radius/users:/etc/raddb/users"
+      #- "./configs/radius/clients.conf:/etc/raddb/clients.conf"
+    environment:
+      - DB_HOST=database 
+      #- DB_NAME=rd
+      #- DB_USER=radius
+      #- DB_PORT=3306
+      #- RADIUS_KEY=testing123
+      #- RAD_CLIENTS=10.0.0.0/24
+      - RAD_DEBUG=yes
+    depends_on:
+      - database
+    links:
+      - database
+    restart: always
+  php:
+    build:
+      context: ./
+      dockerfile: Dockerfile-php
+    container_name: php72-fpm 
+    volumes:
+      - ./web:/usr/share/nginx/html
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: dev_pma
+    environment:
+      PMA_HOST: database
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8092:80
+    depends_on:
+      - database
+  
+ 

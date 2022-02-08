@@ -1,0 +1,16 @@
+version: '3'
+services:
+  
+  web:
+    container_name: inethi-radiusdesk-nginx
+    build:
+      context: ./
+      dockerfile: Dockerfile-nginx
+    volumes:
+      - ${RADIUSDESK_VOLUME}/web_cron/:/etc/cron.d/rd
+      - ${RADIUSDESK_VOLUME}/web/:/usr/share/nginx/html/
+
+
+
+  
+ 

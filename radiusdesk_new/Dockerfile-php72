@@ -1,0 +1,8 @@
+FROM php:7.4-fpm
+  RUN apt-get update && apt-get upgrade -y && apt-get install -y zlib1g-dev libicu-dev libpng-dev libcurl4-gnutls-dev libxml2-dev g++
+  RUN docker-php-ext-install mysqli gd curl xml mbstring pdo_mysql && \
+      docker-php-ext-configure intl && \
+      docker-php-ext-install intl
+
+  
+
