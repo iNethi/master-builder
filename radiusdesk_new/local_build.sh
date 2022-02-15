@@ -12,9 +12,31 @@ mkdir -p $RADIUSDESK_VOLUME/db_startup
 mkdir -p $RADIUSDESK_VOLUME/freeradius
 mkdir -p $RADIUSDESK_VOLUME/freeradius_conf
 
+# Get code from github
+cd $RADIUSDESK_VOLUME/web
+mkdir -p html
+git clone https://github.com/RADIUSdesk/rdcore.git
+
 # Prepare directories for radiusdesk nginx and php
-sh ./setup_radius_local.sh
+# We will create soft links in the directory where Nginx will serve the RdCore contents.
+cd $RADIUSDESK_VOLUME/web/html
+ln -s ../rdcore/rd ./rd
+ln -s ../rdcore/cake3 ./cake3
+ln -s ../rdcore/login ./login
+ln -s ../rdcore/AmpConf/build/production/AmpConf ./conf_dev
+ln -s ../rdcore/login/rd_client/build/production/AmpConf ./usage
+ln -s ../rdcore/cake3/rd_cake/setup/scripts/reporting ./reporting
+
+# Create requried directories
+mkdir -p $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/logs
+mkdir -p $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/webroot/files/imagecache
+mkdir -p $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/tmp
+
+# place nginx config file in shared config directory
 cp ./default.conf $RADIUSDESK_VOLUME/web_conf
+
+# Fix the configs 
+### NEED CODE HERE TO FIX DATABASE REFERENCE
 
 # Prepare database configuration
 cp ./my_custom.cnf $RADIUSDESK_VOLUME/db_conf
@@ -30,8 +52,11 @@ cp ./db_priveleges.sql $RADIUSDESK_VOLUME/db_startup
 # tar xzf $RADIUSDESK_VOLUME/web/rdcore/cake3/rd_cake/setup/radius/freeradius-3-radiusdesk.tar.gz -C $RADIUSDESK_VOLUME/freeradius --strip-components=1
 # cp ./freeradius.service $RADIUSDESK_VOLUME/freeradius_conf
 
-
-sed  -i '' 's/server = \"localhost\"/server = \"rdmariadb\"/g'  ./freeradius/mods-available/sql 
+# Fix the Freeradius config to point to our new database
+cp $RADIUSDESK_VOLUME/web/rdcore/cake3/rd_cake/setup/radius/freeradius-3-radiusdesk.tar.gz .
+tar xzf freeradius-3-radiusdesk.tar.gz
+sed  -i '' 's/server = \"localhost\"/server = \"rdmariadb\"/g'  ./freeradius/mods-available/sql
+tar czvf  freeradius-3-radiusdesk.tar.gz ./freeradius
 
 
 docker-compose config
