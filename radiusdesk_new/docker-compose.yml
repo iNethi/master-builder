@@ -5,6 +5,7 @@ services:
     image: nginx
     container_name: inethi-radiusdesk
     restart: always
+    entrypoint: ["sudo cp /usr/share/nginx/html/cake3/rd_cake/setup/cron/cron3 /etc/cron.d/"]
     #build:
     #  context: ./
     #  dockerfile: Dockerfile-nginx
