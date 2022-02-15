@@ -18,6 +18,10 @@ cd $RADIUSDESK_VOLUME/web
 mkdir -p html
 git clone https://github.com/RADIUSdesk/rdcore.git
 
+# Get Sanchez JS Ext 7
+wget  https://trials.sencha.com/cmd/7.5.0.5/no-jre/SenchaCmd-7.5.0.5-linux-amd64.sh.zip
+
+
 # Prepare directories for radiusdesk nginx and php
 # We will create soft links in the directory where Nginx will serve the RdCore contents.
 cd $RADIUSDESK_VOLUME/web/html
@@ -31,7 +35,7 @@ ln -s ../rdcore/cake3/rd_cake/setup/scripts/reporting ./reporting
 # Create requried directories
 mkdir -p $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/logs
 mkdir -p $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/webroot/files/imagecache
-mkdir -p $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/tmp
+mkdir -p $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/tmpls
 
 cd $pwd
 # place nginx config file in shared config directory
