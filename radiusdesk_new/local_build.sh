@@ -3,6 +3,7 @@
 source ../root.conf
 source ./.env
 
+workdir=`pwd`
 mkdir -p $RADIUSDESK_VOLUME
 mkdir -p $RADIUSDESK_VOLUME/web
 mkdir -p $RADIUSDESK_VOLUME/web_conf
@@ -32,11 +33,13 @@ mkdir -p $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/logs
 mkdir -p $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/webroot/files/imagecache
 mkdir -p $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/tmp
 
+cd $pwd
 # place nginx config file in shared config directory
 cp ./default.conf $RADIUSDESK_VOLUME/web_conf
 
 # Fix the configs 
 ### NEED CODE HERE TO FIX DATABASE REFERENCE
+
 
 # Prepare database configuration
 cp ./my_custom.cnf $RADIUSDESK_VOLUME/db_conf
