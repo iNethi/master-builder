@@ -1,2 +1,4 @@
 /* Setup priveleges */
-grant all privileges on *.* to 'rd'@'%' identified by 'rd' with grant option;
+CREATE DATABASE rd;
+GRANT ALL PRIVILEGES ON rd.* to 'rd'@'%' IDENTIFIED BY 'rd' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
