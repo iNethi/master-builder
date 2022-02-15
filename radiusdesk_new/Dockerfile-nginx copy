@@ -1,0 +1,46 @@
+FROM nginx:latest
+    # Sets up Nginx with php-fpm
+    RUN apt-get update && apt-get upgrade -y
+    RUN apt-get -y install php-fpm php-cli php-mysql php-gd php-curl php-xml php-mbstring php-intl git wget
+
+    # Locales
+    RUN apt-get install -y locales locales-all
+    ENV LC_ALL en_US.UTF-8
+    ENV LANG en_US.UTF-8
+    ENV LANGUAGE en_US.UTF-8
+    ## Install the RADIUSdesk RDCore based on CakePHP v3 Application
+
+    # Check out the RdCore git repository.
+    # This will create an rdcore directory containing some sub-folders.
+    # COPY ./index.html /usr/share/nginx/html/index.html
+
+
+
+    WORKDIR  /usr/share/nginx
+    RUN git clone https://github.com/RADIUSdesk/rdcore.git
+    
+    # We will create soft links in the directory where Nginx will serve the RdCore contents.
+    WORKDIR /usr/share/nginx/html
+    RUN ln -s ../rdcore/rd ./rd
+    RUN ln -s ../rdcore/cake3 ./cake3
+    RUN ln -s ../rdcore/login ./login
+    RUN ln -s ../rdcore/AmpConf/build/production/AmpConf ./conf_dev
+    RUN ln -s ../rdcore/login/rd_client/build/production/AmpConf ./usage
+    RUN ln -s ../rdcore/cake3/rd_cake/setup/scripts/reporting ./reporting
+
+    # Change the ownership of the following files to www-data so Nginx can make changes to the files/directories
+    RUN mkdir -p /usr/share/nginx/html/cake3/rd_cake/logs
+    RUN mkdir -p /usr/share/nginx/html/cake3/rd_cake/webroot/files/imagecache
+    RUN mkdir -p /usr/share/nginx/html/cake3/rd_cake/tmp
+    RUN chown -R www-data. /usr/share/nginx/html/cake3/rd_cake/tmp
+    RUN chown -R www-data. /usr/share/nginx/html/cake3/rd_cake/logs
+    RUN chown -R www-data. /usr/share/nginx/html/cake3/rd_cake/webroot/img/realms
+    RUN chown -R www-data. /usr/share/nginx/html/cake3/rd_cake/webroot/img/dynamic_details
+    RUN chown -R www-data. /usr/share/nginx/html/cake3/rd_cake/webroot/img/dynamic_photos
+    RUN chown -R www-data. /usr/share/nginx/html/cake3/rd_cake/webroot/img/access_providers
+    RUN chown -R www-data. /usr/share/nginx/html/cake3/rd_cake/webroot/img/hardwares
+    RUN chown -R www-data. /usr/share/nginx/html/cake3/rd_cake/webroot/files/imagecache  
+    
+    # Install and Configure PHP-FPM to allow Nginx interpret .php files
+    #RUN systemctl enable php7.4-fpm
+    #RUN systemctl start php7.4-fpm
