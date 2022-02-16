@@ -19,7 +19,6 @@ mkdir -p html
 git clone https://github.com/RADIUSdesk/rdcore.git
 
 
-
 # Prepare directories for radiusdesk nginx and php
 # We will create soft links in the directory where Nginx will serve the RdCore contents.
 cd $RADIUSDESK_VOLUME/web/html
@@ -37,20 +36,24 @@ mkdir -p $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/tmpls
 
 # Get Sanchez JS Ext 7
 #wget  https://trials.sencha.com/cmd/7.5.0.5/no-jre/SenchaCmd-7.5.0.5-linux-amd64.sh.zip
+sudo apt install subversion
 svn checkout svn://svn.code.sf.net/p/radiusdesk/code/extjs ./
 mv ext-6-2-sencha_cmd.tar.gz ./rd
+rm *.zip 
+rm *.gz
 cd ./rd
-sudo tar -xzvf ext-6-2-sencha_cmd.tar.gz
+tar -xzvf ext-6-2-sencha_cmd.tar.gz
+rm *.gz
 
-cd $pwd
+cd $workdir
 # place nginx config file in shared config directory
 cp ./default.conf $RADIUSDESK_VOLUME/web_conf
 
 # Fix the configs 
 ### NEED CODE HERE TO FIX DATABASE REFERENCE
-sed  -i '' "s/\'host\' => \'localhost\'/\'host\' => \'rdmariadb\'/g"  $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/vendor/cakephp/cakephp/src/Database/Driver/Mysql.php
-sed  -i '' "s/\'host\' => \'localhost\'/\'password\' => \'rd\'/g"  $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/vendor/cakephp/cakephp/src/Database/Driver/Mysql.php
-sed  -i '' "s/\'host\' => \'localhost\'/\'database\' => \'rd\'/g"  $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/vendor/cakephp/cakephp/src/Database/Driver/Mysql.php
+sed  -i  "s/'host' => 'localhost'/'host' => 'rdmariadb'/g"  $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/vendor/cakephp/cakephp/src/Database/Driver/Mysql.php
+sed  -i  "s/'password' => ''/'password' => 'rd'/g"  $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/vendor/cakephp/cakephp/src/Database/Driver/Mysql.php
+sed  -i  "s/'database' => 'cake'/'database' => 'rd'/g"  $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/vendor/cakephp/cakephp/src/Database/Driver/Mysql.php
 
 
 # Prepare database configuration
@@ -70,8 +73,9 @@ cp ./db_priveleges.sql $RADIUSDESK_VOLUME/db_startup
 # Fix the Freeradius config to point to our new database
 cp $RADIUSDESK_VOLUME/web/rdcore/cake3/rd_cake/setup/radius/freeradius-3-radiusdesk.tar.gz .
 tar xzf freeradius-3-radiusdesk.tar.gz
-sed  -i '' 's/server = \"localhost\"/server = \"rdmariadb\"/g'  ./freeradius/mods-available/sql
+sed  -i 's/server = \"localhost\"/server = \"rdmariadb\"/g'  ./freeradius/mods-available/sql
 tar czvf  freeradius-3-radiusdesk.tar.gz ./freeradius
+
 
 
 docker-compose config

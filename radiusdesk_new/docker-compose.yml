@@ -34,7 +34,7 @@ services:
   rdmariadb:
     container_name: inethi-radiusdesk-mariadb
     image: docker.io/bitnami/mariadb:10.5
-    entrypoint: ["echo line added >> /checkme"]
+    #entrypoint: ["echo line added >> /checkme"]
 
     restart: always
     environment:
