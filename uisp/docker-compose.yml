@@ -15,6 +15,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.uisp.rule=Host(`${TRAEFIK_API_RULE_HOST}.${inethiDN}`)"
       - "traefik.http.routers.uisp.entrypoints=${TRAEFIK_ENTRYPOINT}"
+      - "traefik.http.services.uisp.loadbalancer.server.scheme=https"
+      - "traefik.http.services.uisp.loadbalancer.server.port=443"
     restart: always
 
 networks:
