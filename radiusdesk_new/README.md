@@ -18,13 +18,11 @@ Dockerised new radiusdesk from https://github.com/RADIUSdesk based on
 docker exec -it inethi-radiusdesk-mariadb sh
 ```
 ```
-mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root -p mysql
+mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root  mysql
 ```
 ```
 mysql -u root
-CREATE DATABASE rd;
-GRANT ALL PRIVILEGES ON rd.* to 'rd'@'127.0.0.1' IDENTIFIED BY 'rd';
-GRANT ALL PRIVILEGES ON rd.* to 'rd'@'localhost' IDENTIFIED BY 'rd';
+GRANT ALL PRIVILEGES ON rd.* to 'rd'@'%' IDENTIFIED BY 'rd' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 exit;
 ```
