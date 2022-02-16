@@ -3,7 +3,7 @@ services:
   
   web:
     image: nginx
-    container_name: inethi-radiusdesk
+    container_name: inethi-radiusdesk2022
     restart: always
     entrypoint: ["sudo cp /usr/share/nginx/html/cake3/rd_cake/setup/cron/cron3 /etc/cron.d/"]
     #build:
