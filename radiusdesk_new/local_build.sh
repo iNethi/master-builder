@@ -18,8 +18,6 @@ cd $RADIUSDESK_VOLUME/web
 mkdir -p html
 git clone https://github.com/RADIUSdesk/rdcore.git
 
-# Get Sanchez JS Ext 7
-wget  https://trials.sencha.com/cmd/7.5.0.5/no-jre/SenchaCmd-7.5.0.5-linux-amd64.sh.zip
 
 
 # Prepare directories for radiusdesk nginx and php
@@ -37,6 +35,13 @@ mkdir -p $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/logs
 mkdir -p $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/webroot/files/imagecache
 mkdir -p $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/tmpls
 
+# Get Sanchez JS Ext 7
+#wget  https://trials.sencha.com/cmd/7.5.0.5/no-jre/SenchaCmd-7.5.0.5-linux-amd64.sh.zip
+svn checkout svn://svn.code.sf.net/p/radiusdesk/code/extjs ./
+mv ext-6-2-sencha_cmd.tar.gz ./rd
+cd ./rd
+sudo tar -xzvf ext-6-2-sencha_cmd.tar.gz
+
 cd $pwd
 # place nginx config file in shared config directory
 cp ./default.conf $RADIUSDESK_VOLUME/web_conf
@@ -46,7 +51,6 @@ cp ./default.conf $RADIUSDESK_VOLUME/web_conf
 sed  -i '' "s/\'host\' => \'localhost\'/\'host\' => \'rdmariadb\'/g"  $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/vendor/cakephp/cakephp/src/Database/Driver/Mysql.php
 sed  -i '' "s/\'host\' => \'localhost\'/\'password\' => \'rd\'/g"  $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/vendor/cakephp/cakephp/src/Database/Driver/Mysql.php
 sed  -i '' "s/\'host\' => \'localhost\'/\'database\' => \'rd\'/g"  $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/vendor/cakephp/cakephp/src/Database/Driver/Mysql.php
-
 
 
 # Prepare database configuration
