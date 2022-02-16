@@ -6,10 +6,11 @@ FROM freeradius/freeradius-server:latest
     RUN mv /etc/freeradius /etc/freeradius.orig
     RUN mkdir -p /etc/freeradius
     COPY ./freeradius-3-radiusdesk.tar.gz  / 
-    #RUN tar xzf /freeradius-3-radiusdesk.tar.gz --one-top-level=/etc/freeradius/
-    RUN tar xzf /freeradius-3-radiusdesk.tar.gz -C /etc/freeradius --strip-components=2
-    RUN chown -R freerad. /etc/freeradius/
-    #RUN cp /etc/freeradius/3.0/radiusd.conf /etc/freeradius
+    RUN tar xzf /freeradius-3-radiusdesk.tar.gz --one-top-level=/etc/freeradius/
+    RUN mv /etc/freeradius/freeradius /etc/freeradius/3.0
+    #RUN tar xzf /freeradius-3-radiusdesk.tar.gz -C /etc/freeradius --strip-components=1
+    RUN chown -R freerad. /etc/freeradius/3.0/
+    RUN cp /etc/freeradius/3.0/radiusd.conf /etc/freeradius
     COPY ./freeradius.service /lib/systemd/system/
 
    
