@@ -72,8 +72,6 @@ networks:
   default:
     external:
       name: "${INETHI_NETWORK}"
-
-
     
 
 
