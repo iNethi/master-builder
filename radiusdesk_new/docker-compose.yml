@@ -60,6 +60,9 @@ services:
     image: freeradius/freeradius-server
     restart: always
 
+    command:
+      "-X"
+      
     ports:
       - "1812:1812/udp"
       - "1813:1813/udp"
