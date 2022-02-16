@@ -43,6 +43,10 @@ cp ./default.conf $RADIUSDESK_VOLUME/web_conf
 
 # Fix the configs 
 ### NEED CODE HERE TO FIX DATABASE REFERENCE
+sed  -i '' "s/\'host\' => \'localhost\'/\'host\' => \'rdmariadb\'/g"  $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/vendor/cakephp/cakephp/src/Database/Driver/Mysql.php
+sed  -i '' "s/\'host\' => \'localhost\'/\'password\' => \'rd\'/g"  $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/vendor/cakephp/cakephp/src/Database/Driver/Mysql.php
+sed  -i '' "s/\'host\' => \'localhost\'/\'database\' => \'rd\'/g"  $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/vendor/cakephp/cakephp/src/Database/Driver/Mysql.php
+
 
 
 # Prepare database configuration
