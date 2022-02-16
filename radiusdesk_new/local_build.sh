@@ -54,7 +54,7 @@ cp ./default.conf $RADIUSDESK_VOLUME/web_conf
 sed  -i  "s/'host' => 'localhost'/'host' => 'rdmariadb'/g"  $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/vendor/cakephp/cakephp/src/Database/Driver/Mysql.php
 sed  -i  "s/'password' => ''/'password' => 'rd'/g"  $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/vendor/cakephp/cakephp/src/Database/Driver/Mysql.php
 sed  -i  "s/'database' => 'cake'/'database' => 'rd'/g"  $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/vendor/cakephp/cakephp/src/Database/Driver/Mysql.php
-
+sed  -i  "s/'host' => 'localhost'/'host' => 'rdmariadb'/g" $RADIUSDESK_VOLUME/web/html/cake3/rd_cake/config/app.php
 
 # Prepare database configuration
 cp ./my_custom.cnf $RADIUSDESK_VOLUME/db_conf
