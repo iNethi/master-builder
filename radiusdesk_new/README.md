@@ -14,7 +14,9 @@ Dockerised new radiusdesk from https://github.com/RADIUSdesk based on
 
 ## Note these steps are still needed after  install (will automate in the future)
 ### Database fixes
-
+```
+docker exec -it inethi-radiusdesk-mariadb sh
+```
 ```
 mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root -p mysql
 ```
