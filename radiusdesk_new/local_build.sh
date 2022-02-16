@@ -76,7 +76,6 @@ tar xzf freeradius-3-radiusdesk.tar.gz
 sed  -i 's/server = \"localhost\"/server = \"rdmariadb\"/g'  ./freeradius/mods-available/sql
 #sed  -i 's/raddbdir = \/etc\/freeradius\/3.0/raddbdir = \/etc\/freeradius\//g' ./freeradius/radiusd.conf
 tar czvf  freeradius-3-radiusdesk.tar.gz ./freeradius
-raddbdir = /etc/freeradius/3.0
 
 
 docker-compose config

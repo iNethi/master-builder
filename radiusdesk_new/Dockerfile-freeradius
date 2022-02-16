@@ -10,8 +10,18 @@ FROM freeradius/freeradius-server:latest
     RUN mv /etc/freeradius/freeradius /etc/freeradius/3.0
     #RUN tar xzf /freeradius-3-radiusdesk.tar.gz -C /etc/freeradius --strip-components=1
     RUN chown -R freerad. /etc/freeradius/3.0/
-    #RUN cp /etc/freeradius/3.0/radiusd.conf /etc/freeradius
-    #RUN cp /etc/freeradius/3.0/proxy.conf /etc/freeradius
+    RUN cp /etc/freeradius/3.0/*.conf /etc/freeradius
+    RUN cp /etc/freeradius/3.0/dictionary /etc/freeradius
+    
+    RUN ln -s /etc/freeradius/3.0/certs /etc/freeradius/certs
+    RUN ln -s /etc/freeradius/3.0/dictionary_overrides /etc/freeradius/dictionary_overrides
+    RUN ln -s /etc/freeradius/3.0/mods-available /etc/freeradius/mods-available
+    RUN ln -s /etc/freeradius/3.0/mods-config /etc/freeradius/mods-config
+    RUN ln -s /etc/freeradius/3.0/mods-enabled /etc/freeradius/mods-enabled
+    RUN ln -s /etc/freeradius/3.0/policy.d /etc/freeradius/policy.d
+    RUN ln -s /etc/freeradius/3.0/sites-available /etc/freeradius/sites-available
+    RUN ln -s /etc/freeradius/3.0/sites-enabled /etc/freeradius/sites-enabled
+
     COPY ./freeradius.service /lib/systemd/system/
 
    
