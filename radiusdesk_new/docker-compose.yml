@@ -5,7 +5,7 @@ services:
     image: nginx
     container_name: inethi-radiusdesk2022
     restart: always
-    #entrypoint: ["sudo cp /usr/share/nginx/html/cake3/rd_cake/setup/cron/cron3 /etc/cron.d/"]
+    # FIXME entrypoint: ["sudo cp /usr/share/nginx/html/cake3/rd_cake/setup/cron/cron3 /etc/cron.d/"]
     #build:
     #  context: ./
     #  dockerfile: Dockerfile-nginx
@@ -34,7 +34,7 @@ services:
   rdmariadb:
     container_name: inethi-radiusdesk-mariadb
     image: docker.io/bitnami/mariadb:10.5
-    #entrypoint: ["echo line added >> /checkme"]
+    #FIXME entrypoint: ["mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root  mysql"]
 
     restart: always
     environment:

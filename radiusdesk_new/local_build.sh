@@ -63,7 +63,7 @@ cp ./my_custom.cnf $RADIUSDESK_VOLUME/db_conf
 # Note this directory will be mounted as /docker-entrypoint-initdb.d on docker - docker instance will 
 # execute all sql files in this directory the first time in alphabetical order
 cp $RADIUSDESK_VOLUME/web/rdcore/cake3/rd_cake/setup/db/rd.sql $RADIUSDESK_VOLUME/db_startup
-cp ./db_priveleges.sql $RADIUSDESK_VOLUME/db_startup
+## FIXME - this causes mariadb to fail to come up cp ./db_priveleges.sql $RADIUSDESK_VOLUME/db_startup
 
 # Prepare files for freeradius
 # See Dockerfile-freeradius - custome image built for freeradius
