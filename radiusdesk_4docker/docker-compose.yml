@@ -27,6 +27,8 @@ services:
     container_name: inethi-radiusdesk-php
     environment:
       - "PHP_INI_SCAN_DIR=:/p/gd"
+      - "PHP.cgi.fix_pathinfo=1"
+      - "PHP_SELF=/index.php"
 
     volumes:
       - "${RADIUSDESK_VOLUME}/web:/usr/share/nginx"

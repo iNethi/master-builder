@@ -1,0 +1,31 @@
+version: '3'
+services:
+  
+  radiusdesk_single:
+    build:
+      context: ./
+      dockerfile: Dockerfile-build-full-radiusdesk
+      args:
+        radiusdesk_volume: ${RADIUSDESK_VOLUME}
+    container_name: inethi-radiusdesksingle
+
+    environment:
+      - "PHP_INI_SCAN_DIR=:/p/gd"
+      - "PHP.cgi.fix_pathinfo=1"
+      - "PHP_SELF=/index.php"
+    restart: always
+
+    labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.radiusdesk.rule=Host(`${TRAEFIK_API_RULE_HOST}.${inethiDN}`)"
+        - "traefik.http.routers.radiusdesk.entrypoints=${TRAEFIK_ENTRYPOINT}"
+
+networks:
+  default:
+    external:
+      name: "${INETHI_NETWORK}"
+    
+
+
+  
+ 
