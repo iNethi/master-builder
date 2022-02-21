@@ -7,8 +7,9 @@ echo Radiusdesk 2-docker system builder v1.0
 echo ---------------------------------------
 echo
 echo Special shout out to:
-echo Dirk van der Walt for building this brilliant software and helping debug the dockers
-echo Enock Mbewe for building the first docker version and showing the way with supervisord
+echo - Dirk van der Walt for building this brilliant software and helping debug the dockers
+echo - Enock Mbewe for building the first docker version and showing the way with supervisord
+echo - Keegan White for all the work on traefik and improving the iNEthi architecture
 echo
 echo Starting Build ....
 echo
