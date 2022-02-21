@@ -9,7 +9,7 @@ echo
 echo Special shout out to:
 echo - Dirk van der Walt for building this brilliant software and helping debug the dockers
 echo - Enock Mbewe for building the first docker version and showing the way with supervisord
-echo - Keegan White for all the work on traefik and improving the iNEthi architecture
+echo - Keegan White for all the work on traefik and improving the iNethi architecture
 echo
 echo Starting Build ....
 echo
