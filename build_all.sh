@@ -146,7 +146,7 @@ echo
 
 [[ "${choices[7]}" ]] && {
     printf "Building Radiusdesk docker ... "
-    cd ./radiusdesk_new
+    cd ./radiusdesk_2docker
     ./local_build.sh
     cd ..
 }

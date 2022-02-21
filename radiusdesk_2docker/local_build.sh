@@ -13,9 +13,9 @@ echo
 echo Starting Build ....
 echo
 echo Copying database files to volume mounts for MariaDB ...
-echo mkdir  -p /mnt/data/radiusdesk/db
-echo mkdir  -p /mnt/data/radiusdesk/db_startup
-echo mkdir  -p /mnt/data/radiusdesk/db_conf
+mkdir  -p /mnt/data/radiusdesk/db
+mkdir  -p /mnt/data/radiusdesk/db_startup
+mkdir  -p /mnt/data/radiusdesk/db_conf
 git clone https://github.com/RADIUSdesk/rdcore.git
 cp rdcore/cake3/rd_cake/setup/db/rd.sql $RADIUSDESK_VOLUME/db_startup
 cp db_priveleges.sql $RADIUSDESK_VOLUME/db_startup
