@@ -35,7 +35,7 @@ sleep 60
 
 echo Creating database for Radiusdesk ...
 # Build daatabase
-docker exec -u 0 -it inethi-radiusdesk-mariadb /db_startup/startup.sh
+docker exec -u 0 -it inethi-radiusdesk-mariadb /tmp/startup.sh
 echo
 echo Building Radiusdesk container with nginx, php-fpm and freeradius ...
 

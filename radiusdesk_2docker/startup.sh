@@ -16,12 +16,12 @@ if [[ ! -f $FLAG ]]; then
 
    sleep 10
    echo -- CONFIGURE PRIVELEGES
-   mysql -u root < /db_startup/db_priveleges.sql 
+   mysql -u root < /tmp/db_priveleges.sql 
 
    sleep 2
    echo -- IMPORT RADIUSDESK TABLES
    # Populate database
-   mysql -u root rd < /db_startup/rd.sql  
+   mysql -u root rd < /tmp/rd.sql  
    #the next line creates an empty file so it won't run the next boot
    touch "$FLAG"
 
