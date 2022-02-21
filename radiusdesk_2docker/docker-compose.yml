@@ -23,6 +23,10 @@ services:
     depends_on:
       - "rdmariadb"
 
+    ports:
+      - "1812:1812/udp"
+      - "1813:1813/udp"
+
   rdmariadb:
     container_name: inethi-radiusdesk-mariadb
     image: docker.io/bitnami/mariadb:10.5
