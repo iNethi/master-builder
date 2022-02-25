@@ -7,8 +7,8 @@ FROM jtreminio/php:7.4
     ## Install all software required
 
     # Sets up Nginx and required language pack
-    RUN apt-get update
-    RUN apt-get upgrade
+    RUN apt-get -y update
+    RUN apt-get -y upgrade
     RUN apt-get -y install language-pack-en-base
     RUN apt-get -y install nginx
 
