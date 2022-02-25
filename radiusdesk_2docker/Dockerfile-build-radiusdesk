@@ -71,6 +71,8 @@ FROM jtreminio/php:7.4
 
     # Setup Cron jobs
     RUN cp /var/www/html/cake3/rd_cake/setup/cron/cron3 /etc/cron.d/
+    RUN chmod 0644 /etc/cron.d/cron3
+    RUN crontab /etc/cron.d/cron3
 
     # configure php-fpm
     RUN mkdir -p /var/log/php-fpm
