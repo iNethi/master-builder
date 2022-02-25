@@ -41,10 +41,11 @@ services:
     
     volumes:
       - ${RADIUSDESK_VOLUME}/db_conf/my_custom.cnf:/opt/bitnami/mariadb/conf/my_custom.cnf:ro
-      - ${RADIUSDESK_VOLUME}/db:/bitnami/mariadb
+      - rd_data:/bitnami/mariadb
       - ${RADIUSDESK_VOLUME}/db_startup:/tmp
 
-   
+volumes:
+  rd_data:
 
 
 networks:

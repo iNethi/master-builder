@@ -114,6 +114,8 @@ FROM jtreminio/php:7.4
     # supervisord allows multiple processes to be started with a single process
     COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+    # Set the Radius shared secret
+    RUN sed  -i 's/FreeRADIUS-Client-Secret = \"testing123\"/FreeRADIUS-Client-Secret = \"inethi4u\"/g'  /etc/freeradius/3.0/sites-enabled/dynamic-clients
 
     # Copy files from production to root www
     RUN cp -R /var/www/html/rd/build/production/Rd/* /var/www/html/

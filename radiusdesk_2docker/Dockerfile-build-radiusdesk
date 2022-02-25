@@ -110,6 +110,9 @@ FROM jtreminio/php:7.4
     # Fix the Freeradius config to point to our new database
     RUN sed  -i 's/server = \"localhost\"/server = \"rdmariadb\"/g'  /etc/freeradius/3.0/mods-available/sql
 
+    # Set the Radius shared secret
+    RUN sed  -i 's/FreeRADIUS-Client-Secret = \"testing123\"/FreeRADIUS-Client-Secret = \"inethi4u\"/g'  /etc/freeradius/3.0/sites-enabled/dynamic-clients
+
     # Copy files from production to root www
     RUN cp -R /var/www/html/rd/build/production/Rd/* /var/www/html/
 
