@@ -99,13 +99,20 @@ FROM jtreminio/php:7.4
     # supervisord allows multiple processes to be started with a single process
     COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+    # Copy php settings
+    COPY ./php.ini /etc/php/php.ini
 
-    # Fix the configs 
-    ### NEED CODE HERE TO FIX DATABASE REFERENCE
+    # Fix the configs to point to external database
     RUN sed  -i  "s/'host' => 'localhost'/'host' => 'rdmariadb'/g"  /var/www/html/cake3/rd_cake/vendor/cakephp/cakephp/src/Database/Driver/Mysql.php
     RUN sed  -i  "s/'password' => ''/'password' => 'rd'/g"  /var/www/html/cake3/rd_cake/vendor/cakephp/cakephp/src/Database/Driver/Mysql.php
     RUN sed  -i  "s/'database' => 'cake'/'database' => 'rd'/g"  /var/www/html/cake3/rd_cake/vendor/cakephp/cakephp/src/Database/Driver/Mysql.php
-    RUN sed  -i  "s/'host' => 'localhost'/'host' => 'rdmariadb'/g" /var/www/html/cake3/rd_cake/config/app.php
+   
+    RUN sed  -i  "s/\$servername = \"localhost\";/\$servername = \"rdmariadb\";/g"  /var/www/rdcore/cake3/rd_cake/setup/scripts/reporting/reporting.php
+    RUN sed  -i  "s/\$servername = \"localhost\";/\$servername = \"rdmariadb\";/g"  /var/www/rdcore/cake3/rd_cake/setup/scripts/reporting/flows_wip.php
+    RUN sed  -i  "s/\$servername = \"localhost\";/\$servername = \"rdmariadb\";/g"  /var/www/rdcore/cake3/rd_cake/setup/scripts/reporting/process_flows.php
+    RUN sed  -i  "s/\$servername = \"localhost\";/\$servername = \"rdmariadb\";/g"  /var/www/rdcore/cake3/rd_cake/setup/scripts/reporting/process_report.php
+    RUN sed  -i  "s/\$servername = \"localhost\";/\$servername = \"rdmariadb\";/g"  /var/www/rdcore/cake3/rd_cake/setup/scripts/reporting/reporting_wip.php 
+    RUN sed  -i  "s/\$servername = \"localhost\";/\$servername = \"rdmariadb\";/g"  /var/www/rdcore/cake3/rd_cake/setup/scripts/reporting/send_remote_syslog.php
 
     # Fix the Freeradius config to point to our new database
     RUN sed  -i 's/server = \"localhost\"/server = \"rdmariadb\"/g'  /etc/freeradius/3.0/mods-available/sql
@@ -119,6 +126,7 @@ FROM jtreminio/php:7.4
     # entrypoint run script when container starts - ignores what is in command
     ENTRYPOINT /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
 
+    # Only expose radiusdesk web front end to Teaefik and Freeradius UDP ports that bypass traefik
     EXPOSE 80/tcp
     EXPOSE 1812/udp
     EXPOSE 1813/udp
