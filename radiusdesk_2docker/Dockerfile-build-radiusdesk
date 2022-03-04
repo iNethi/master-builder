@@ -25,7 +25,7 @@ FROM jtreminio/php:7.4
     COPY ./default /etc/nginx/sites-enabled/
     COPY ./disable_strict_mode.cnf /etc/mysql/conf.d/
 
-    RUN cd /var/www && git clone https://github.com/RADIUSdesk/rdcore.git
+    RUN cd /var/www && git clone https://github.com/iNethi/rdcore.git
 
     RUN mkdir -p /var/www/html
 
@@ -106,7 +106,8 @@ FROM jtreminio/php:7.4
     RUN sed  -i  "s/'host' => 'localhost'/'host' => 'rdmariadb'/g"  /var/www/html/cake3/rd_cake/vendor/cakephp/cakephp/src/Database/Driver/Mysql.php
     RUN sed  -i  "s/'password' => ''/'password' => 'rd'/g"  /var/www/html/cake3/rd_cake/vendor/cakephp/cakephp/src/Database/Driver/Mysql.php
     RUN sed  -i  "s/'database' => 'cake'/'database' => 'rd'/g"  /var/www/html/cake3/rd_cake/vendor/cakephp/cakephp/src/Database/Driver/Mysql.php
-   
+    RUN sed  -i  "s/'host' => 'localhost'/'host' => 'rdmariadb'/g" /var/www/html/cake3/rd_cake/config/app.php
+
     RUN sed  -i  "s/\$servername = \"localhost\";/\$servername = \"rdmariadb\";/g"  /var/www/rdcore/cake3/rd_cake/setup/scripts/reporting/reporting.php
     RUN sed  -i  "s/\$servername = \"localhost\";/\$servername = \"rdmariadb\";/g"  /var/www/rdcore/cake3/rd_cake/setup/scripts/reporting/flows_wip.php
     RUN sed  -i  "s/\$servername = \"localhost\";/\$servername = \"rdmariadb\";/g"  /var/www/rdcore/cake3/rd_cake/setup/scripts/reporting/process_flows.php
