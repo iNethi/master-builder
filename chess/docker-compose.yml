@@ -14,7 +14,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.chess.rule=Host(`${TRAEFIK_API_RULE_HOST}.${inethiDN}`)"
       - "traefik.http.routers.chess.entrypoints=${TRAEFIK_ENTRYPOINT}"
-      - "traefik.http.services.chess.loadbalancer.server.port=9663"
+      - "traefik.http.services.chess.loadbalancer.server.port=9664"
 
 networks:
   default:
