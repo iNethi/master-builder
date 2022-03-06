@@ -2,7 +2,7 @@
 
 # customize with your own.
 sudo mkdir -p /mnt/data
-options=("jellyfin" "keycloak" "nginx(splash)" "moodle" "nextcloud" "wordpress" "unifi" "radiusdesk")
+options=("jellyfin" "keycloak" "nginx(splash)" "moodle" "nextcloud" "wordpress" "unifi" "radiusdesk" "payments")
 entrypoint=web
 
 menu() {
@@ -147,6 +147,13 @@ echo
 [[ "${choices[7]}" ]] && {
     printf "Building Radiusdesk docker ... "
     cd ./radiusdesk_2docker
+    ./local_build.sh
+    cd ..
+}
+
+[[ "${choices[8]}" ]] && {
+    printf "Building Payment system docker ... "
+    cd ./payments
     ./local_build.sh
     cd ..
 }
