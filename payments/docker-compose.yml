@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  voucherapi:
+    container_name: inethi-payment-api-dev
+    build: ./services/web
+    # sleep until postgres is up
+    command: bash -c 'python manage.py run -h 0.0.0.0'
+    volumes:
+      - "${PAYMENTAPI_VOLUME_DEV}:/app"
+    ports:
+      - 5000:5000
+    environment:
+      - FLASK_APP=endpoints/__init__.py
+      - FLASK_ENV=development
+      - "DATABASE_URL=mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@rdmariadb/${MYSQL_DB}"
+
+  
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.flask.rule=Host(`${TRAEFIK_API_RULE_FLASK_DEV}.${inethiDN}`)"
+
+  voucherweb:
+    image: nginx
+    container_name: inethi-voucher
+    restart: always
+    volumes:
+        - "${VOUCHER_VOLUME}/html:/usr/share/nginx/html"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.voucher.rule=Host(`${TRAEFIK_API_RULE_VOUCHER}.${inethiDN}`)"
+      - "traefik.http.routers.voucher.entrypoints=${TRAEFIK_ENTRYPOINT}"
+
+
+networks:
+  default:
+    external:
+      name: "${INETHI_NETWORK}"

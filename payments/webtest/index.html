@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>Payment</title>
+    <link rel="stylesheet" href="nicepage.css" media="screen">
+    <link rel="stylesheet" href="Payment.css" media="screen">
+    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
+      <script type="text/javascript" src="jspdf.min.js"></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <script src="jquery-3.6.0.js"></script>
+      <script>
+       $(document).ready(function(){
+          $('#queryButton').click(function(){
+              const doc = new jsPDF();
+              let sendRequest = true;
+              let voucherPin = document.getElementById("usedVoucherPin").value;
+              voucherPin = voucherPin.replace(/\s+/g, '');
+              const phoneNumber = document.getElementById("usedPhoneNumber").value;
+              if (isNaN(voucherPin) && sendRequest) {
+                  alert("Please input a valid voucher pin");
+                  sendRequest = false;
+                  console.log("invalid voucher pin")
+              }
+              if (voucherPin === '' && sendRequest) {
+                  alert("Please input a valid pin");
+                  sendRequest = false;
+                  console.log("invalid voucher pin")
+              }
+              if (isNaN(phoneNumber) && sendRequest) {
+                  alert("Please input a valid phone number");
+                  sendRequest = false;
+                  console.log("invalid phone number")
+              }
+              if (phoneNumber === '' && sendRequest) {
+                  alert("Please input a valid phone number");
+                  sendRequest = false;
+                  console.log("invalid phone number")
+              }
+              if (phoneNumber.length !== 10 && sendRequest) {
+                  alert("Please input a valid phone number");
+                  sendRequest = false;
+                  console.log("invalid phone number")
+              }
+              if (sendRequest) {
+                  $("#queryButton").attr("disabled", true);
+                  $( "#queryButton" ).fadeTo( "fast" , 0.1, function() {
+                        // Animation complete.
+                  });
+
+                  const data = {
+                      "voucherPin" : voucherPin,
+                      "cellphoneNumber": phoneNumber
+                  }
+                  console.log(voucherPin)
+                  console.log(phoneNumber)
+                  $.ajax({
+                      type: "POST",
+                      url: "http://voucherapi.inethimac.net:5000/query",
+                      contentType: "application/json",
+                      data: JSON.stringify(data),
+                  success: function (data, status) {
+                      const json_obj = data.message;
+                      const json_obj_response_code = data.responseCode;
+                      const message = JSON.stringify(json_obj);
+                      const response_code = JSON.stringify(json_obj_response_code);
+                      // const json = JSON.parse(message);
+                      if (response_code === '0') {
+                          doc.text(message, 10, 10);
+                          doc.save("response.pdf");
+
+                          if(alert("Your voucher code is: " + message + "\nPlease write this down as clicking ok will remove " +
+                              "it from your screen. You will also be able to download a PDF with your code after clicking okay.")){}
+                          else {
+                            window.location.reload();
+                          }
+                      }
+                      else {
+                          if(alert(message)){}
+                          else {
+                            window.location.reload();
+                          }
+
+                      }
+
+                  },
+                  error: function (errMsg) {
+                      console.log(errMsg)
+                      console.log(typeof(errMsg))
+
+                      if(alert("There has been an error processing your payment. Please notify an admin or try again later")){}
+                          else {
+                            window.location.reload();
+                          }
+                      window.location.reload();
+                  }
+              })
+              }
+          });
+       });
+    </script>
+    <script>
+       $(document).ready(function(){
+          $('#submit').click(function(){
+              const doc = new jsPDF();
+              let sendRequest = true;
+              const voucherChoice = $("input[name='" + "radio" + "']:checked").val();
+              if (typeof(voucherChoice) === 'undefined') {
+                  alert("Please select a voucher");
+                  sendRequest = false;
+                  console.log("no voucher selected")
+              }
+              let voucherPin = document.getElementById("voucherPin").value;
+              voucherPin = voucherPin.replace(/\s+/g, '');
+              const phoneNumber = document.getElementById("phoneNumber").value;
+              if (isNaN(voucherPin) && sendRequest) {
+                  alert("Please input a valid voucher pin");
+                  sendRequest = false;
+                  console.log("invalid voucher pin")
+              }
+              if (voucherPin === '' && sendRequest) {
+                  alert("Please input a valid pin");
+                  sendRequest = false;
+                  console.log("invalid voucher pin")
+              }
+              if (isNaN(phoneNumber) && sendRequest) {
+                  alert("Please input a valid phone number");
+                  sendRequest = false;
+                  console.log("invalid phone number")
+              }
+              if (phoneNumber === '' && sendRequest) {
+                  alert("Please input a valid phone number");
+                  sendRequest = false;
+                  console.log("invalid phone number")
+              }
+              if (phoneNumber.length !== 10 && sendRequest) {
+                  alert("Please input a valid phone number");
+                  sendRequest = false;
+                  console.log("invalid phone number")
+              }
+              if (sendRequest) {
+                  $("#submit").attr("disabled", true);
+                  $( "#submit" ).fadeTo( "fast" , 0.1, function() {
+                        // Animation complete.
+                  });
+                  let amount = voucherChoice // don't make this 0 as 0 redeems the whole voucher
+
+                  const data = {
+                      "voucherChoice" : amount,
+                      "voucherPin" : voucherPin,
+                      "cellphoneNumber": phoneNumber
+                  }
+                  console.log(voucherPin)
+                  console.log(phoneNumber)
+                  console.log(amount)
+                  $.ajax({
+                      type: "POST",
+                      url: "http://voucherapi.inethimac.net:5000/redeem",
+                      contentType: "application/json",
+                      data: JSON.stringify(data),
+                  success: function (data, status) {
+                      const json_obj = data.message;
+                      const json_obj_response_code = data.responseCode;
+                      const message = JSON.stringify(json_obj);
+                      const response_code = JSON.stringify(json_obj_response_code);
+                      // const json = JSON.parse(message);
+                      if (response_code === '0') {
+                          doc.text(message, 10, 10);
+                          doc.save("response.pdf");
+                          if(alert("Your voucher code is: " + message + "\nPlease write this down as clicking ok will remove " +
+                              "it from your screen.")){}
+                          else {
+                            window.location.reload();
+                          }
+                      }
+                      else {
+                          if(alert(message)){}
+                          else {
+                            window.location.reload();
+                          }
+
+                      }
+
+                  },
+                  error: function (errMsg) {
+                      console.log(errMsg)
+                      console.log(typeof(errMsg))
+
+                      if(alert("There has been an error processing your payment. Please notify an admin or try again later")){}
+                          else {
+                            window.location.reload();
+                          }
+                      window.location.reload();
+                  }
+              })
+              }
+          });
+       });
+    </script>
+
+    <script>
+    var allRadios = document.getElementsByName("radio");
+    var booRadio;
+    var x = 0;
+    for(x = 0; x < allRadios.length; x++){
+        allRadios[x].onclick = function(){
+            if(booRadio === this){
+                this.checked = false;
+        booRadio = null;
+            }else{
+            booRadio = this;
+        }
+        };
+
+}
+</script>
+
+    <meta name="generator" content="Nicepage 4.0.3, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    
+
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="Payment">
+    <meta property="og:type" content="website">
+  </head>
+  <body data-home-page="Payment.html" data-home-page-title="Payment" class="u-body">
+
+
+    <section class="u-clearfix u-section-1" id="sec-19a0">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <p class="u-text u-text-default u-text-1">Time Based Vouchers</p>
+        <div class="u-expanded-width u-list u-list-1">
+          <div class="u-repeater u-repeater-1">
+            <div class="u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-container-layout-1">
+                <img alt="" class="u-expanded-width u-image u-image-default u-image-1" data-image-width="2000" data-image-height="1333" src="images/Shop-Logo.png">
+                <h3 class="u-text u-text-default u-text-2">5 mb/s 1hr</h3>
+                <p class="u-text u-text-3"> Voucher Details </p>
+                  <ul>
+                    <li>PRICE R2</li>
+                    <li>1 Hour Internet</li>
+                    <li>5 Mb/s</li>
+                    <li>1 Device</li>
+                    <li>Valid for 24 hours</li>
+                  </ul>
+              </div>
+            </div>
+            <div class="u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-container-layout-2">
+                <img alt="" class="u-expanded-width u-image u-image-default u-image-2" data-image-width="2000" data-image-height="1333" src="images/Shop-Logo.png">
+                <h3 class="u-text u-text-default u-text-4">5 mb/s 3hr</h3>
+                <p class="u-text u-text-5">Voucher Details</p>
+                <ul>
+                    <li>PRICE R5</li>
+                    <li>3 Hour Internet</li>
+                    <li>5 Mb/s</li>
+                    <li>1 Device</li>
+                    <li>Valid for 24 hours</li>
+                  </ul>
+              </div>
+            </div>
+            <div class="u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-container-layout-3">
+                <img alt="" class="u-expanded-width u-image u-image-default u-image-3" data-image-width="2000" data-image-height="1333" src="images/Shop-Logo.png">
+                <h3 class="u-text u-text-default u-text-6">5 mb/s 24hr</h3>
+                <p class="u-text u-text-7">Voucher Details</p>
+                <ul>
+                    <li>PRICE R15</li>
+                    <li>24 Hour Internet</li>
+                    <li>5 Mb/s</li>
+                    <li>1 Device</li>
+                    <li>Valid for 24 hours</li>
+                  </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="u-text u-text-default u-text-8">Data Based Vouchers</p>
+        <div class="u-expanded-width u-list u-list-2">
+          <div class="u-repeater u-repeater-2">
+            <div class="u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-container-layout-4">
+                <img alt="" class="u-expanded-width u-image u-image-default u-image-4" data-image-width="2000" data-image-height="1333" src="images/Shop-Logo.png">
+                <h3 class="u-text u-text-default u-text-9">5 mb/s 1GB</h3>
+                <p class="u-text u-text-10"> Voucher Details</p>
+                <ul>
+                    <li>PRICE R10</li>
+                    <li>1 GB of Data</li>
+                    <li>5 Mb/s</li>
+                    <li>Unlimited Devices</li>
+                    <li>Valid for 84 Days</li>
+                  </ul>
+              </div>
+            </div>
+            <div class="u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-container-layout-5">
+                <img alt="" class="u-expanded-width u-image u-image-default u-image-5" data-image-width="2000" data-image-height="1333" src="images/Shop-Logo.png">
+                <h3 class="u-text u-text-default u-text-11">5 mb/s 5B</h3>
+                <p class="u-text u-text-12"> Voucher Details</p>
+                <ul>
+                    <li>PRICE R40</li>
+                    <li>10 GB of Data</li>
+                    <li>5 Mb/s</li>
+                    <li>Unlimited Devices</li>
+                    <li>Valid for 84 Days</li>
+                  </ul>
+              </div>
+            </div>
+            <div class="u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-container-layout-6">
+                <img alt="" class="u-expanded-width u-image u-image-default u-image-6" data-image-width="2000" data-image-height="1333" src="images/Shop-Logo.png">
+                <h3 class="u-text u-text-default u-text-13">5 mb/s 10GB</h3>
+                <p class="u-text u-text-14"> Voucher Details</p>
+                <ul>
+                    <li>PRICE R70</li>
+                    <li>10 GB of Data</li>
+                    <li>5 Mb/s</li>
+                    <li>Unlimited Devices</li>
+                    <li>Valid for 84 Days</li>
+                  </ul>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div style="padding-bottom: 20px">
+            <h3> Choose your Voucher</h3>
+            <div>
+              <div id="redeem">
+                <input type="radio" id="51hr" name="radio" value="1HTIME">
+                <label for="1HTIME"> 5 mb/s 1hr </label><br>
+                <input type="radio" id="53hr" name="radio" value="3HTIME">
+                <label for="3HTIME"> 5 mb/s 3hr </label><br>
+                <input type="radio" id="524hr" name="radio" value="24HTIME">
+                <label for="24HTIME"> 5 mb/s 24hr </label><br>
+                <input type="radio" id="51gb" name="radio" value="1GDATA">
+                <label for="1GDATA"> 5 mb/s 1GB </label><br>
+                <input type="radio" id="55gb" name="radio" value="5GDATA">
+                <label for="5GDATA"> 5 mb/s 5GB </label><br>
+                <input type="radio" id="510gb" name="radio" value="10GDATA">
+                <label for="10GDATA"> 5 mb/s 10GB </label><br>
+                <label for="voucherPin">Voucher Pin:</label>
+                <input type="text" id="voucherPin" name="voucherPin"><br>
+                <label for="phoneNumber">Phone number:</label>
+                <input type="text" id="phoneNumber" name="phoneNumber"><br>
+                  <button id=submit type="submit" value="Submit">Submit</button>
+              </div>
+            </div>
+              <div style="padding-bottom: 20px">
+                <h3>Find Lost Voucher Code</h3>
+                    <div id="query">
+                        <label for="usedPhoneNumber">Phone number:</label>
+                        <input type="text" id="usedPhoneNumber" name="voucherPin"><br>
+                        <label for="usedVoucherPin">Enter the voucher pin you used to buy the WiFi access code:</label>
+                        <input type="text" id="usedVoucherPin" name="phoneNumber"><br>
+                  </div>
+                  <button id="queryButton" type="submit" value="Submit">Query</button>
+              </div>
+        </div>
+      </div>
+    </section>
+    
+    
+  </body>
+</html>

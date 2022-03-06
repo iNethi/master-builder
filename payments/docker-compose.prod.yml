@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  web:
+    container_name: inethi-payment-api-prod
+    build:
+      context: ./services/web
+      dockerfile: Dockerfile.prod
+    command: bash -c 'gunicorn --bind 0.0.0.0:5000 manage:app'
+    volumes:
+      - "${PAYMENTAPI_VOLUME_PROD}:/home/app"
+    expose:
+      - 5000
+
+    environment:
+      - FLASK_APP=endpoints/__init__.py
+      - FLASK_ENV=production
+      - "DATABASE_URL=mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@rdmariadb/${MYSQL_DB}"
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.flaskprod.rule=Host(`${TRAEFIK_API_RULE_FLASK_PROD}.${inethiDN}`)"
+      - "traefik.http.routers.flaskprod.tls=true"
+      - "traefik.http.routers.flaskprod.tls.certresolver=letsencrypt"
+
+  #db:
+  #  container_name: inethi-payment-db-prod
+  #  image: postgres:13-alpine
+  #  volumes:
+  #    - "${PAYMENTDB_VOLUME_PROD}:/var/lib/postgresql/data/"
+  #  environment:
+  #    - "POSTGRES_USER=${POSTGRES_USER}"
+  #    - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
+  #    - "POSTGRES_DB=${POSTGRES_DB_PROD}"
+
+networks:
+  default:
+    external:
+      name: "${INETHI_NETWORK}"
