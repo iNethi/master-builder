@@ -1,13 +1,13 @@
 version: "2.1"
 services:
   minecraft_bedrock:
-    image: itzg/minecraft-bedrock-server
-    container_name: inethi-minecraft_bedrock_latest
+    image: itzg/minecraft-server
+    container_name: inethi-minecraft
     environment:
       - "EULA=TRUE"
-      - "SERVER_NAME=inethi-latest"
-      - "VERSION=LATEST"
-      - "SERVER_PORT=19232"
+      - "SERVER_NAME=inethi-java"
+      #  "VERSION=1.18.0.02"
+      #- SERVER_PORT
       #- SERVER_PORT_V6
       # - GAMEMODE
       # - DIFFICULTY
@@ -29,18 +29,22 @@ services:
       # - PLAYER_MOVEMENT_DISTANCE_THRESHOLD
       # - PLAYER_MOVEMENT_DURATION_THRESHOLD_IN_MS
       # - CORRECT_PLAYER_MOVEMENT
+
+    tty: true
+    stdin_open: true
     
     ports:
-      - "19232:19232/udp"
+      - "25565:25565/udp"
+      - "25575:25575/udp"
 
     volumes:
-      - mc_data_bedrock_latest:/data
+      - mc_data_java:/data
 
     restart: always
 
 
 volumes:
-  mc_data_bedrock_latest:
+  mc_data_java:
  
 
 networks:
