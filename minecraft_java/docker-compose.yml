@@ -6,6 +6,7 @@ services:
     environment:
       - "EULA=TRUE"
       - "SERVER_NAME=inethi-java"
+      - "TYPE=SPIGOT"
       #  "VERSION=1.18.0.02"
       #- SERVER_PORT
       #- SERVER_PORT_V6
