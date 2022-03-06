@@ -170,6 +170,7 @@ def redeem_voucher():
         return api_response
     else:
         match.status = "issued"  # reserve voucher in DB
+        match.paytype = "One4You"
         match.phone_number = cellphone_number
         # match.voucher_pin = voucher_pin can't do this as this is unique and will cause a DB error if user tries to
         # reuse a 1FORYOU voucher
