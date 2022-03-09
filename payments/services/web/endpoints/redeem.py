@@ -69,14 +69,14 @@ def send_request(amount, request_id, voucher_pin, cellphone_number, access_token
         "requestId": request_id,
         "voucherPin": voucher_pin,
         "amount": amount,
-        "userId": "987654321674523",
+        "userId": "XXXX",
         "customerContact": {
             "mechanism": "SMS",
             "address": cellphone_number
         },
         "acquirer": {
             "account": {
-                "accountNumber": "5293-6751-0895-5057"
+                "accountNumber": "XXXX"
             }
         }
     })
@@ -94,9 +94,9 @@ def generate_access_token():
     :return: the bearer token
     """
     url_access_token = "https://api.flashswitch.flash-group.com/token"
-    payload_access_token = 'grant_type=client_credentials'
+    payload_access_token = 'XXXX'
     headers_access_token = {
-        'Authorization': 'Basic ZHJJMzVrQjlPZEJrU19PTzNqQVZMelBZWHNBYTpNWFJnQnpsNkMxSF82cGZLUnpJQkxqZnhHRGNh',
+        'Authorization': 'XXXX',
         'Content-Type': 'application/x-www-form-urlencoded'
     }
     response_access_token = requests.request("POST", url_access_token, headers=headers_access_token,

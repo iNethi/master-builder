@@ -8,11 +8,8 @@ Find all the code for building a community ISP [here](https://github.com/iNethi)
 
 ## How to Use
 ### With the Build Script
-1. Edit the environment variables to your liking
+1. Edit the environment variables to your liking and the redeem endpoints to contain your 1FORYOU account details
 2. Run the build script and follow the instructions on screen:
-```
-
-```
 ### Without the Build Script
 #### Production Environment
 1. Run the following command from the traefik folder:
