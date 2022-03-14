@@ -1,23 +1,24 @@
 version: '3'
 
 services:
-  voucherapi:
-    container_name: inethi-payment-api-dev
-    build: ./services/web
-    # sleep until postgres is up
-    command: bash -c 'python manage.py run -h 0.0.0.0'
-  
-    ports:
-      - 5000:5000
+  voucherapiprod:
+    container_name: inethi-payment-api-prod
+    build:
+      context: ./services/web
+      dockerfile: Dockerfile.prod
+    command: bash -c 'gunicorn --bind 0.0.0.0:80 manage:app'
+    
+
     environment:
       - FLASK_APP=endpoints/__init__.py
-      - FLASK_ENV=development
+      - FLASK_ENV=production
       - "DATABASE_URL=mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@rdmariadb/${MYSQL_DB}"
 
-  
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.voucherapi.rule=Host(`${TRAEFIK_API_RULE_FLASK_DEV}.${inethiDN}`)"
+      - "traefik.http.routers.voucherapiprod.rule=Host(`voucherapiprod.inethimac.net`)"
+      - "traefik.http.routers.voucherapiprod.entrypoints=web"
+
 
   voucherweb:
     image: nginx

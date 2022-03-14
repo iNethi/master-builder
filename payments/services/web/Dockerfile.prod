@@ -14,7 +14,7 @@ ENV PYTHONUNBUFFERED 1
 
 # install system dependencies
 RUN apt-get update && \
-    apt-get install -y  gcc build-essential libpq-dev
+    apt-get install -y  gcc build-essential libpq-dev libmariadb-dev
 
 # lint
 RUN pip install --upgrade pip
@@ -45,8 +45,11 @@ RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
 # install dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends netcat
+RUN apt-get update && apt-get install -y --no-install-recommends netcat 
+RUN apt-get install -y  gcc build-essential libmariadb-dev
+
 COPY --from=builder /usr/src/app/wheels /wheels
+
 COPY --from=builder /usr/src/app/requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache /wheels/*
@@ -57,5 +60,6 @@ COPY . $APP_HOME
 # chown all the files to the app user
 RUN chown -R app:app $APP_HOME
 
+EXPOSE 80
 # change to the app user
 USER app

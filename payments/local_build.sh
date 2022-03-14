@@ -13,8 +13,9 @@ cp -r ./webtest/* $VOUCHER_VOLUME/html/
 
 #docker-compose -f docker-compose.prod.yml config
 
-docker-compose config
-docker-compose -f docker-compose.yml  up  -d --build
+#docker-compose config
+#docker-compose -f docker-compose.yml  up  -d --build
+docker-compose -f docker-compose-prod.yml  up  -d --build 
 
 
 
