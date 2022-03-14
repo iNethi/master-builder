@@ -1,0 +1,32 @@
+version: "2.1"
+services:
+  fdroid:
+    container_name: inethi-fdroid
+    build: ./
+    command: init
+   
+    volumes:
+      - "${FDROID_VOLUME}/repo:/repo"
+    #ports:
+    #  - "${JELLYFIN_PORT1}:8096"
+    #  - "${JELLYFIN_PORT2}:8920"
+    #  - "${JELLYFIN_PORT3}:7359/udp"
+    #  - "${JELLYFIN_PORT4}:1900/udp"
+    #devices:
+      #- /dev/dri:/dev/dri #optional
+      #- /dev/vcsm:/dev/vcsm #optional
+      #- /dev/vchiq:/dev/vchiq #optional
+      #- /dev/video10:/dev/video10 #optional
+      #- /dev/video11:/dev/video11 #optional
+      #- /dev/video12:/dev/video12 #optional
+    #restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.fdroid.rule=Host(`${TRAEFIK_API_RULE_HOST}.${inethiDN}`)"
+      - "traefik.http.routers.fdroid.entrypoints=${TRAEFIK_ENTRYPOINT}"
+    
+networks:
+  default:
+    external:
+      name: "${INETHI_NETWORK}"
+

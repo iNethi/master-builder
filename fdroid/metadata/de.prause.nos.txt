@@ -1,0 +1,9 @@
+License:GPLV3
+Web Site:https://www.nightofscience.de
+Source Code:https://chaos.expert/nos/night_of_science
+Issue Tracker:https://chaos.expert/nos/night_of_scince/issues
+Changelog:
+Summary:Night of Science
+Description:
+Night of Science
+.

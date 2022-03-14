@@ -1,0 +1,105 @@
+kiwix:
+    container_name: kiwix
+    image: kiwix/kiwix-serve
+    command:
+      - --library
+      - ${KIWIX_DATA_DIR}/library.xml
+    restart: unless-stopped
+    volumes:
+      - ${KIWIX_DATA_DIR}:${KIWIX_DATA_DIR}
+      - ${TRANSMISSION_DOWNLOADS_DIR}:${TRANSMISSION_DOWNLOADS_DIR}
+    networks:
+      - traefik
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.kiwix.entrypoints: websecure
+      traefik.http.routers.kiwix.rule: Host(`${DOMAIN_KIWIX}`)
+      traefik.http.routers.kiwix.tls: "true"
+      traefik.http.services.kiwix.loadbalancer.server.port: 80
+
+
+
+
+matomo:
+    container_name: matomo
+    hostname: ${DOMAIN_MATOMO}
+    image: matomo:4.1.1-apache
+    restart: unless-stopped
+    volumes:
+      - matomo:/var/www/html
+    environment:
+      MATOMO_DATABASE_HOST: ${MYSQL_HOST}
+      MATOMO_DATABASE_ADAPTER: mysql
+      MATOMO_DATABASE_TABLES_PREFIX: matomo_
+      MATOMO_DATABASE_USERNAME: ${MYSQL_USER_MATOMO}
+      MATOMO_DATABASE_PASSWORD: ${MYSQL_PASSWORD_MATOMO}
+      MATOMO_DATABASE_DBNAME: ${MYSQL_DATABASE_MATOMO}
+    networks:
+      - mysql
+      - traefik
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.matomo.entrypoints: websecure
+      traefik.http.routers.matomo.rule: Host(`${DOMAIN_MATOMO}`)
+      traefik.http.routers.matomo.tls: "true"
+      traefik.http.services.matomo.loadbalancer.server.port: 80
+    depends_on:
+      - mariadb
+
+  
+prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.24.1
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.prometheus.entrypoints: websecure
+      traefik.http.routers.prometheus.rule: Host(`${DOMAIN_PROMETHEUS}`)
+      traefik.http.routers.prometheus.tls: "true"
+      traefik.http.services.prometheus.loadbalancer.server.port: 9090
+    networks:
+      - traefik
+      - prometheus
+    restart: unless-stopped
+    volumes:
+      - ./config/services/prometheus:/etc/prometheus
+      - prometheus:/prometheus
+    command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml
+
+grafana:
+    container_name: grafana
+    image: grafana/grafana:7.3.7
+    environment:
+      GF_INSTALL_PLUGINS: grafana-clock-panel,natel-discrete-panel,grafana-piechart-panel
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.grafana.entrypoints: websecure
+      traefik.http.routers.grafana.rule: Host(`${DOMAIN_GRAFANA}`)
+      traefik.http.routers.grafana.tls: "true"
+      traefik.http.services.grafana.loadbalancer.server.port: 3000
+    volumes:
+      - grafana:/var/lib/grafana:rw
+    networks:
+      - traefik
+      - prometheus
+    restart: unless-stopped
+
+esourcespace:
+    container_name: resourcespace
+    image: suntorytimed/resourcespace:latest
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+    volumes:
+      - resourcespace:/var/www/html
+    networks:
+      - traefik
+      - mysql
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.resourcespace.entrypoints: websecure
+      traefik.http.routers.resourcespace.rule: Host(`${DOMAIN_RESOURCESPACE}`)
+      traefik.http.routers.resourcespace.tls: "true"
+      traefik.http.services.resourcespace.loadbalancer.server.port: 80
+
+
+
