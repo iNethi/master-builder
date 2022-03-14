@@ -7,8 +7,8 @@ services:
       context: ./services/web
       dockerfile: Dockerfile.prod
     command: bash -c 'gunicorn --bind 0.0.0.0:80 manage:app'
-    
-
+   
+ 
     environment:
       - FLASK_APP=endpoints/__init__.py
       - FLASK_ENV=production
@@ -16,8 +16,8 @@ services:
 
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.voucherapiprod.rule=Host(`voucherapiprod.inethimac.net`)"
-      - "traefik.http.routers.voucherapiprod.entrypoints=web"
+      - "traefik.http.routers.voucherapiprod.rule=Host(`${TRAEFIK_API_RULE_FLASK_PROD}.${inethiDN}`)"
+      - "traefik.http.routers.voucherapiprod.entrypoints=${TRAEFIK_ENTRYPOINT}"
 
 
   voucherweb:
