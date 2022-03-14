@@ -229,6 +229,7 @@ def redeem_voucher():
 
     # Deal with response codes from 1FORYOU (v1.0.0)
     else:
+        print(response)
         if response['responseCode'] == 0:  # 0 indicates a success
             print(match.name)
             confirmation = {
@@ -248,10 +249,37 @@ def redeem_voucher():
                 return api_response  # do this so the user gets their voucher even if the DB fails
             return api_response
         elif response['responseCode'] == 2400:  # 2400 indicates insufficient funds
-            confirmation = {
-                "message": "Insufficient funds.",
+            # Look at the different kinds of 2400 codes
+            if response['responseMessage'] == "OneForYou_VoucherCancelled":
+                confirmation = {
+                "message": "This is a cancelled 1ForYou Voucher",
                 "responseCode": 1
-            }
+                }
+            elif response['responseMessage'] == "OneForYou_VoucherExpired":
+                confirmation = {
+                "message": "This is an expired 1ForYou Voucher",
+                "responseCode": 1
+                }
+
+            elif response['responseMessage'] == "OneForYou_InsufficientValue":
+                confirmation = {
+                "message": "Insufficient funds on the 1ForYou Voucher",
+                "responseCode": 1
+                }
+        
+            elif response['responseMessage'] == "OneForYou_Error":
+                confirmation = {
+                "message": "There was an Error when using the 1ForYou Voucher",
+                "responseCode": 1
+                }
+            
+            else: 
+                confirmation = {
+                    "message": "This 1ForYou Voucher cannot be used",
+                    "responseCode": 1
+                }
+            
+            
         elif response['responseCode'] == 2401:  # 2401 indicates the voucher has already been used
             confirmation = {
                 "message": "This 1FORYOU voucher has already been used.",
