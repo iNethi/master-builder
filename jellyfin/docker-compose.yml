@@ -8,11 +8,11 @@ services:
       - PGID=1000
       - TZ=UTC
       - UMASK_SET=<022> #optional
-    volumes:
-      - "${JELLYFIN_VOLUME}/config:/config"
-      - "${JELLYFIN_VOLUME}/tvseries:/data/tvshows"
-      - "${JELLYFIN_VOLUME}/movies:/data/movies"
-      - "${JELLYFIN_VOLUME}/opt/vc/lib:/opt/vc/lib"
+    #volumes:
+    #  - "${JELLYFIN_VOLUME}/config:/config"
+    #  - "${JELLYFIN_VOLUME}/tvseries:/data/tvshows"
+    #  - "${JELLYFIN_VOLUME}/movies:/data/movies"
+     # - "${JELLYFIN_VOLUME}/opt/vc/lib:/opt/vc/lib"
     #ports:
     #  - "${JELLYFIN_PORT1}:8096"
     #  - "${JELLYFIN_PORT2}:8920"
