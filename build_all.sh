@@ -56,6 +56,8 @@ if [ "$entrypoint" = websecure ]; then
         read -p 'AWS_ACCESS_KEY_ID: '  AWS_ACCESS_KEY_ID
         read -p 'AWS_SECRET_ACCESS_KEY: ' AWS_SECRET_ACCESS_KEY
         read -p 'AWS_HOSTED_ZONE_ID: ' AWS_HOSTED_ZONE_ID
+        sudo mkdir traefikssl/secrets/
+        sudo touch traefikssl/secrets/secrets_passwords.env
         echo AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID > traefikssl/secrets/secret_keys.env
         echo AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY >> traefikssl/secrets/secret_keys.env
         echo AWS_HOSTED_ZONE_ID=$AWS_HOSTED_ZONE_ID >> traefikssl/secrets/secret_keys.env
@@ -83,8 +85,6 @@ echo
 [ "$entrypoint" = websecure ] && {
     printf "Building Traefik docker... "
         cd ./traefikssl
-        sudo mkdir secrets
-        sudo touch secrets/secrets_passwords.env
         ./local_build.sh
         cd ..
 }
