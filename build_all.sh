@@ -83,6 +83,8 @@ echo
 [ "$entrypoint" = websecure ] && {
     printf "Building Traefik docker... "
         cd ./traefikssl
+        sudo mkdir secrets
+        sudo touch secrets/secrets_passwords.env
         ./local_build.sh
         cd ..
 }
