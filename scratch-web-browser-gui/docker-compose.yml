@@ -2,7 +2,7 @@ version: '3.3'
 services:
   scratch-gui:
     container_name: inethi-scratch
-    image: keegan337/scratch-gui
+    image: leejoneshane/scratch3
     restart: always
     labels:
       - "traefik.enable=true"
