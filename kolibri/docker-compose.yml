@@ -1,0 +1,19 @@
+version: '3'
+services:
+  kiwix-serve:
+    container_name: inethi-kiwix
+    image: kiwix/kiwix-serve
+    volumes:
+      - "${KIWIX_VOLUME}:/data"
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.kiwix.rule=Host(`${TRAEFIK_API_RULE_HOST}.${inethiDN}`)"
+      - "traefik.http.routers.kiwix.entrypoints=${TRAEFIK_ENTRYPOINT}"
+    command:
+      "${COMMAND}"
+
+networks:
+  default:
+    external:
+      name: "${INETHI_NETWORK}"
