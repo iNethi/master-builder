@@ -18,7 +18,6 @@
         }
 
 
-
         #content {
             font-family: 'Source Sans Pro', sans-serif;
             background-color: #1C1275;
@@ -151,7 +150,7 @@
         }
 
         .login-submit:disabled:hover {
-            background-color: #727272
+            background-color:#727272
         }
 
 
@@ -159,7 +158,7 @@
         .login-submit:hover {
             border: 0;
             text-shadow: 0 1px rgba(0, 0, 0, .3);
-            background-color: #5b6ca3
+            background-color:  #5b6ca3
         }
 
 
@@ -294,7 +293,7 @@
 
         .button {
             background-color: #2d48a1;
-            ;
+;
             border: none;
             color: white;
             padding: 15px 32px;
@@ -365,8 +364,8 @@
         }
 
         .banner {
-            padding: 0px;
-            background-color: white;
+            padding: 10px;
+            background-color: #e0e0e0;
 
             width: 100%;
             align-items: center
@@ -383,18 +382,8 @@
             text-align: left
         }
 
-        .news {
-            padding-top: 10px;
-            padding-bottom: 10px;
-            width: 100%;
-            /*border: 1px solid rgb(63, 63, 63);*/
-            background-color: #e0e0e0;
-            color: black;
-            text-align: center
-        }
-
         .footer {
-            padding-top: 10px;
+            padding: 10px;
             width: 100%;
             background-color: #e0e0e0;
             color: black;
@@ -437,7 +426,6 @@
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            justify-content: center;
             font-size: 14px;
         }
 
@@ -488,8 +476,41 @@
 <body class="body">
 
     <div class="banner">
-        <img src="captiveportal-focus.png" style="width: 100%;">
+        <img src="captiveportal-social-networking-banner.png" style="width: 100%; max-width: 800px;">
     </div>
+
+
+
+    <div class="warning2">
+        <div>
+            <b> IMPORTANT INFORMATION ON COVID-19</b>
+            <ul>
+                <li>Wash your hand regularly with plenty of soap and water.</li>
+                <li>Don’t touch your eyes, mouth or nose with unclean hands.</li>
+                <li>Keep a distance of at least 1 meter from anyone coughing or sneezing.</li>
+                <li>Follow the elbow touch and foot touch greeting to avoid spreading germs.</li>
+            </ul>
+            <b>FOR MORE INFORMATION</b>
+            <ul>
+                <li><a href="https://coronavirus.datafree.co/">Covid-19 Corona Virus South African Portal</a></li>
+                <li><a href="http://10.2.0.10/COVID-19.pdf">The Cononavirus: No-Panic Helpguide</a></li>
+
+            </ul>
+
+        </div>
+
+
+    </div>
+
+    <div class="getvoucher">
+        Contact OVCOMM Dynamic on <b>076 039 8538</b> (between 8h00 and 20h00) to obtain a voucher or OwnCloud login
+    </div>
+
+
+
+    <button class="floatButton" type="button" onclick="viewdiv('logincard')">Internet</button>
+
+
 
     <div class="login-card" , id="logincard">
 
@@ -531,53 +552,9 @@
     </div>
 
 
-    <!--
-    <div class="news">
-        Workshop on becoming a content creator on 30 April
-    </div>
-    -->
-
-    <div class="login-card" , id="logincard">
-
-        <span> <i>To access the Internet enter your username and password or voucher number. </i></span>
-        <br />
-
-        <br />
-        <div class="loginform">
-            <div id="error-message">
-                #PORTAL_MESSAGE#
-            </div>
-            <form name="login_form" method="post" action="#PORTAL_ACTION#">
-                <input type="text" name="auth_user" placeholder="User" id="auth_user">
-                <input type="password" name="auth_pass" placeholder="Password" id="auth_pass">
-                <br />
-                <input onkeyup="copyFunction()" type="text" name="auth_voucher" placeholder="Voucher" id="auth_voucher">
-
-                <div class="login-help">
-                    <ul class="list">
-                        <li class="list__item">
-                            <label class="label--checkbox">
-                                <input type="checkbox" class="checkbox"
-                                    onchange="document.getElementById('login').disabled = !this.checked;">
-                                <span>I agree with the <a href="http://10.2.0.10/iNethi_AUP.pdf">Acceptance User
-                                        Policy</a> </span>
-                            </label>
-                        </li>
-                    </ul>
-                </div>
-                <input name="redirurl" type="hidden" value="http://splash.inethi.net">
-                <input type="submit" name="accept" class="login login-submit" value="Login" id="login" disabled>
-                <button type="button" class="login-cancel" onclick="hidediv('logincard')" id="cancel">Cancel </button>
-            </form>
-        </div>
-
-
-
-
-    </div>
-
-
-    
+    <h3 className="lineText">
+        <span>Free local services</span>
+    </h3>
     <div class="desktop">
 
         <!--<div class=desktopItem>
@@ -588,46 +565,160 @@
             <p>Disapora</p> 
         </div>-->
 
-
         <div class=desktopItem>
-            <a href="http://voucher.blackequations.co.za">
-                <img src="captiveportal-voucher.png" height="80">
+            <a href="http://owncloud.inethi.net">
+                <img src="captiveportal-owncloud.ico" height="80">
                 <p></p>
             </a>
-            <p> Buy an Internet Voucher </p>
+            <p> OwnCloud <i>user:inethi</i><br/><i>pass: inethi</i></p>
         </div>
-
-        <div class=desktopItem onclick="viewdiv('logincard')"">
-            
-                <img src="captiveportal-internet.png" height="80">
-                <p></p>
-            </a>
-            
-            <p> Connect to the Internet </p>
-            
-        </div>
-
         <div class=desktopItem>
-            <a href="https://wordpress.blackequations.co.za" ">
-                <img src="captiveportal-blackequations.png" height="80">
+            <a href="http://nextcloud.inethi.net">
+                <img src="captiveportal-nextcloud.png" height="80">
                 <p></p>
             </a>
-            <p> Business listings, OVTV and much more  </p>
+            <p> Nextcloud <i>user:inethi</i><br/><i>pass: inethirocks</i></p>
+        </div>
+        <div class=desktopItem>
+            <a href="http://plex.inethi.net:32400/web">
+                <img src="captiveportal-plex.png" height="80">
+                <p></p>
+            </a>
+            <p> Plex </p>
         </div>
 
         <div class=desktopItem>
-            <a href="http://splash.inethi.net" >
-                <img src="captiveportal-inethi.png" height="80">
+            <a href="http://chat.inethi.net:3000">
+                <img src="captiveportal-rocketchat.ico" height="80">
                 <p></p>
             </a>
-            <p> Explore a world of free fast content</p>
+            <p>Rocket Chat</p>
         </div>
-       
-        <!--<button class="floatButton" type="button" onclick="viewdiv('logincard')">Internet</button>-->
+        <div class=desktopItem>
+            <a href="http://inethibox.inethi.net">
+                <img src="captiveportal-wikifundi.ico" height="80">
+                <p></p>
+            </a>
+            <p>Internet in a box </p>
+        </div>
+        <div class=desktopItem>
+            <a href="http://inethibox.inethi.net/kiwix/wikipedia_en_simple_all_novid_2018-06/">
+                <img src="captiveportal-wikipedia.png" height="80">
+                <p></p>
+            </a>
+            <p>Wikipedia</p>
+        </div>
+        <div class=desktopItem>
+            <a href="http://inethibox.inethi.net/kiwix/ted_en_science_2018-07/">
+                <img src="captiveportal-TEDtalk.png" height="80">
+                <p></p>
+            </a>
+            <p>TED Talks Science</p>
+        </div>
+        <div class=desktopItem>
+            <a href="http://inethibox.inethi.net/kiwix/teded_en_all_2017-10/">
+                <img src="captiveportal-TEDtalk.png" height="80">
+                <p></p>
+            </a>
+            <p>TED Talks Education</p>
+        </div>
+        <div class=desktopItem>
+            <a href="http://inethibox.inethi.net/kiwix/ted_en_global_issues_2018-07/">
+                <img src="captiveportal-TEDtalk.png" height="80">
+                <p></p>
+            </a>
+            <p>TED Talks Global issues</p>
+        </div>
 
     </div>
 
-    
+    <h3 className="lineText">
+        <span>Ocean View High School and partner content</span>
+    </h3>
+
+    <div class="desktop">
+        <div class=desktopItem>
+            <a href="http://nextcloud.inethi.net/s/6qFRHkbAQwHXqcp">
+                <img src="captiveportal-ovhigh.png" height="80">
+                <p></p>
+            </a>
+            <p>Ocean View High</p>
+        </div>
+        <div class=desktopItem>
+            <a href="http://nextcloud.inethi.net/s/AX4PSsZy3PHLFFi">
+                <img src="captiveportal-ovhigh.png" height="80">
+                <p></p>
+            </a>
+            <p>OV High Grade 8</p>
+            
+        </div>
+        <div class=desktopItem>
+            <a href="http://nextcloud.inethi.net/s/WSbWowqZHoQxiYA">
+                <img src="captiveportal-ovhigh.png" height="80">
+                <p></p>
+            </a>
+            <p>OV High Grade 9</p>
+        </div>
+        <div class=desktopItem>
+            <a href="http://nextcloud.inethi.net/s/oD6pZnJ3CER6QEN">
+                <img src="captiveportal-ovhigh.png" height="80">
+                <p></p>
+            </a>
+            <p>OV High Grade 10</p>
+        </div>
+        <div class=desktopItem>
+            <a href="http://nextcloud.inethi.net/s/6wsX3BqjzioBW8Y">
+                <img src="captiveportal-ovhigh.png" height="80">
+                <p></p>
+            </a>
+            <p>OV High Grade 11</p>
+        </div>
+        <div class=desktopItem>
+            <a href="http://nextcloud.inethi.net/s/ggzdDDqBTXMenG4">
+                <img src="captiveportal-ovhigh.png" height="80">
+                <p></p>
+            </a>
+            <p>OV High Grade 12</p>
+        </div>
+        <div class=desktopItem>
+            <a href="http://nextcloud.inethi.net/s/WLyPbmTfJ2Xwd5H">
+                <img src="captiveportal-unizulu.png" height="80">
+                <p></p>
+            </a>
+            <p>Unizulu Science Center</p>
+        </div>
+       
+    </div>
+
+    <h3 className="lineText">
+        <span>Free Internet services</span>
+    </h3>
+
+    <div class="desktop">
+        <div class=desktopItem>
+            <a href="https://coronavirus.datafree.co">
+                <img src="captiveportal-covid19.png" height="80">
+                <p></p>
+            </a>
+            <p>COVID-19 Info</p>
+        </div>
+        <div class=desktopItem>
+            <a href="http://easyclass.com">
+                <img src="captiveportal-easyclass.png" height="80">
+                <p></p>
+            </a>
+            <p>EasyClass</p>
+        </div>
+        <!--<div class=desktopItem>
+            <a href="http://wikifundi.inethi.net">
+                <img src="icons/googleclass.png" height="80">
+                <p></p>
+            </a>
+            <p>Google classroom</p>
+        </div>-->
+
+
+    </div>
 
     <br />
     <br />
@@ -665,29 +756,17 @@
     <br />
     <br />-->
     <div class="footer">
-        <span> <i>Operated by </i> <strong>Black Equations</strong> and powered by the </i><strong>iNethi platform </strong> </span>
+        <span> <i>Operated by </i> <strong>OVCOMM DYNAMIC</strong></span>
         <br />
         <br />
+        <span> <i> Internet link sponsored by </i> </span>
+        <br />
+        <br />
+        <img style="width:200px;" src="captiveportal-herotell.png" /><br>
     </div>
 
-    <!--<script src="https://keycloak.inethi.net/auth/js/keycloak.js"> </script>-->
+
     <script>
-
-        /*var keycloak = new Keycloak({
-            "realm": "inethi",
-            "auth-server-url": "https://keycloak.inethi.net/auth/",
-            "ssl-required": "external",
-            "resource": "inethisplash",
-            "public-client": true,
-            "confidential-port": 0,
-            "clientId": "inethisplash"
-        });
-        keycloak.init( {onLoad: 'login-required'} ).then(function (authenticated) {
-            console.log(authenticated ? 'authenticated' : 'not authenticated');
-        }).catch(function () {
-            console.log('failed to initialize');
-        });*/
-
         function copyFunction() {
             document.getElementById("auth_user").value = document.getElementById("auth_voucher").value;
             document.getElementById("auth_pass").value = document.getElementById("auth_voucher").value;
