@@ -8,7 +8,12 @@ services:
       - PGID=1000
       - TZ=UTC
       - UMASK_SET=<022> #optional
-    #volumes:
+    volumes:
+        - "${NEXTCLOUD_RSHARE_VOLUME}:/mnt/Rshare"
+        - "${NEXTCLOUD_RVIDEO_VOLUME}:/mnt/Rvideo"
+        - "${NEXTCLOUD_RPHOTO_VOLUME}:/mnt/Rphoto"
+        - "${NEXTCLOUD_RMUSIC_VOLUME}:/mnt/Rmusic"
+        
     #  - "${JELLYFIN_VOLUME}/config:/config"
     #  - "${JELLYFIN_VOLUME}/tvseries:/data/tvshows"
     #  - "${JELLYFIN_VOLUME}/movies:/data/movies"
