@@ -8,6 +8,7 @@ services:
     restart: unless-stopped
     volumes:
       - "${MYSQL_VOLUME}:/var/lib/mysql"
+      
     environment:
       - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
       - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
@@ -23,6 +24,10 @@ services:
       - mysql 
     volumes:
       - "${NEXTCLOUD_VOLUME}:/var/www/html"
+      - "${NEXTCLOUD_RSHARE_VOLUME}:/mnt/Rshare"
+      - "${NEXTCLOUD_RVIDEO_VOLUME}:/mnt/Rvideo"
+      - "${NEXTCLOUD_RPHOTO_VOLUME}:/mnt/Rphoto"
+      - "${NEXTCLOUD_RMUSIC_VOLUME}:/mnt/Rmusic"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.nextcloud.rule=Host(`${TRAEFIK_API_RULE_NEXTCLOUD}.${inethiDN}`)"
