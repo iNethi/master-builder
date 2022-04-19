@@ -1,82 +1,236 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
-    <meta charset="utf-8" />
-    <title>Inethi Network</title>
+<title>Page Title</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    <style>
-        #content,
-        .login,
-        .login-card h1,
-        .login-help {
-            text-align: center
-        }
+/* Style the body */
+body {
+  font-family:  -apple-system,system-ui;
+  margin: 0;
+
+   text-align: center;
+    
+}
+
+    .login,
+    .login-card h1,
+    .login-help {
+        text-align: center
+}
 
 
-        #content {
-            font-family: 'Source Sans Pro', sans-serif;
-            background-color: #1C1275;
-            background: linear-gradient(135deg, #1475CF, #2B40B5, #1C1275);
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
-            display: table-cell;
-            vertical-align: middle
-        }
 
-        .body {
-            text-align: center;
-        }
+.loginform {
+    width: 280px;
+    display: inline-block;
+}
 
-        .img.center {
-            display: block;
-            width: 100%;
-            height: auto;
-            align-content: center;
-            align-items: center;
-        }
+#error-message {
+    text-align: center;
+    color: #ff3e3e;
+    font-style: italic;
+}
 
-        .h1 {
-            font-family: "Helvetica Neue";
-            color: rgba(0, 0, 0, 0.5);
-            font-style: normal;
-            font-weight: 600;
-            text-align: center;
-            text-decoration: blink;
-            font-size: 35px;
-        }
 
-        .h2 {
-            font-family: "Helvetica Neue";
-            font-style: thin;
-            color: rgba(86, 88, 237, 0.71);
-            /*font-style: !important; */
-            font-weight: 500;
-            text-align: center;
-            text-decoration: underline;
-        }
 
-        .login-card {
-            padding: 40px;
-            width: 300px;
-            background-color: #F7F7F7;
-            margin: auto;
-            border-radius: 2px;
-            box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
-            overflow: hidden;
+.desktop {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
 
-            position: absolute;
-            z-index: 100;
-            right: 20px;
-            top: 100px;
-            display: none
-        }
+.desktop a, a:hover, a:visited, a:active {
+  color: inherit;
+  text-decoration: none;
+ }
+
+.imageContainer {
+    padding: 10px;
+    background-color: white;
+    width: 100%;
+    align-items: center
+}
+
+
+.banner {
+    padding: 10px;
+    background-color: #e0e0e0;
+
+    width: 100%;
+    align-items: center
+}
+  
+
+.desktopItem {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    width: 100px;
+    height: 100px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.desktopItem2 {
+    padding-top: 30px;
+    padding-right: 20px;
+    padding-bottom: 30px;
+    padding-left: 20px;
+    max-width: 320px;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    flex-grow:1;
+    flex-shrink: 1;
+    flex-basis: 0%;
+    box-sizing: border-box;
+}
+
+.desktopItemCol1 {
+    opacity: 1;
+    height: 73px;
+    width: 73px;
+    text-shadow: -2px 0 0 rgb(0 0 0 / 0%);
+    padding: 16px;
+    background-color: #f1c50e;
+    border-radius: 50%; 
+    display: block;
+}
+
+.desktopItemCol2 {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left:16px;
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+    min-height: 198px;
+    margin: 0 0 0 auto;
+}
+.desktopItemCol2 h3 {
+    margin: 0px;
+    font-family: 'Source Serif Pro',serif;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.desktopItemCol2 p {
+    line-height: 1.6;
+    text-align: left;
+    font-size: 0.875rem;
+}
+
+
+.svg-content {
+    width: 40px;
+    fill: #f1c50e;
+    box-sizing: border-box;
+
+}
+.floatButton {
+    position: absolute;
+    z-index: 100;
+    top: 20px;
+    right: 20px;
+    font-family: 'Source Serif Pro',serif;
+    background-color: rgb(88,136,196);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.floatButton:hover {
+    background-color: rgb(169,196,229);
+    color: rgb(74,124,193);
+}
+
+.absoluteButton {
+    z-index: 100;
+    top: 20px;
+    right: 20px;
+    background-color: #f1c50e;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    font-family: 'Source Serif Pro',serif;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.absoluteButton:hover {
+    background-color: rgb(169,196,229);
+    color: rgb(74,124,193);
+}
+
+.absoluteButton2 {
+    z-index: 100;
+    top: 20px;
+    right: 20px;
+    background-color: rgb(88,136,196);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    font-family: 'Source Serif Pro',serif;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.absoluteButton2:hover {
+    background-color: rgb(169,196,229);
+    color: rgb(74,124,193);
+}
+
+.purchase-card {
+    padding: 10px;
+    width: 300px;
+    background-color: #F7F7F7;
+    margin: auto;
+    border-radius: 2px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
+    overflow: hidden;
+    text-align: left;
+    position: absolute;
+    z-index: 110;
+    right: 10px;
+    top: 100px;
+    display: none
+}
+
+.login-card {
+    font-size: 0.875rem;
+    padding: 10px;
+    width: 300px;
+    background-color: #F7F7F7;
+    margin: auto;
+    border-radius: 2px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
+    overflow: hidden;
+
+    position: absolute;
+    z-index: 100;
+    right: 10px;
+    top: 100px;
+    display: none
+}
 
         .login-card h1 {
             font-weight: 400;
@@ -140,7 +294,8 @@
             border: 0;
             color: #fff;
             text-shadow: 0 1px rgba(0, 0, 0, .1);
-            background-color: #2d48a1
+            background-color: rgb(88,136,196);
+            border-radius: 8px;
         }
 
 
@@ -150,7 +305,8 @@
         }
 
         .login-submit:disabled:hover {
-            background-color:#727272
+            background-color: #727272;
+            color: white;
         }
 
 
@@ -158,7 +314,8 @@
         .login-submit:hover {
             border: 0;
             text-shadow: 0 1px rgba(0, 0, 0, .3);
-            background-color:  #5b6ca3
+            background-color: rgb(169,196,229);
+            color: rgb(74,124,193);
         }
 
 
@@ -176,14 +333,16 @@
             color: #fff;
             cursor: pointer;
             text-shadow: 0 1px rgba(0, 0, 0, .1);
-            background-color: #cecece
+            border-radius: 8px;
+            background-color: rgb(88,136,196)
         }
 
 
         .login-cancel:hover {
             border: 0;
             text-shadow: 0 1px rgba(0, 0, 0, .3);
-            background-color: #727272
+            background-color: rgb(169,196,229);
+            color: rgb(74,124,193);
         }
 
         .login-card a {
@@ -201,628 +360,511 @@
 
         .login-help {
             width: 100%;
-            font-size: 12px
+           
         }
 
         .login-help a {
             color: black;
-
-        }
-
-        .list {
-            list-style-type: none;
-            padding: 0
-        }
-
-        .list__item {
-            margin: 0 0 .7rem;
-            padding: 0
-        }
-
-        label {
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-align: center;
-            -webkit-align-items: center;
-            -ms-flex-align: center;
-            align-items: center;
-            text-align: left;
-            font-size: 14px;
-        }
-
-        input[type=checkbox] {
-            -webkit-box-flex: 0;
-            -webkit-flex: none;
-            -ms-flex: none;
-            flex: none;
-            margin-right: 10px;
-            float: left
-        }
-
-        @media screen and (max-width:450px) {
-            .login-card {
-                width: 70% !important
-            }
-
-            .login-card img {
-                width: 30%;
-                height: 30%
-            }
-        }
-
-        textarea {
-            width: 66%;
-            margin: auto;
-            height: 120px;
-            max-height: 120px;
-            background-color: #f7f7f7;
-            padding: 20px
-        }
-
-        #terms {
-            display: none;
-            padding-top: 100px;
-            padding-bottom: 300px;
-        }
-
-        .auth_source {
-            border: 1px solid lightgray;
-            padding: 20px 8px 0px 8px;
-            margin-top: -2em;
-            border-radius: 2px;
-        }
-
-        .auth_head {
-            background-color: #f7f7f7;
-            display: inline-block;
-        }
-
-        .auth_head_div {
-            text-align: left;
-        }
-
-        #error-message {
-            text-align: center;
-            color: #ff3e3e;
-            font-style: italic;
         }
 
 
+/* Header/logo Title */
+.header {
+  padding: 60px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+}
 
-        .button {
-            background-color: #2d48a1;
-;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-        }
+/* Style the top navigation bar */
+.navbar {
+  display: flex;
+  background-color: #333;
+}
 
-        .loginform {
-            width: 280px;
-            display: inline-block;
-        }
+/* Style the navigation bar links */
+.navbar a {
+  color: white;
+  padding: 14px 20px;
+  text-decoration: none;
+  text-align: center;
+}
 
-        .voucher {
-            width: 300px;
-            display: inline-block;
-        }
+/* Change color on hover */
+.navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
 
-        .warning {
-            margin: 4px 2px;
-            color: blue;
-            font-weight: bold;
-            display: inline-block;
-        }
+/* Column container */
+.row {  
+  display: flex;
+  flex-wrap: wrap;
+}
 
+/* Create two unequal columns that sits next to each other */
+/* Sidebar/left column */
+.side {
+  flex: 30%;
+  background-color: #f1f1f1;
+  padding: 20px;
+}
 
-        .floatButton {
-            position: absolute;
-            z-index: 100;
-            top: 20px;
-            right: 20px;
-            background-color: #2d48a1;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            font-size: 16px;
-            margin: 4px 2px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
+/* Main column */
+.main {
+  flex: 90%;
+  background-color: white;
+  padding: 20px;
+}
 
+/* Fake image, just for this example */
+.fakeimg {
+  background-color: #aaa;
+  width: 100%;
+  padding: 20px;
+}
 
-        .floatButton:hover {
-            background-color: #5b6ca3
-        }
+/* Footer */
+.footer {
+margin-top:50px;
+    padding: 10px;
+    width: 100%;
+    background-color: #e0e0e0;
+    color: black;
+    text-align: center
+}
 
+.lineText {
+    text-align: center;
+    font-family: 'Source Serif Pro',serif;
+    
+}
 
+.lineText h1,h2,h3,h4 {
+   color: black;
+}
 
-
-        .floatDiv {
-            position: absolute;
-            z-index: 100;
-            width: 200px;
-            height: 200px;
-            right: 20px;
-            top: 200px;
-            background-color: #dddddd;
-            display: none
-        }
-
-        .banner {
-            padding: 10px;
-            background-color: #e0e0e0;
-
-            width: 100%;
-            align-items: center
-        }
-
-
-
-        .getvoucher {
-            padding: 10px;
-            width: 100%;
-            border: 1px solid rgb(63, 63, 63);
-            background-color: lightgrey;
-            color: black;
-            text-align: left
-            
-        }
-
-        .footer {
-            padding: 10px;
-            width: 100%;
-            background-color: #e0e0e0;
-            color: black;
-            text-align: center
-        }
-
-        .warning2 {
-            padding: 10px;
-            width: 100%;
-            background-color: #e81a4b;
-            color: white;
-            text-align: left
-        }
-
-        /* unvisited link */
-        .warning2 a:link {
-            color: white;
-            text-decoration: underline
-        }
-
-        /* visited link */
-        .warning2 a:visited {
-            color: white;
-            text-decoration: underline
-        }
-
-        /* mouse over link */
-        .warning2 a:hover {
-            color: blue;
-            text-decoration: underline
-        }
-
-        /* selected link */
-        .warning2 a:active {
-            color: blue;
-            text-decoration: underline
-        }
-
-        .desktop {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            font-size: 14px;
-        }
+.lineText h3,h4 {
+   color:  #777777;
+}
 
 
-        .desktopItem {
-            width: 100px;
-            height: 100px;
-            margin-left: 15px;
-            margin-right: 15px;
-            margin-bottom: 30px;
-            margin-top: 30px;
-        }
 
-        .videoFooter {
-            background-color: #e0e0e0;
-            display: flex;
-            align-items: center;
-            font-size: 14px;
-        }
-
-        .videoItem {
-            height: 150px;
-            margin: 5px;
-        }
-
-        .lineText {
-            width: 90%;
-            text-align: center;
-            border-bottom: 1px solid #aaaaaa;
-            line-height: 0.1em;
-            margin: 10px 0 20px;
-            font-size: 14px;
-            color: #555555;
-        }
-
-        .lineText span {
-            background: #eeeeee;
-            padding: 0 10px;
-        }
-    </style>
+/* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 700px) {
+  .row, .navbar {   
+    flex-direction: column;
+  }
+}
+</style>
 </head>
+<body>
 
+<!-- Note -->
+<!--<div style="background:yellow;padding:5px">
+  <h4 style="text-align:center">Resize the browser window to see the responsive effect.</h4>
+</div>-->
 
-<!--
-<header><img src="img/social-networking-banner.jpg" width="1000"></dheader>
--->
+<!-- Header -->
 
-<body class="body">
-
-    <div class="banner">
-        <img src="captiveportal-social-networking-banner.png" style="width: 100%; max-width: 800px;">
+  <div class="banner">
+    <img src="captiveportal-inethilogo.png" style="width: 100%; max-width: 300px;">
+    <div class="lineText">
+        <h1>Connecting the d​ots for communities ... </h1>
     </div>
-
-
-
-    <div class="warning2">
-        <div>
-            <b> IMPORTANT INFORMATION ON COVID-19</b>
-            <ul>
-                <li>Wash your hand regularly with plenty of soap and water.</li>
-                <li>Don’t touch your eyes, mouth or nose with unclean hands.</li>
-                <li>Keep a distance of at least 1 meter from anyone coughing or sneezing.</li>
-                <li>Follow the elbow touch and foot touch greeting to avoid spreading germs.</li>
-            </ul>
-            <b>FOR MORE INFORMATION</b>
-            <ul>
-                <li><a href="https://coronavirus.datafree.co/">Covid-19 Corona Virus South African Portal</a></li>
-                <li><a href="COVID-19.pdf">The Cononavirus: No-Panic Helpguide</a></li>
-
-            </ul>
-
-        </div>
-
-
-    </div>
-
-    <div class="getvoucher">
-        Contact iNethi at inethi4us@gmail.com to obtain passwords to test these services
-    </div>
-
     
-    <button class="floatButton" type="button" onclick="viewdiv('logincard')">Common login</button>
+    <div class="lineText">
+        <h3><i>Explore a world of free and iNethi club services that celebrate the creativity in your own community and dive into our large collection of education and entertainment resources.</i></h3>
+    </div>
+    <button class="absoluteButton"  onclick="window.location.href='https://inethi.org.za'"> LEARN MORE</button>
+</br>
+</br>
+    <!--<button class="absoluteButton2" onclick="window.location.href='https://voucher.inethicloud.net'">PURCHASE VOUCHER</button>-->
+    <button class="absoluteButton2" onclick="viewdiv('purchasecard')">PURCHASE VOUCHER</button>
+  </div>
+  
+  <!--<button class="floatButton" type="button" onclick="viewdiv('logincard')">INTERNET</button>-->
+  
+  
 
 
-    <div class="login-card" , id="logincard">
 
-        <span> <i>This is a common login for all your services </i></span>
-        <br />
+<!-- The flexible grid (content) -->
+<div class="login-card" , id="logincard">
 
-        <br />
-        <div class="loginform">
-           
-            <form name="login_form" method="post" action="#PORTAL_ACTION#">
-                <input type="text" name="auth_user" placeholder="User" id="auth_user">
-                <input type="password" name="auth_pass" placeholder="Password" id="auth_pass">
-                <br />
+    <span> <i>To access the Internet enter your username and password or voucher number. </i></span>
+    <br />
+
+    <br />
+    <div class="loginform">
+        <div id="error-message">
+            #PORTAL_MESSAGE#
+        </div>
+        <form name="login_form" method="post" action="#PORTAL_ACTION#">
+            <input type="text" name="auth_user" placeholder="User" id="auth_user">
+            <input type="password" name="auth_pass" placeholder="Password" id="auth_pass">
+            <br />
+            <input onkeyup="copyFunction()" type="text" name="auth_voucher" placeholder="Voucher" id="auth_voucher">
+
+            <div class="login-help">
+               
+                <label class="label--checkbox">
+                    <input type="checkbox" class="checkbox"
+                        onchange="document.getElementById('login').disabled = !this.checked;">
+                    <span>I agree with the <a href="http://10.2.0.10/iNethi_AUP.pdf">Acceptance User
+                            Policy</a> </span>
+                    
+                </label>
+               
+                    
                 
-
-                <div class="login-help">
-                    <ul class="list">
-                        <li class="list__item">
-                            <label class="label--checkbox">
-                                <input type="checkbox" class="checkbox"
-                                    onchange="document.getElementById('login').disabled = !this.checked;">
-                                <span>I agree with the <a href="http://10.2.0.10/iNethi_AUP.pdf">Acceptance User
-                                        Policy</a> </span>
-                            </label>
-                        </li>
-                    </ul>
-                </div>
-                <input name="redirurl" type="hidden" value="http://splash.inethi.net">
-                <input type="submit" name="accept" class="login login-submit" value="Login" id="login" disabled>
-                <button type="button" class="login-cancel" onclick="hidediv('logincard')" id="cancel">Cancel </button>
-            </form>
-        </div>
-
-
-
-
+            </div>
+            <br/>
+            <input name="redirurl" type="hidden" value="http://splash.inethi.net">
+            <input type="submit" name="accept" class="login login-submit" value="Login" id="login" disabled>
+            <button type="button" class="login-cancel" onclick="hidediv('logincard')" id="cancel">Cancel </button>
+            <br/>
+            <br/>
+            <button type="button"  class="login-cancel" onclick="viewdiv('purchasecard')">Purchase voucher</button>
+        </form>
     </div>
 
 
-    <h3 className="lineText">
-        <span>iNethi hosted services</span>
-    </h3>
-    <i>Content will be auto synced to remote iNethi cloudlets </i>
-    <div class="desktop">
-
-        <!--<div class=desktopItem>
-            <a href="https://diaspora.inethi.net">
-                <img src="icons/diaspora.png" height="80">
-                <p></p>
-            </a>
-            <p>Disapora</p> 
-        </div>-->
-
-       
-        <div class=desktopItem>
-            <a href="http://nextcloudg.inethi.net" target="_blank">
-                <img src="captiveportal-nextcloud.png" height="80">
-                <p></p>
-            </a>
-            <p> iNethiCloud</p>
-        </div>
-        <!--<div class=desktopItem>
-            <a href="http://plexg.inethi.net:32400/web" target="_blank"> 
-                <img src="captiveportal-plex.png" height="80">
-                <p></p>
-            </a>
-            <p> iNethiPlex </p>
-        </div>-->
-        <div class=desktopItem>
-            <a href="http://avideog.inethi.net" target="_blank"> 
-                <img src="captiveportal-avideo.png" height="80">
-                <p></p>
-            </a>
-            <p> iNethiTube </p>
-        </div>
-        <div class=desktopItem>
-            <a href="http://jellyfing.inethi.net" target="_blank"> 
-                <img src="captiveportal-jellyfin.png" height="80">
-                <p></p>
-            </a>
-            <p> iNethiVideo <i>user:guest</i><br/><i>pass:(empty)</i></p>
-        </div>
-
-        <div class=desktopItem>
-            <a href="https://element.inethi.net" target="_blank"> 
-                <img src="captiveportal-rocketchat.png" height="80">
-                <p></p>
-            </a>
-            <p> iNethiChat </p>
-        </div>
-      
-        
-
-    </div>
 
 
-    <h3 className="lineText">
-        <span>Ocean View High School and partner content</span>
-    </h3>
+</div>
+  
 
-    <div class="desktop">
-        <div class=desktopItem>
-            <a href="http://nextcloudg.inethi.net/s/R2ZPPSJcnPHF2KB">
-                <img src="captiveportal-ovhigh.png" height="80">
-                <p></p>
-            </a>
-            <p>Ocean View High</p>
-        </div>
-        <div class=desktopItem>
-            <a href="http://nextcloudg.inethi.net/s/ogG7GYEf3mgZgrt">
-                <img src="captiveportal-ovhigh.png" height="80">
-                <p></p>
-            </a>
-            <p>OV High Grade 8</p>
+<div class="purchase-card" , id="purchasecard">
+
+    <span>To use Sarafu dial <b>*384*96#</b> on Safaricom and </b>*483*46#</b> on Other networks</span>
+    <br />
+    <hr>
+    <ul>
+        <li>To buy 1-day of internet and 7 days of Inethi Services. Send <b>1 SRF</b> to 0757628885 </li>
+        <li>To buy 1-week of internet and 30 days of Inethi Services. Send <b>5 SRF</b> to 0757628885  </li>
+    </ul>
+    <br/>
+    <br/>
+    <button type="button" class="login-cancel" onclick="hidediv('purchasecard')" >Cancel </button>
+
+</div>
+<!--<div class="desktop">
+
+<div class=desktopItem>
+    <a href="http://voucher.blackequations.co.za">
+        <img src="captiveportal-voucher.png" height="80">
+        <p></p>
+    </a>
+    <p> Buy an Internet Voucher </p>
+</div>
+
+
+
+<div class=desktopItem>
+    <a href="https://www.grassrootseconomics.org">
+        <img src="captiveportal-grassecon.png" height="80">
+        <p></p>
+    </a>
+    <p> Grassroots Economics, Find out more </p>
+</div>
+
+<div class=desktopItem>
+    <a href="https://wordpress.inethilocal.net/main" >
+        <img src="captiveportal-inethi.png" height="80">
+        <p></p>
+    </a>
+    <p> Explore a world of free fast content</p>
+</div>
+
+</div> -->
+
+
+
+<div class="lineText">
+    <h1>Free local services</h1>
+</div>
+
+<div class="lineText">
+    <h3><i>Because learning should always be free</i></h3>
+</div>
+
+
+<div class="desktop">
+    <a href="https://kiwix.inethilocal.net/wikipedia_en_all_mini_2022-01/">
+    <!--<a href="https://kiwix.inethilocal.net/wikipedia_en_all_maxi_2021-12/">-->
+    <div class="desktopItem2">
+        <span class="desktopItemCol1">
+            <img width=43px src="captiveportal-wikipedia.png" alt="">
+        </span>
+        <div class="desktopItemCol2" >
+            <h3>Wikipedia</h3>
+            <p > The world's largest free community-built encyclopedia</p>
             
+            <svg class="svg-content" viewBox="0 0 268.832 268.832" x="0px" y="0px" id="svg-ac38" style="enable-background:new 0 0 268.832 268.832;"><g><path d="M265.171,125.577l-80-80c-4.881-4.881-12.797-4.881-17.678,0c-4.882,4.882-4.882,12.796,0,17.678l58.661,58.661H12.5   c-6.903,0-12.5,5.597-12.5,12.5c0,6.902,5.597,12.5,12.5,12.5h213.654l-58.659,58.661c-4.882,4.882-4.882,12.796,0,17.678   c2.44,2.439,5.64,3.661,8.839,3.661s6.398-1.222,8.839-3.661l79.998-80C270.053,138.373,270.053,130.459,265.171,125.577z"></path>
+            </g></svg>
         </div>
-        <div class=desktopItem>
-            <a href="http://nextcloudg.inethi.net/s/Dp3pyBbDdBPZoTe">
-                <img src="captiveportal-ovhigh.png" height="80">
-                <p></p>
-            </a>
-            <p>OV High Grade 9</p>
-        </div>
-        <div class=desktopItem>
-            <a href="http://nextcloudg.inethi.net/s/poksjT6zT7b93we">
-                <img src="captiveportal-ovhigh.png" height="80">
-                <p></p>
-            </a>
-            <p>OV High Grade 10</p>
-        </div>
-        <div class=desktopItem>
-            <a href="http://nextcloudg.inethi.net/s/SwBwiexrtrp2ESo">
-                <img src="captiveportal-ovhigh.png" height="80">
-                <p></p>
-            </a>
-            <p>OV High Grade 11</p>
-        </div>
-        <div class=desktopItem>
-            <a href="http://nextcloudg.inethi.net/s/y7LqzqRjRaDdPeH">
-                <img src="captiveportal-ovhigh.png" height="80">
-                <p></p>
-            </a>
-            <p>OV High Grade 12</p>
-        </div>
-        <div class=desktopItem>
-            <a href="https://nextcloudg.inethi.net/s/e2tAqEMHXxDaz73">
-                <img src="captiveportal-unizulu.png" height="80">
-                <p></p>
-            </a>
-            <p>Unizulu Science Center</p>
-        </div>
-       
-       
-
 
     </div>
-
-    <h3 className="lineText">
-        <span>Free Internet services (during COVID-19)</span>
-    </h3>
-    <i>Advertised as zero rated by the South African Government. Full list <a href="https://docs.google.com/spreadsheets/d/1d3HciexwZQndqHULEILwk_g4F1RRwUMlQjVVPc80BsI/edit#gid=0" target="_blank">here</a></i>
-
-    <div class="desktop">
-        <div class=desktopItem>
-            <a href="https://coronavirus.datafree.co" target="_blank">
-                <img src="captiveportal-covid19.png" height="80">
-                <p></p>
-            </a>
-            <p>COVID-19 Info</p>
-        </div>
-        <div class=desktopItem>
-            <a href="https://www.wikipedia.org" target="_blank">
-                <img src="captiveportal-wikipedia.png" height="80">
-                <p></p>
-            </a>
-            <p>Wikipedia</p>
-        </div>
-        <div class=desktopItem>
-            <a href="https://www.khanacademy.org/" target="_blank">
-                <img src="captiveportal-kahn.png" height="80">
-                <p></p>
-            </a>
-            <p>Kahn Academy</p>
-        </div>
-        <div class=desktopItem>
-            <a href="https://www.mathsclubs.co.za/" target="_blank">
-                <img src="captiveportal-mathsclubs.png" height="80">
-                <p></p>
-            </a>
-            <p>Maths Clubs</p>
-        </div>
-
-        <!--<div class=desktopItem>
-            <a href="http://wikifundi.inethi.net">
-                <img src="icons/googleclass.png" height="80">
-                <p></p>
-            </a>
-            <p>Google classroom</p>
-        </div>-->
-
-
-    </div>
-    <h3 className="lineText">
-        <span>iNethi Administration </span>
-    </h3>
+    </a>
     
-    <div class="desktop">
-        <div class=desktopItem>
-            <a href="http://radiusdeskg.inethi.net/rd/" target="_blank">
-                <img src="radiusdesk.png" height="80">
-                <p></p>
-            </a>
-            <p>Radiusdesk</p>
+    <a href="https://kiwix.inethilocal.net/ted_en_science_2022-01">
+    <div class="desktopItem2">
+        <span class="desktopItemCol1">
+            <img width=43px src="captiveportal-TEDtalk.png" alt="">
+        </span>
+        <div class="desktopItemCol2" >
+            <h3>TED Talks</h3>
+            <p > Explore interesting talks on science, technology, history, psychology and much more</p>
+            
+            <svg class="svg-content" viewBox="0 0 268.832 268.832" x="0px" y="0px" id="svg-ac38" style="enable-background:new 0 0 268.832 268.832;"><g><path d="M265.171,125.577l-80-80c-4.881-4.881-12.797-4.881-17.678,0c-4.882,4.882-4.882,12.796,0,17.678l58.661,58.661H12.5   c-6.903,0-12.5,5.597-12.5,12.5c0,6.902,5.597,12.5,12.5,12.5h213.654l-58.659,58.661c-4.882,4.882-4.882,12.796,0,17.678   c2.44,2.439,5.64,3.661,8.839,3.661s6.398-1.222,8.839-3.661l79.998-80C270.053,138.373,270.053,130.459,265.171,125.577z"></path>
+            </g></svg>
         </div>
-        <div class=desktopItem>
-            <a href="https://unifi.inethi.net" target="_blank">
-                <img src="unifi.png" height="80">
-                <p></p>
-            </a>
-            <p>Unifi Controller</p>
-        </div>
-        <div class=desktopItem>
-            <a href="https://unms.inethi.net" target="_blank">
-                <img src="unms.png" height="80">
-                <p></p>
-            </a>
-            <p>UNMS Controller</p>
-        </div>
-        <div class=desktopItem>
-            <a href="https://keycloak.inethi.net" target="_blank">
-                <img src="keycloak.png" height="80">
-                <p></p>
-            </a>
-            <p>SSO User manager</p>
-        </div>
-
-        <!--<div class=desktopItem>
-            <a href="http://wikifundi.inethi.net">
-                <img src="icons/googleclass.png" height="80">
-                <p></p>
-            </a>
-            <p>Google classroom</p>
-        </div>-->
-
 
     </div>
+    </a>
 
-    <br />
-    <br />
-    <br />
-    <!--<h3 className="lineText">
-        <span>Top local video uploads</span>
-    </h3>
-    <div class="videoFooter">
-        <div class=videoItem>
-            <a href="http://wikifundi.inethi.net">
-                <img src="icons/video1.png" height="150">
-                <p></p>
-            </a>
+    <a href="https://kolibri.inethilocal.net/en/learn/#/topics/ec164fee25ee526296e68f7c10b1e169">
+    <div class="desktopItem2">
+        <span class="desktopItemCol1">
+            <img width=43px src="captiveportal-kahn.png" alt="">
+        </span>
+        <div class="desktopItemCol2" >
+            <h3>Kahn Academy</h3>
+            <p >Learn about maths, art, computer programming, physics, and more</p>
+            
+            <svg class="svg-content" viewBox="0 0 268.832 268.832" x="0px" y="0px" id="svg-ac38" style="enable-background:new 0 0 268.832 268.832;"><g><path d="M265.171,125.577l-80-80c-4.881-4.881-12.797-4.881-17.678,0c-4.882,4.882-4.882,12.796,0,17.678l58.661,58.661H12.5   c-6.903,0-12.5,5.597-12.5,12.5c0,6.902,5.597,12.5,12.5,12.5h213.654l-58.659,58.661c-4.882,4.882-4.882,12.796,0,17.678   c2.44,2.439,5.64,3.661,8.839,3.661s6.398-1.222,8.839-3.661l79.998-80C270.053,138.373,270.053,130.459,265.171,125.577z"></path>
+            </g></svg>
+         
+   
         </div>
-        <div class=videoItem>
-            <a href="http://wikifundi.inethi.net">
-                <img src="icons/video2.png" height="150">
-                <p></p>
-            </a>
-        </div>
-        <div class=videoItem>
-            <a href="http://wikifundi.inethi.net">
-                <img src="icons/video3.png" height="150">
-                <p></p>
-            </a>
-        </div>
-        <div class=videoItem>
-            <a href="http://wikifundi.inethi.net">
-                <img src="icons/video4.png" height="150">
-                <p></p>
-            </a>
+
+    </div>
+    </a>
+
+    <a href="https://kiwix.inethilocal.net/phet_en_2021-08/A/index.html">
+    <div class="desktopItem2">
+        <span class="desktopItemCol1">
+            <img width=43px src="captiveportal-science.png" alt="">
+        </span>
+        <div class="desktopItemCol2" >
+            <h3>PhET Simulations</h3>
+            <p >Interactive simulation for Science and Maths</p>
+            
+            <svg class="svg-content" viewBox="0 0 268.832 268.832" x="0px" y="0px" id="svg-ac38" style="enable-background:new 0 0 268.832 268.832;"><g><path d="M265.171,125.577l-80-80c-4.881-4.881-12.797-4.881-17.678,0c-4.882,4.882-4.882,12.796,0,17.678l58.661,58.661H12.5   c-6.903,0-12.5,5.597-12.5,12.5c0,6.902,5.597,12.5,12.5,12.5h213.654l-58.659,58.661c-4.882,4.882-4.882,12.796,0,17.678   c2.44,2.439,5.64,3.661,8.839,3.661s6.398-1.222,8.839-3.661l79.998-80C270.053,138.373,270.053,130.459,265.171,125.577z"></path>
+            </g></svg>
+
         </div>
     </div>
+    </a>
 
-    <br />
-    <br />-->
-    <div class="footer">
-        <br />
-        <br />
-        <span> <i>To find out more about <strong>iNethi</strong> </i></span>
-        <br />
-        <br />
-        <span>Visit: <a href="http://inethi.org.za" target="_blank">http://inethi.org.za </a></span>
-        <br />
-        <span>email: <a href="mailto:inethi4us@gmail.com?subject=Inquiry about iNethi">inethi4us@gmail.com</a></span>
-        <br />
-        <br />
+    <a href="https://scratch.inethilocal.net/projects/editor/?tutorial=getStarted">
+    <div class="desktopItem2">
+        <span class="desktopItemCol1">
+            <img width=43px src="captiveportal-scratch.png" alt="">
+        </span>
+        <div class="desktopItemCol2" >
+            <h3>Scratch</h3>
+            <p >Learn to program and make your own games you can share with your friends</p>
+            
+            <svg class="svg-content" viewBox="0 0 268.832 268.832" x="0px" y="0px" id="svg-ac38" style="enable-background:new 0 0 268.832 268.832;"><g><path d="M265.171,125.577l-80-80c-4.881-4.881-12.797-4.881-17.678,0c-4.882,4.882-4.882,12.796,0,17.678l58.661,58.661H12.5   c-6.903,0-12.5,5.597-12.5,12.5c0,6.902,5.597,12.5,12.5,12.5h213.654l-58.659,58.661c-4.882,4.882-4.882,12.796,0,17.678   c2.44,2.439,5.64,3.661,8.839,3.661s6.398-1.222,8.839-3.661l79.998-80C270.053,138.373,270.053,130.459,265.171,125.577z"></path>
+            </g></svg>
+         
+   
+        </div>
+
     </div>
+    </a>
+
+    <a href="https://kiwix.inethilocal.net/gutenberg_en_all_2022-03/A/Home.html">
+    <div class="desktopItem2">
+        <span class="desktopItemCol1">
+            <img width=43px src="captiveportal-gutenberg.png" alt="">
+        </span>
+        <div class="desktopItemCol2" >
+            <h3>Gutenberg</h3>
+            <p >The world's largest collection of free books</p>
+            
+            <svg class="svg-content" viewBox="0 0 268.832 268.832" x="0px" y="0px" id="svg-ac38" style="enable-background:new 0 0 268.832 268.832;"><g><path d="M265.171,125.577l-80-80c-4.881-4.881-12.797-4.881-17.678,0c-4.882,4.882-4.882,12.796,0,17.678l58.661,58.661H12.5   c-6.903,0-12.5,5.597-12.5,12.5c0,6.902,5.597,12.5,12.5,12.5h213.654l-58.659,58.661c-4.882,4.882-4.882,12.796,0,17.678   c2.44,2.439,5.64,3.661,8.839,3.661s6.398-1.222,8.839-3.661l79.998-80C270.053,138.373,270.053,130.459,265.171,125.577z"></path>
+            </g></svg>
+         
+   
+        </div>
+
+    </div>
+    </a>
+  
+    
+    
+</div>
+
+<div class="lineText">
+    <h1>iNethi club services</h1>
+</div>
+
+<div class="lineText">
+    <h3><i>Entertainment, storage for your phone, games and much more</i></h3>
+</div>
+
+<div class="desktop">
+
+    <a href="http://jellyfin.inethilocal.net">
+    <div class="desktopItem2">
+        <span class="desktopItemCol1">
+            <img width=43px src="captiveportal-jellyfin.png" alt="">
+        </span>
+        <div class="desktopItemCol2" >
+            <h3>Jellyfin</h3>
+            <p >Your own community Youtube</p>
+            
+            <svg class="svg-content" viewBox="0 0 268.832 268.832" x="0px" y="0px" id="svg-ac38" style="enable-background:new 0 0 268.832 268.832;"><g><path d="M265.171,125.577l-80-80c-4.881-4.881-12.797-4.881-17.678,0c-4.882,4.882-4.882,12.796,0,17.678l58.661,58.661H12.5   c-6.903,0-12.5,5.597-12.5,12.5c0,6.902,5.597,12.5,12.5,12.5h213.654l-58.659,58.661c-4.882,4.882-4.882,12.796,0,17.678   c2.44,2.439,5.64,3.661,8.839,3.661s6.398-1.222,8.839-3.661l79.998-80C270.053,138.373,270.053,130.459,265.171,125.577z"></path>
+            </g></svg>
+         
+   
+        </div>
+
+    </div>
+    </a>
+  
+    <a href="http://nextcloud.inethilocal.net">
+    <div class="desktopItem2">
+        <span class="desktopItemCol1">
+            <img width=43px src="captiveportal-nextcloud.png" alt="">
+        </span>
+        <div class="desktopItemCol2" >
+            <h3>Nextcloud</h3>
+            <p >Share files with friends and backup all those photos on your phone</p>
+            
+            <svg class="svg-content" viewBox="0 0 268.832 268.832" x="0px" y="0px" id="svg-ac38" style="enable-background:new 0 0 268.832 268.832;"><g><path d="M265.171,125.577l-80-80c-4.881-4.881-12.797-4.881-17.678,0c-4.882,4.882-4.882,12.796,0,17.678l58.661,58.661H12.5   c-6.903,0-12.5,5.597-12.5,12.5c0,6.902,5.597,12.5,12.5,12.5h213.654l-58.659,58.661c-4.882,4.882-4.882,12.796,0,17.678   c2.44,2.439,5.64,3.661,8.839,3.661s6.398-1.222,8.839-3.661l79.998-80C270.053,138.373,270.053,130.459,265.171,125.577z"></path>
+            </g></svg>
+         
+   
+        </div>
+
+    </div>
+    </a>
+
+    <a href="http://chess.inethilocal.net">
+    <div class="desktopItem2">
+        <span class="desktopItemCol1">
+            <img width=43px src="captiveportal-chess.png" alt="">
+        </span>
+        <div class="desktopItemCol2" >
+            <h3>Chess</h3>
+            <p >Play chess against your friends or a chess computer</p>
+            
+            <svg class="svg-content" viewBox="0 0 268.832 268.832" x="0px" y="0px" id="svg-ac38" style="enable-background:new 0 0 268.832 268.832;"><g><path d="M265.171,125.577l-80-80c-4.881-4.881-12.797-4.881-17.678,0c-4.882,4.882-4.882,12.796,0,17.678l58.661,58.661H12.5   c-6.903,0-12.5,5.597-12.5,12.5c0,6.902,5.597,12.5,12.5,12.5h213.654l-58.659,58.661c-4.882,4.882-4.882,12.796,0,17.678   c2.44,2.439,5.64,3.661,8.839,3.661s6.398-1.222,8.839-3.661l79.998-80C270.053,138.373,270.053,130.459,265.171,125.577z"></path>
+            </g></svg>
+         
+   
+        </div>
+
+    </div>
+    </a>
+
+    <a href="http://splash.inethilocal.net/minecraft">
+    <div class="desktopItem2">
+        <span class="desktopItemCol1">
+            <img width=43px src="captiveportal-minecraft.png" alt="">
+        </span>
+        <div class="desktopItemCol2" >
+            <h3>Minecraft</h3>
+            <p >Play minecraft with friends without using any data</p>
+            
+            <svg class="svg-content" viewBox="0 0 268.832 268.832" x="0px" y="0px" id="svg-ac38" style="enable-background:new 0 0 268.832 268.832;"><g><path d="M265.171,125.577l-80-80c-4.881-4.881-12.797-4.881-17.678,0c-4.882,4.882-4.882,12.796,0,17.678l58.661,58.661H12.5   c-6.903,0-12.5,5.597-12.5,12.5c0,6.902,5.597,12.5,12.5,12.5h213.654l-58.659,58.661c-4.882,4.882-4.882,12.796,0,17.678   c2.44,2.439,5.64,3.661,8.839,3.661s6.398-1.222,8.839-3.661l79.998-80C270.053,138.373,270.053,130.459,265.171,125.577z"></path>
+            </g></svg>
+        </div>
+
+    </div>
+    </a>
+
+    <a href="http://ludo.inethilocal.net/minecraft">
+    <div class="desktopItem2">
+        <span class="desktopItemCol1">
+            <img width=43px src="captiveportal-ludo.png" alt="">
+        </span>
+        <div class="desktopItemCol2" >
+            <h3>Ludo</h3>
+            <p>Play Ludo against friends</p>
+            
+            <svg class="svg-content" viewBox="0 0 268.832 268.832" x="0px" y="0px" id="svg-ac38" style="enable-background:new 0 0 268.832 268.832;"><g><path d="M265.171,125.577l-80-80c-4.881-4.881-12.797-4.881-17.678,0c-4.882,4.882-4.882,12.796,0,17.678l58.661,58.661H12.5   c-6.903,0-12.5,5.597-12.5,12.5c0,6.902,5.597,12.5,12.5,12.5h213.654l-58.659,58.661c-4.882,4.882-4.882,12.796,0,17.678   c2.44,2.439,5.64,3.661,8.839,3.661s6.398-1.222,8.839-3.661l79.998-80C270.053,138.373,270.053,130.459,265.171,125.577z"></path>
+            </g></svg>
+         
+   
+        </div>
+
+    </div>
+    </a>
+
+    
+    
+</div>
+
+<div class="lineText">
+    <h1>Help grow the network</h1>
+</div>
+
+<div class="lineText">
+    <h3><i>Earn community vouchers for hosting radios</i></h3>
+</div>
+
+<button class="absoluteButton"  onclick="window.location.href='https://inethi.org.za'"> LEARN HOW</button>
+
+<div class="imageContainer">
+    <img src="captiveportal-mesh.png" style="width: 100%; max-width: 400px;">
+  </div>
 
 
-    <script>
-        function copyFunction() {
-            document.getElementById("auth_user").value = document.getElementById("auth_voucher").value;
-            document.getElementById("auth_pass").value = document.getElementById("auth_voucher").value;
-        }
-
-        function viewdiv(id) {
-            var div = document.getElementById(id);
-            div.style.display = "block"
-        }
-
-        function hidediv(id) {
-            var div = document.getElementById(id);
-            div.style.display = "none"
-        }
 
 
-    </script>
-
+<!-- Footer -->
+<div class="footer">
+    <span> <i>Operated by </i> <strong>Dappa </strong> and <strong> Grassroots Economics</strong></span>
+    <br />
+    <br />
+    <span> <i>Powered by </i> <a href="https://inethi.org.za"><strong>iNethi </strong></a> </i></span>
+    <br />
+    <br />
+    <span> <i> Project Sponsored by The Internet Society </i> </span>
+    <br />
+    <br />
+</div>
 
 </body>
 
+<script>
 
+    /*var keycloak = new Keycloak({
+        "realm": "inethi",
+        "auth-server-url": "https://keycloak.inethi.net/auth/",
+        "ssl-required": "external",
+        "resource": "inethisplash",
+        "public-client": true,
+        "confidential-port": 0,
+        "clientId": "inethisplash"
+    });
+    keycloak.init( {onLoad: 'login-required'} ).then(function (authenticated) {
+        console.log(authenticated ? 'authenticated' : 'not authenticated');
+    }).catch(function () {
+        console.log('failed to initialize');
+    });*/
+
+    function copyFunction() {
+        document.getElementById("auth_user").value = document.getElementById("auth_voucher").value;
+        document.getElementById("auth_pass").value = document.getElementById("auth_voucher").value;
+    }
+
+    function viewdiv(id) {
+        var div = document.getElementById(id);
+        div.style.display = "block"
+    }
+
+    function hidediv(id) {
+        var div = document.getElementById(id);
+        div.style.display = "none"
+    }
+
+
+</script>
 
 </html>
