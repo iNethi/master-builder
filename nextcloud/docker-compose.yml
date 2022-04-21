@@ -7,7 +7,7 @@ services:
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     restart: unless-stopped
     volumes:
-      - nextcloud_data:/var/lib/mysql"
+      - nextcloud_data:/var/lib/mysql
       
     environment:
       - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
