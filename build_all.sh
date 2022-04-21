@@ -56,7 +56,7 @@ if [ "$entrypoint" = websecure ]; then
         read -p 'AWS_ACCESS_KEY_ID: '  AWS_ACCESS_KEY_ID
         read -p 'AWS_SECRET_ACCESS_KEY: ' AWS_SECRET_ACCESS_KEY
         read -p 'AWS_HOSTED_ZONE_ID: ' AWS_HOSTED_ZONE_ID
-        sudo mkdir ./traefikssl/secrets/
+        mkdir ./traefikssl/secrets/
         echo AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID > ./traefikssl/secrets/secret_keys.env
         echo AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY >> ./traefikssl/secrets/secret_keys.env
         echo AWS_HOSTED_ZONE_ID=$AWS_HOSTED_ZONE_ID >> ./traefikssl/secrets/secret_keys.env
@@ -74,7 +74,7 @@ echo export TRAEFIK_ENTRYPOINT=$entrypoint >> ./root.conf
 
 printf "Create docker traefik bridge: traefik-bridge ..."
 echo
-sudo docker network create --attachable -d bridge inethi-bridge-traefik
+docker network create --attachable -d bridge inethi-bridge-traefik
 
 printf "Pulling dnsmasq and traefik..."
 echo
