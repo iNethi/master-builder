@@ -33,8 +33,8 @@ echo Set General master secure password for all services
 read -p 'master password: '  MASTER_PASSWORD
 # Set for Nextcloud
 mkdir -p ./nextcloud/secrets
-echo MYSQL_ROOT_PASSWORD=$MASTER_PASSWORD > ./nextcloud/secrets/secret_passwords.env
-echo MYSQL_PASSWORD=$MASTER_PASSWORD >> ./nextcloud/secrets/secret_passwords.env
+echo export MYSQL_ROOT_PASSWORD=$MASTER_PASSWORD > ./nextcloud/secrets/secret_passwords.env
+echo export MYSQL_PASSWORD=$MASTER_PASSWORD >> ./nextcloud/secrets/secret_passwords.env
 echo
 
 # Select domain namec
