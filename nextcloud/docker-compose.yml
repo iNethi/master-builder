@@ -6,7 +6,7 @@ services:
     container_name: inethi-mysql
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     restart: unless-stopped
-    env_file: "./secrets/secret_keys.env"
+    env_file: "./secrets/secret_passwords.env"
     volumes:
       - nextcloud_data:/var/lib/mysql
       
