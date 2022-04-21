@@ -43,6 +43,14 @@ for i in ${!options[@]}; do
     }
 done
 
+echo Set General master secure password for all services
+read -p 'master password: '  MASTER_PASSWORD
+# Set for Nextcloud
+mkdir -p ./nextcloud/secrets
+echo MYSQL_ROOT_PASSWORD=$MASTER_PASSWORD > ./nextcloud/secrets/secret_passwords.env
+echo MYSQL_PASSWORD=$MASTER_PASSWORD >> ./nextcloud/secrets/secret_passwords.env
+echo
+
 echo "$msg"
 
 if [ "$entrypoint" = websecure ]; then
@@ -56,7 +64,7 @@ if [ "$entrypoint" = websecure ]; then
         read -p 'AWS_ACCESS_KEY_ID: '  AWS_ACCESS_KEY_ID
         read -p 'AWS_SECRET_ACCESS_KEY: ' AWS_SECRET_ACCESS_KEY
         read -p 'AWS_HOSTED_ZONE_ID: ' AWS_HOSTED_ZONE_ID
-        mkdir ./traefikssl/secrets/
+        mkdir -p ./traefikssl/secrets/
         echo AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID > ./traefikssl/secrets/secret_keys.env
         echo AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY >> ./traefikssl/secrets/secret_keys.env
         echo AWS_HOSTED_ZONE_ID=$AWS_HOSTED_ZONE_ID >> ./traefikssl/secrets/secret_keys.env
@@ -64,9 +72,14 @@ if [ "$entrypoint" = websecure ]; then
 else
     echo You chose insecure Domain Name: http://$domainName
 fi
+
+
+
 echo
 printf "Starting to build dockers ... "
 echo
+
+
 
 # # Send the environmental variables to other scripts
 echo export inethiDN=$domainName > ./root.conf
