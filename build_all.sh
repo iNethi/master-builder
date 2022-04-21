@@ -27,6 +27,16 @@ while menu && read -rp "$prompt" num && [[ "$num" ]]; do
     [[ "${choices[num]}" ]] && choices[num]="" || choices[num]="+"
 done
 
+
+echo
+echo Set General master secure password for all services
+read -p 'master password: '  MASTER_PASSWORD
+# Set for Nextcloud
+mkdir -p ./nextcloud/secrets
+echo MYSQL_ROOT_PASSWORD=$MASTER_PASSWORD > ./nextcloud/secrets/secret_passwords.env
+echo MYSQL_PASSWORD=$MASTER_PASSWORD >> ./nextcloud/secrets/secret_passwords.env
+echo
+
 # Select domain namec
 read -p 'Doman name: ' domainName
 
@@ -39,6 +49,7 @@ select yn in "Yes" "No"; do
     esac
 done
 
+echo
 printf "You selected"; msg=" nothing"
 for i in ${!options[@]}; do
     [[ "${choices[i]}" ]] && {
@@ -46,13 +57,7 @@ for i in ${!options[@]}; do
     }
 done
 
-echo Set General master secure password for all services
-read -p 'master password: '  MASTER_PASSWORD
-# Set for Nextcloud
-mkdir -p ./nextcloud/secrets
-echo MYSQL_ROOT_PASSWORD=$MASTER_PASSWORD > ./nextcloud/secrets/secret_passwords.env
-echo MYSQL_PASSWORD=$MASTER_PASSWORD >> ./nextcloud/secrets/secret_passwords.env
-echo
+
 
 echo "$msg"
 
