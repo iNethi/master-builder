@@ -7,7 +7,7 @@ services:
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     restart: unless-stopped
     volumes:
-      - "${MYSQL_VOLUME}:/var/lib/mysql"
+      - nextcloud_data:/var/lib/mysql"
       
     environment:
       - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
@@ -32,6 +32,9 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.nextcloud.rule=Host(`${TRAEFIK_API_RULE_NEXTCLOUD}.${inethiDN}`)"
       - "traefik.http.routers.nextcloud.entrypoints=${TRAEFIK_ENTRYPOINT}"
+
+volumes:
+  nextcloud_data:
 
 networks:
   default:
