@@ -9,11 +9,12 @@
     <title>Payment</title>
     <link rel="stylesheet" href="nicepage.css" media="screen">
     <link rel="stylesheet" href="Payment.css" media="screen">
-    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
-      <script type="text/javascript" src="jspdf.min.js"></script>
+ 
+    <script type="text/javascript" src="jspdf.min.js"></script>
     <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
-    <script src="jquery-3.6.0.js"></script>
-      <script>
+    <script src="jquery.js"></script>
+
+    <script>
        $(document).ready(function(){
           $('#queryButton').click(function(){
               const doc = new jsPDF();
@@ -60,7 +61,7 @@
                   console.log(phoneNumber)
                   $.ajax({
                       type: "POST",
-                      url: "http://voucherapi.inethimac.net:5000/query",
+                      url: "https://flaskprod.blackequations.co.za/query",
                       contentType: "application/json",
                       data: JSON.stringify(data),
                   success: function (data, status) {
@@ -216,8 +217,8 @@
         }
         };
 
-}
-</script>
+    }
+    </script>
 
     <meta name="generator" content="Nicepage 4.0.3, nicepage.com">
     <!--<link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">-->
