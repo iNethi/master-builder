@@ -124,14 +124,19 @@ Add a Public Group
 
 Add External storages
 
-- Select Administator user
+- Select Administator user - select Settings
 - Bottom left - select External storages
 
 Add the following:
-- Folder name: Share, External storage: Local, Configuration /mnt/Rshare
-- Folder name: Shared Videos, External storage: Local, Configuration /mnt/Rvideos
-- Folder name: Shared Music, External storage: Local, Configuration /mnt/Rmusic
-- Folder name: Shared Music, External storage: Local, Configuration /mnt/Rphoto
+- Folder name: Rshare , External storage: Local, Configuration /mnt/Rshare, Available for Public, Options: Enable Sharing,  Read only
+- Folder name: Rvideo, External storage: Local, Configuration /mnt/Rvideos,  Available for Public, Options: Enable Sharing,  Read only
+- Folder name: Rmusic, External storage: Local, Configuration /mnt/Rmusic,  Available for Public, Options: Enable Sharing,  Read only
+- Folder name: Rphoto, External storage: Local, Configuration /mnt/Rphoto,  Available for Public, Options: Enable Sharing,  Read only
+- Folder name: RWshare , External storage: Local, Configuration /mnt/Rshare, Available for admin, Options: Enable Sharing
+- Folder name: RWvideo, External storage: Local, Configuration /mnt/Rvideos,  Available for admin, Options: Enable Sharing
+- Folder name: RWmusic, External storage: Local, Configuration /mnt/Rmusic,  Available for admin, Options: Enable Sharing
+- Folder name: RWphoto, External storage: Local, Configuration /mnt/Rphoto,  Available for admin, Options: Enable Sharing
+
 
 ## Jellyfin
 

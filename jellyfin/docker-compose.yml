@@ -13,8 +13,7 @@ services:
         - "${NEXTCLOUD_RVIDEO_VOLUME}:/mnt/Rvideo"
         - "${NEXTCLOUD_RPHOTO_VOLUME}:/mnt/Rphoto"
         - "${NEXTCLOUD_RMUSIC_VOLUME}:/mnt/Rmusic"
-        
-    #  - "${JELLYFIN_VOLUME}/config:/config"
+        - "${JELLYFIN_VOLUME}/config:/config"
     #  - "${JELLYFIN_VOLUME}/tvseries:/data/tvshows"
     #  - "${JELLYFIN_VOLUME}/movies:/data/movies"
      # - "${JELLYFIN_VOLUME}/opt/vc/lib:/opt/vc/lib"
