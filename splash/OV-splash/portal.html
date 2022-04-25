@@ -6,11 +6,241 @@
     <meta name="keywords" content="CHOOSE YOUR VOUCHER">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
+
     <title>FOCUS CAPTIVE PORTAL</title>
     <link rel="stylesheet" href="captiveportal-tidy.css" media="screen">
-    <script class="u-script" type="text/javascript" src="captiveportal-jquery.js" defer=""></script>
+    <script src="captiveportal-jquery.js"></script>
     <script class="u-script" type="text/javascript" src="captiveportal-nicepage.js" defer=""></script>
-    <meta name="generator" content="Nicepage 4.8.2, nicepage.com">
+
+    <script>
+      $(document).ready(function(){
+         $('#queryButton').click(function(){
+             //const doc = new jsPDF();
+             let sendRequest = true;
+             let voucherPin = document.getElementById("usedVoucherPin").value;
+             voucherPin = voucherPin.replace(/\s+/g, '');
+             const phoneNumber = document.getElementById("usedPhoneNumber").value;
+
+             if (isNaN(voucherPin) && sendRequest) {
+                 alert("Please input a valid voucher pin");
+                 sendRequest = false;
+                 console.log("invalid voucher pin")
+             }
+             if (voucherPin === '' && sendRequest) {
+                 alert("Please input a valid pin");
+                 sendRequest = false;
+                 console.log("invalid voucher pin")
+             }
+             if (isNaN(phoneNumber) && sendRequest) {
+                 alert("Please input a valid phone number");
+                 sendRequest = false;
+                 console.log("invalid phone number")
+             }
+             if (phoneNumber === '' && sendRequest) {
+                 alert("Please input a valid phone number");
+                 sendRequest = false;
+                 console.log("invalid phone number")
+             }
+             if (phoneNumber.length !== 10 && sendRequest) {
+                 alert("Please input a valid phone number");
+                 sendRequest = false;
+                 console.log("invalid phone number")
+             }
+             if (sendRequest) {
+                 $("#queryButton").attr("disabled", true);
+                 $( "#queryButton" ).fadeTo( "fast" , 0.1, function() {
+                       // Animation complete.
+                 });
+
+                 const data = {
+                     "voucherPin" : voucherPin,
+                     "cellphoneNumber": phoneNumber
+                 }
+                 console.log(voucherPin)
+                 console.log(phoneNumber)
+                 $.ajax({
+                     type: "POST",
+                     url: "http://voucherapi.inethimac.net:5000/query",
+                     contentType: "application/json",
+                     data: JSON.stringify(data),
+                 success: function (data, status) {
+                     const json_obj = data.message;
+                     const json_obj_response_code = data.responseCode;
+                     const message = JSON.stringify(json_obj);
+                     const response_code = JSON.stringify(json_obj_response_code);
+                     // const json = JSON.parse(message);
+                     if (response_code === '0') {
+                         doc.text(message, 10, 10);
+                         doc.save("response.pdf");
+
+                         if(alert("Your voucher code is: " + message + "\nPlease write this down as clicking ok will remove " +
+                             "it from your screen. You will also be able to download a PDF with your code after clicking okay.")){}
+                         else {
+                           window.location.reload();
+                         }
+                     }
+                     else {
+                         if(alert(message)){}
+                         else {
+                           window.location.reload();
+                         }
+
+                     }
+
+                 },
+                 error: function (errMsg) {
+                     console.log(errMsg)
+                     console.log(typeof(errMsg))
+
+                     if(alert("There has been an error processing your payment. Please notify an admin or try again later")){}
+                         else {
+                           window.location.reload();
+                         }
+                     window.location.reload();
+                 }
+             })
+             }
+         });
+      });
+   </script>
+   <script>
+     function myFunction() {
+        alert("The form was submitted");
+      }
+
+      function Validator() {
+        alert("The form was submitted");
+        return true;
+      }
+
+      
+
+      $(document).ready(function(){
+
+
+        $("#One4YouForm").submit(function(event) {
+             console.log('Submit Voucher done')
+              /* stop form from submitting normally */
+              event.preventDefault();
+              event.stopPropagation();
+              event.stopImmediatePropagation();
+
+             //const doc = new jsPDF();
+             let sendRequest = true;
+             const voucherChoice = $("input[name='" + "radiobutton" + "']:checked").val();
+             if (typeof(voucherChoice) === 'undefined') {
+                 alert("Please select a voucher");
+                 sendRequest = false;
+                 console.log("no voucher selected")
+             }
+             let voucherPin = document.getElementById("voucherPin").value;
+             voucherPin = voucherPin.replace(/\s+/g, '');
+             const phoneNumber = document.getElementById("phoneNumber").value;
+             if (isNaN(voucherPin) && sendRequest) {
+                 alert("Please input a valid voucher pin");
+                 sendRequest = false;
+                 console.log("invalid voucher pin")
+             }
+             if (voucherPin === '' && sendRequest) {
+                 alert("Please input a valid voucher pin");
+                 sendRequest = false;
+                 console.log("invalid voucher  pin")
+             }
+             if (isNaN(phoneNumber) && sendRequest) {
+                 alert("Please input a valid phone number");
+                 sendRequest = false;
+                 console.log("invalid phone number")
+             }
+             if (phoneNumber === '' && sendRequest) {
+                 alert("Please input a valid phone number");
+                 sendRequest = false;
+                 console.log("invalid phone number")
+             }
+             if (phoneNumber.length !== 10 && sendRequest) {
+                 alert("Please input a valid phone number");
+                 sendRequest = false;
+                 console.log("invalid phone number")
+             }
+             if (sendRequest) {
+                 $("#voucherButton").attr("disabled", true);
+                 $("#voucherButton" ).fadeTo( "fast" , 0.1, function() {
+                       // Animation complete.
+                 });
+
+                 let amount = voucherChoice // don't make this 0 as 0 redeems the whole voucher
+
+                 const data = {
+                     "voucherChoice" : amount,
+                     "voucherPin" : voucherPin,
+                     "cellphoneNumber": phoneNumber
+                 }
+                 console.log(data)
+               
+                 $.ajax({
+                     type: "POST",
+                     url: "https://flaskprod.blackequations.co.za/redeem",
+                     contentType: "application/json",
+                     data: JSON.stringify(data),
+                 success: function (data, status) {
+                     const json_obj = data.message;
+                     const json_obj_response_code = data.responseCode;
+                     const message = JSON.stringify(json_obj);
+                     const response_code = JSON.stringify(json_obj_response_code);
+                     // const json = JSON.parse(message);
+                     if (response_code === '0') {
+                         //doc.text(message, 10, 10);
+                         //doc.save("response.pdf");
+                         if(alert("Your voucher code is: " + message + "\nPlease write this down as clicking ok will remove " +
+                             "it from your screen.")){}
+                         else {
+                           window.location.reload();
+                         }
+                     }
+                     else {
+                         if(alert(message)){}
+                         else {
+                           window.location.reload();
+                         }
+
+                     }
+
+                 },
+                 error: function (errMsg) {
+                     console.log(errMsg)
+                     console.log(typeof(errMsg))
+
+                     if(alert("There has been an error processing your payment. Please notify an admin or try again later")){}
+                         else {
+                           window.location.reload();
+                         }
+                     window.location.reload();
+                 }
+
+             })
+
+             }
+         });
+      });
+   </script>
+
+
+   <script>
+   var allRadios = document.getElementsByName("radio");
+   var booRadio;
+   var x = 0;
+   for(x = 0; x < allRadios.length; x++){
+       allRadios[x].onclick = function(){
+           if(booRadio === this){
+               this.checked = false;
+       booRadio = null;
+           }else{
+           booRadio = this;
+       }
+       };
+
+   }
+   </script>
+ 
   
 
     <script type="application/ld+json">{
@@ -94,7 +324,7 @@
                   
               </div>
               <br/>
-              <input name="redirurl" type="hidden" value="http://splash.inethi.net">
+              <input name="redirurl" type="hidden" value="http://splash.inethilocal.net">
               <input type="submit" name="accept" class="login login-submit" value="Login" id="login" disabled>
               <button type="button" class="login-cancel" onclick="hidediv('logincard')" id="cancel">Cancel </button>
               <br/>
@@ -163,7 +393,8 @@
         <h1 class="u-align-center u-text u-text-default u-text-1">CHOOSE YOUR<br>VOUCHER
         </h1>
         <div class="u-align-center u-expanded-width-xs u-form u-form-1">
-          <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom" name="form" style="padding: 10px;">
+          <!--<form  class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" name="form" style="padding: 10px;" onsubmit="myFunction()">-->
+          <form id="One4YouForm" action="https://flaskprod.blackequations.co.za/redeem" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom" name="form" style="padding: 10px;">
             <div class="u-form-group u-form-radiobutton u-form-group-1">
               <div class="u-form-radio-button-wrapper">
                 <input type="radio" name="radiobutton" value="R1 - 30min" required="required">
@@ -209,31 +440,27 @@
             </div>
             <div class="u-form-group u-form-group-2">
               <label for="text-76cf" class="u-label">Voucher Pin</label>
-              <input type="text" placeholder="Enter 1ForYou 16-Digit pin" id="text-76cf" name="number-1" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="required" maxlength="16">
+              <input type="text" placeholder="Enter 1ForYou 16-Digit pin" id="voucherPin" name="number-1" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="required" maxlength="16">
             </div>
-            <div class="u-form-group u-form-name u-form-group-3">
-              <label for="name-0c34" class="u-label">Name</label>
-              <input type="text" placeholder="Enter your Name" id="name-0c34" name="name" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
-            </div>
-            <div class="u-form-group u-form-name u-form-group-4">
-              <label for="name-2ae3" class="u-label">Surname</label>
-              <input type="text" placeholder="Enter your Surname" id="name-2ae3" name="name-1" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
-            </div>
+       
             <div class="u-form-group u-form-phone u-form-group-5">
               <label for="phone-3236" class="u-label">Cellphone</label>
-              <input type="tel" pattern="\+?\d{0,2}[\s\(\-]?([0-9]{3})[\s\)\-]?([\s\-]?)([0-9]{3})[\s\-]?([0-9]{2})[\s\-]?([0-9]{2})" placeholder="Enter your cellphone (e.g. 0789485736)" id="phone-3236" name="phone" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="" maxlength="10">
+              <input type="tel" pattern="\+?\d{0,2}[\s\(\-]?([0-9]{3})[\s\)\-]?([\s\-]?)([0-9]{3})[\s\-]?([0-9]{2})[\s\-]?([0-9]{2})" placeholder="Enter your cellphone (e.g. 0789485736)" id="phoneNumber" name="phone" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="" maxlength="10">
             </div>
             <div class="u-align-center u-form-group u-form-submit">
-              <a href="#" class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-custom-color-1 u-radius-10 u-btn-1">Submit</a>
+              <a href="#" id="voucherButton" class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-custom-color-1 u-radius-10 u-btn-1">Submit</a>
               <input type="submit" value="submit" class="u-form-control-hidden">
+          
             </div>
+            <!--<input type="button" value="submit" onclick="JavaScript:return Validator();" />-->
             <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
-            <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div>
+            <div class="u-form-send-message u-form-send-error "> Unable to send your message. Please fix errors then try again. </div>
             <input type="hidden" value="" name="recaptchaResponse">
           </form>
         </div>
       </div>
     </section>
+
     <section class="u-clearfix u-section-5" id="sec-1046">
       <div class="u-align-left u-clearfix u-sheet u-sheet-1">
         <img class="u-image u-image-default u-preserve-proportions u-image-1" src="captiveportal-FOCUSLARGE1.png" alt="" data-image-width="756" data-image-height="756">

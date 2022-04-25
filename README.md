@@ -94,16 +94,22 @@ Once all the docker are running there are some remaining configurations steps
 
 ## Nextcloud
 
-Set up the connection to the database
+- To setup go to [https://nextcloud.inethilocal.net](https://nextcloud.inethilocal.net)
 
-- user: admin
-- password: iNethi#2018
+### Choose a master username and password and storage location
 
-### Select MySQL/MariaDB (under configure the database)
+- user: inethiadmin (suggestions)
+- password: (pick a secure password)
+- storage location: (leave as default)
+
+### configure database
+
+Select MySQL/MariaDB (under configure the database)
+
 - Database user: inethi
-- password: inethi2018
+- password: iNethi#2021
 - database name: inethi_nextcloud
-- database: mariadb
+- database: inethi-mysql
 
 Once Nextcloud launches login as administrator
 
@@ -125,6 +131,15 @@ Add the following:
 - Folder name: Share, External storage: Local, Configuration /mnt/Rshare
 - Folder name: Shared Videos, External storage: Local, Configuration /mnt/Rvideos
 - Folder name: Shared Music, External storage: Local, Configuration /mnt/Rmusic
+- Folder name: Shared Music, External storage: Local, Configuration /mnt/Rphoto
+
+## Jellyfin
+
+- To setup go to [https://jellyfin.inethilocal.net](https://jellyfin.inethilocal.net)
+
+
+
+### Choose a master username and password and storage location
 
 # Features in the works
 - Payment integrations
