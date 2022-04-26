@@ -91,7 +91,7 @@ def query_voucher():
     """
     voucher_pin = request.json.get('voucherPin')  # 1FORYOU voucher pin
     cellphone_number = request.json.get('cellphoneNumber')  # user's cellphone number
-    match = Vouchers.query.filter_by(used=True, voucher_pin=voucher_pin, phone_number=cellphone_number).first()  #
+    match = Vouchers.query.filter_by( voucher_pin=voucher_pin, phone_number=cellphone_number).first()  #
     # check if a Radius voucher has been purchased
     print(type(match))
     if match is None:  # if no Radius voucher has not been purchased with the users details
