@@ -10,12 +10,13 @@
     <title>FOCUS CAPTIVE PORTAL</title>
     <link rel="stylesheet" href="captiveportal-tidy.css" media="screen">
     <script src="captiveportal-jquery.js"></script>
+    <script src="captiveportal-jspdf.js"></script>
     <script class="u-script" type="text/javascript" src="captiveportal-nicepage.js" defer=""></script>
 
     <script>
       $(document).ready(function(){
          $('#queryButton').click(function(){
-             //const doc = new jsPDF();
+             const doc = new jsPDF();
              let sendRequest = true;
              let voucherPin = document.getElementById("usedVoucherPin").value;
              voucherPin = voucherPin.replace(/\s+/g, '');
