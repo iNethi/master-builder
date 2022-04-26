@@ -3,365 +3,576 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="">
+    <meta name="keywords" content="CHOOSE YOUR VOUCHER">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
-    <title>Payment</title>
-    <link rel="stylesheet" href="nicepage.css" media="screen">
-    <link rel="stylesheet" href="Payment.css" media="screen">
+
+    <title>FOCUS CAPTIVE PORTAL</title>
+    <link rel="stylesheet" href="captiveportal-tidy.css" media="screen">
+    <script src="captiveportal-jquery.js"></script>
+    <script class="u-script" type="text/javascript" src="captiveportal-nicepage.js" defer=""></script>
+
+    <script>
+      $(document).ready(function(){
+         $('#queryButton').click(function(){
+             //const doc = new jsPDF();
+             let sendRequest = true;
+             let voucherPin = document.getElementById("usedVoucherPin").value;
+             voucherPin = voucherPin.replace(/\s+/g, '');
+             const phoneNumber = document.getElementById("usedPhoneNumber").value;
+
+             if (isNaN(voucherPin) && sendRequest) {
+                 alert("Please input a valid voucher pin");
+                 sendRequest = false;
+                 console.log("invalid voucher pin")
+             }
+             if (voucherPin === '' && sendRequest) {
+                 alert("Please input a valid pin");
+                 sendRequest = false;
+                 console.log("invalid voucher pin")
+             }
+             if (isNaN(phoneNumber) && sendRequest) {
+                 alert("Please input a valid phone number");
+                 sendRequest = false;
+                 console.log("invalid phone number")
+             }
+             if (phoneNumber === '' && sendRequest) {
+                 alert("Please input a valid phone number");
+                 sendRequest = false;
+                 console.log("invalid phone number")
+             }
+             if (phoneNumber.length !== 10 && sendRequest) {
+                 alert("Please input a valid phone number");
+                 sendRequest = false;
+                 console.log("invalid phone number")
+             }
+             if (sendRequest) {
+                 $("#queryButton").attr("disabled", true);
+                 $( "#queryButton" ).fadeTo( "fast" , 0.1, function() {
+                       // Animation complete.
+                 });
+
+                 const data = {
+                     "voucherPin" : voucherPin,
+                     "cellphoneNumber": phoneNumber
+                 }
+                 console.log(voucherPin)
+                 console.log(phoneNumber)
+                 $.ajax({
+                     type: "POST",
+                     url: "https://voucherapiprod.blackequations.co.za/query",
+                     contentType: "application/json",
+                     data: JSON.stringify(data),
+                 success: function (data, status) {
+                     const json_obj = data.message;
+                     const json_obj_response_code = data.responseCode;
+                     const message = JSON.stringify(json_obj);
+                     const response_code = JSON.stringify(json_obj_response_code);
+                     // const json = JSON.parse(message);
+                     if (response_code === '0') {
+                         doc.text(message, 10, 10);
+                         doc.save("response.pdf");
+
+                         if(alert("Your voucher code is: " + message + "\nPlease write this down as clicking ok will remove " +
+                             "it from your screen. You will also be able to download a PDF with your code after clicking okay.")){}
+                         else {
+                           window.location.reload();
+                         }
+                     }
+                     else {
+                         if(alert(message)){}
+                         else {
+                           window.location.reload();
+                         }
+
+                     }
+
+                 },
+                 error: function (errMsg) {
+                     console.log(errMsg)
+                     console.log(typeof(errMsg))
+
+                     if(alert("There has been an error processing your payment. Please notify an admin or try again later")){}
+                         else {
+                           window.location.reload();
+                         }
+                     window.location.reload();
+                 }
+             })
+             }
+         });
+      });
+   </script>
+   <script>
+     function myFunction() {
+        alert("The form was submitted");
+      }
+
+      function Validator() {
+        alert("The form was submitted");
+        return true;
+      }
+
+      
+
+      $(document).ready(function(){
+
+
+        $("#One4YouForm").submit(function(event) {
+             console.log('Submit Voucher done')
+              /* stop form from submitting normally */
+              event.preventDefault();
+              event.stopPropagation();
+              event.stopImmediatePropagation();
+
+             //const doc = new jsPDF();
+             let sendRequest = true;
+             const voucherChoice = $("input[name='" + "radiobutton" + "']:checked").val();
+             if (typeof(voucherChoice) === 'undefined') {
+                 alert("Please select a voucher");
+                 sendRequest = false;
+                 console.log("no voucher selected")
+             }
+             let voucherPin = document.getElementById("voucherPin").value;
+             voucherPin = voucherPin.replace(/\s+/g, '');
+             const phoneNumber = document.getElementById("phoneNumber").value;
+             if (isNaN(voucherPin) && sendRequest) {
+                 alert("Please input a valid voucher pin");
+                 sendRequest = false;
+                 console.log("invalid voucher pin")
+             }
+             if (voucherPin === '' && sendRequest) {
+                 alert("Please input a valid voucher pin");
+                 sendRequest = false;
+                 console.log("invalid voucher  pin")
+             }
+             if (isNaN(phoneNumber) && sendRequest) {
+                 alert("Please input a valid phone number");
+                 sendRequest = false;
+                 console.log("invalid phone number")
+             }
+             if (phoneNumber === '' && sendRequest) {
+                 alert("Please input a valid phone number");
+                 sendRequest = false;
+                 console.log("invalid phone number")
+             }
+             if (phoneNumber.length !== 10 && sendRequest) {
+                 alert("Please input a valid phone number");
+                 sendRequest = false;
+                 console.log("invalid phone number")
+             }
+             if (sendRequest) {
+                 $("#voucherButton").attr("disabled", true);
+                 $("#voucherButton" ).fadeTo( "fast" , 0.1, function() {
+                       // Animation complete.
+                 });
+
+                 let amount = voucherChoice // don't make this 0 as 0 redeems the whole voucher
+
+                 const data = {
+                     "voucherChoice" : amount,
+                     "voucherPin" : voucherPin,
+                     "cellphoneNumber": phoneNumber
+                 }
+                 console.log(data)
+               
+                 $.ajax({
+                     type: "POST",
+                     url: "https://voucherapiprod.blackequations.co.za/redeem",
+                     contentType: "application/json",
+                     data: JSON.stringify(data),
+                 success: function (data, status) {
+                     const json_obj = data.message;
+                     const json_obj_response_code = data.responseCode;
+                     const message = JSON.stringify(json_obj);
+                     const response_code = JSON.stringify(json_obj_response_code);
+                     // const json = JSON.parse(message);
+                     if (response_code === '0') {
+                         //doc.text(message, 10, 10);
+                         //doc.save("response.pdf");
+                         if(alert("Your voucher code is: " + message + "\nPlease write this down as clicking ok will remove " +
+                             "it from your screen.")){}
+                         else {
+                           window.location.reload();
+                         }
+                     }
+                     else {
+                         if(alert(message)){}
+                         else {
+                           window.location.reload();
+                         }
+
+                     }
+
+                 },
+                 error: function (errMsg) {
+                     console.log(errMsg)
+                     console.log(typeof(errMsg))
+
+                     if(alert("There has been an error processing your payment. Please notify an admin or try again later")){}
+                         else {
+                           window.location.reload();
+                         }
+                     window.location.reload();
+                 }
+
+             })
+
+             }
+         });
+      });
+   </script>
+
+
+   <script>
+   var allRadios = document.getElementsByName("radio");
+   var booRadio;
+   var x = 0;
+   for(x = 0; x < allRadios.length; x++){
+       allRadios[x].onclick = function(){
+           if(booRadio === this){
+               this.checked = false;
+       booRadio = null;
+           }else{
+           booRadio = this;
+       }
+       };
+
+   }
+   </script>
  
-    <script type="text/javascript" src="jspdf.min.js"></script>
-    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
-    <script src="jquery.js"></script>
+  
+
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "Site198722"
+    }</script> 
 
     <script>
-       $(document).ready(function(){
-          $('#queryButton').click(function(){
-              const doc = new jsPDF();
-              let sendRequest = true;
-              let voucherPin = document.getElementById("usedVoucherPin").value;
-              voucherPin = voucherPin.replace(/\s+/g, '');
-              const phoneNumber = document.getElementById("usedPhoneNumber").value;
-              if (isNaN(voucherPin) && sendRequest) {
-                  alert("Please input a valid voucher pin");
-                  sendRequest = false;
-                  console.log("invalid voucher pin")
-              }
-              if (voucherPin === '' && sendRequest) {
-                  alert("Please input a valid pin");
-                  sendRequest = false;
-                  console.log("invalid voucher pin")
-              }
-              if (isNaN(phoneNumber) && sendRequest) {
-                  alert("Please input a valid phone number");
-                  sendRequest = false;
-                  console.log("invalid phone number")
-              }
-              if (phoneNumber === '' && sendRequest) {
-                  alert("Please input a valid phone number");
-                  sendRequest = false;
-                  console.log("invalid phone number")
-              }
-              if (phoneNumber.length !== 10 && sendRequest) {
-                  alert("Please input a valid phone number");
-                  sendRequest = false;
-                  console.log("invalid phone number")
-              }
-              if (sendRequest) {
-                  $("#queryButton").attr("disabled", true);
-                  $( "#queryButton" ).fadeTo( "fast" , 0.1, function() {
-                        // Animation complete.
-                  });
 
-                  const data = {
-                      "voucherPin" : voucherPin,
-                      "cellphoneNumber": phoneNumber
-                  }
-                  console.log(voucherPin)
-                  console.log(phoneNumber)
-                  $.ajax({
-                      type: "POST",
-                      url: "https://flaskprod.blackequations.co.za/query",
-                      contentType: "application/json",
-                      data: JSON.stringify(data),
-                  success: function (data, status) {
-                      const json_obj = data.message;
-                      const json_obj_response_code = data.responseCode;
-                      const message = JSON.stringify(json_obj);
-                      const response_code = JSON.stringify(json_obj_response_code);
-                      // const json = JSON.parse(message);
-                      if (response_code === '0') {
-                          doc.text(message, 10, 10);
-                          doc.save("response.pdf");
+      /*var keycloak = new Keycloak({
+          "realm": "inethi",
+          "auth-server-url": "https://keycloak.inethi.net/auth/",
+          "ssl-required": "external",
+          "resource": "inethisplash",
+          "public-client": true,
+          "confidential-port": 0,
+          "clientId": "inethisplash"
+      });
+      keycloak.init( {onLoad: 'login-required'} ).then(function (authenticated) {
+          console.log(authenticated ? 'authenticated' : 'not authenticated');
+      }).catch(function () {
+          console.log('failed to initialize');
+      });*/
+  
+      function copyFunction() {
+          document.getElementById("auth_user").value = document.getElementById("auth_voucher").value;
+          document.getElementById("auth_pass").value = document.getElementById("auth_voucher").value;
+      }
+  
+      function viewdiv(id) {
+          var div = document.getElementById(id);
+          div.style.display = "block"
+      }
+  
+      function hidediv(id) {
+          var div = document.getElementById(id);
+          div.style.display = "none"
+      }
+  
+  
+  </script>
 
-                          if(alert("Your voucher code is: " + message + "\nPlease write this down as clicking ok will remove " +
-                              "it from your screen. You will also be able to download a PDF with your code after clicking okay.")){}
-                          else {
-                            window.location.reload();
-                          }
-                      }
-                      else {
-                          if(alert(message)){}
-                          else {
-                            window.location.reload();
-                          }
-
-                      }
-
-                  },
-                  error: function (errMsg) {
-                      console.log(errMsg)
-                      console.log(typeof(errMsg))
-
-                      if(alert("There has been an error processing your payment. Please notify an admin or try again later")){}
-                          else {
-                            window.location.reload();
-                          }
-                      window.location.reload();
-                  }
-              })
-              }
-          });
-       });
-    </script>
-    <script>
-       $(document).ready(function(){
-          $('#submit').click(function(){
-              const doc = new jsPDF();
-              let sendRequest = true;
-              const voucherChoice = $("input[name='" + "radio" + "']:checked").val();
-              if (typeof(voucherChoice) === 'undefined') {
-                  alert("Please select a voucher");
-                  sendRequest = false;
-                  console.log("no voucher selected")
-              }
-              let voucherPin = document.getElementById("voucherPin").value;
-              voucherPin = voucherPin.replace(/\s+/g, '');
-              const phoneNumber = document.getElementById("phoneNumber").value;
-              if (isNaN(voucherPin) && sendRequest) {
-                  alert("Please input a valid voucher pin");
-                  sendRequest = false;
-                  console.log("invalid voucher pin")
-              }
-              if (voucherPin === '' && sendRequest) {
-                  alert("Please input a valid pin");
-                  sendRequest = false;
-                  console.log("invalid voucher pin")
-              }
-              if (isNaN(phoneNumber) && sendRequest) {
-                  alert("Please input a valid phone number");
-                  sendRequest = false;
-                  console.log("invalid phone number")
-              }
-              if (phoneNumber === '' && sendRequest) {
-                  alert("Please input a valid phone number");
-                  sendRequest = false;
-                  console.log("invalid phone number")
-              }
-              if (phoneNumber.length !== 10 && sendRequest) {
-                  alert("Please input a valid phone number");
-                  sendRequest = false;
-                  console.log("invalid phone number")
-              }
-              if (sendRequest) {
-                  $("#submit").attr("disabled", true);
-                  $( "#submit" ).fadeTo( "fast" , 0.1, function() {
-                        // Animation complete.
-                  });
-                  let amount = voucherChoice // don't make this 0 as 0 redeems the whole voucher
-
-                  const data = {
-                      "voucherChoice" : amount,
-                      "voucherPin" : voucherPin,
-                      "cellphoneNumber": phoneNumber
-                  }
-                  console.log(voucherPin)
-                  console.log(phoneNumber)
-                  console.log(amount)
-                  $.ajax({
-                      type: "POST",
-                      url: "http://voucherapi.inethimac.net:5000/redeem",
-                      contentType: "application/json",
-                      data: JSON.stringify(data),
-                  success: function (data, status) {
-                      const json_obj = data.message;
-                      const json_obj_response_code = data.responseCode;
-                      const message = JSON.stringify(json_obj);
-                      const response_code = JSON.stringify(json_obj_response_code);
-                      // const json = JSON.parse(message);
-                      if (response_code === '0') {
-                          doc.text(message, 10, 10);
-                          doc.save("response.pdf");
-                          if(alert("Your voucher code is: " + message + "\nPlease write this down as clicking ok will remove " +
-                              "it from your screen.")){}
-                          else {
-                            window.location.reload();
-                          }
-                      }
-                      else {
-                          if(alert(message)){}
-                          else {
-                            window.location.reload();
-                          }
-
-                      }
-
-                  },
-                  error: function (errMsg) {
-                      console.log(errMsg)
-                      console.log(typeof(errMsg))
-
-                      if(alert("There has been an error processing your payment. Please notify an admin or try again later")){}
-                          else {
-                            window.location.reload();
-                          }
-                      window.location.reload();
-                  }
-              })
-              }
-          });
-       });
-    </script>
-
-    <script>
-    var allRadios = document.getElementsByName("radio");
-    var booRadio;
-    var x = 0;
-    for(x = 0; x < allRadios.length; x++){
-        allRadios[x].onclick = function(){
-            if(booRadio === this){
-                this.checked = false;
-        booRadio = null;
-            }else{
-            booRadio = this;
-        }
-        };
-
-    }
-    </script>
-
-    <meta name="generator" content="Nicepage 4.0.3, nicepage.com">
-    <!--<link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">-->
-    
     <meta name="theme-color" content="#478ac9">
-    <meta property="og:title" content="Payment">
+    <meta property="og:title" content="FOCUS CAPTIVE PORTAL">
     <meta property="og:type" content="website">
   </head>
-  <body data-home-page="Payment.html" data-home-page-title="Payment" class="u-body">
+  <body data-home-page="FOCUS-CAPTIVE-PORTAL.html" data-home-page-title="FOCUS CAPTIVE PORTAL" class="u-body u-xl-mode">
+    <section class="u-clearfix u-custom-color-1 u-section-1" id="sec-71a9">
+      <div class="u-align-left u-clearfix u-sheet u-sheet-1">
+        <img class="u-align-center u-image u-image-1" src="captiveportal-FOCUS1231.png" data-image-width="1112" data-image-height="477">
+      </div>
+    </section>
+
+  
+  </div>
 
 
-    <section class="u-clearfix u-section-1" id="sec-19a0">
+    <section class="u-clearfix u-section-2" id="sec-061e">
       <div class="u-clearfix u-sheet u-sheet-1">
-        <p class="u-text u-text-default u-text-1">Time Based Vouchers</p>
-        <div class="u-expanded-width u-list u-list-1">
-          <div class="u-repeater u-repeater-1">
-            <div class="u-container-style u-list-item u-repeater-item">
-              <div class="u-container-layout u-similar-container u-container-layout-1">
-                <img alt="" class="u-expanded-width u-image u-image-default u-image-1" data-image-width="2000" data-image-height="1333" src="images/Shop-Logo.png">
-                <h3 class="u-text u-text-default u-text-2">5 mb/s 1hr</h3>
-                <p class="u-text u-text-3"> Voucher Details </p>
-                  <ul>
-                    <li>PRICE R2</li>
-                    <li>1 Hour Internet</li>
-                    <li>5 Mb/s</li>
-                    <li>1 Device</li>
-                    <li>Valid for 24 hours</li>
-                  </ul>
+        <h1 class="u-align-center u-text u-text-default u-text-1">FOCUS CONNECT</h1>
+        <div class="u-align-center u-clearfix u-expanded-width u-gutter-10 u-layout-custom-sm u-layout-custom-xs u-layout-wrap u-layout-wrap-1">
+          <div class="u-gutter-0 u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-1">
+                <div class="u-border-2 u-border-custom-color-1 u-container-layout u-container-layout-1">
+                  <img class="focusvoucher u-align-center u-image u-image-round u-radius-10 u-image-1" src="captiveportal-FOCUS1.png" alt="" data-image-width="150" data-image-height="134" data-href="#sec-1046" data-page-id="187521654">
+                  <p class="u-align-center-xs u-text u-text-default u-text-2">Use your FOCUS voucher</p>
+                </div>
               </div>
-            </div>
-            <div class="u-container-style u-list-item u-repeater-item">
-              <div class="u-container-layout u-similar-container u-container-layout-2">
-                <img alt="" class="u-expanded-width u-image u-image-default u-image-2" data-image-width="2000" data-image-height="1333" src="images/Shop-Logo.png">
-                <h3 class="u-text u-text-default u-text-4">5 mb/s 3hr</h3>
-                <p class="u-text u-text-5">Voucher Details</p>
-                <ul>
-                    <li>PRICE R5</li>
-                    <li>3 Hour Internet</li>
-                    <li>5 Mb/s</li>
-                    <li>1 Device</li>
-                    <li>Valid for 24 hours</li>
-                  </ul>
-              </div>
-            </div>
-            <div class="u-container-style u-list-item u-repeater-item">
-              <div class="u-container-layout u-similar-container u-container-layout-3">
-                <img alt="" class="u-expanded-width u-image u-image-default u-image-3" data-image-width="2000" data-image-height="1333" src="images/Shop-Logo.png">
-                <h3 class="u-text u-text-default u-text-6">5 mb/s 24hr</h3>
-                <p class="u-text u-text-7">Voucher Details</p>
-                <ul>
-                    <li>PRICE R15</li>
-                    <li>24 Hour Internet</li>
-                    <li>5 Mb/s</li>
-                    <li>1 Device</li>
-                    <li>Valid for 24 hours</li>
-                  </ul>
+              <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-2">
+                <div class="u-border-2 u-border-custom-color-1 u-container-layout u-container-layout-2">
+                  <img class="oneForYouvoucher u-align-center u-image u-image-round u-preserve-proportions u-radius-10 u-image-2" src="captiveportal-OneForYou-7.jpg" alt="" data-image-width="224" data-image-height="224" data-href="#sec-62b5" data-page-id="187521654">
+                  <p class="u-align-center-xs u-text u-text-default u-text-3">Use your 1For voucher</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <p class="u-text u-text-default u-text-8">Data Based Vouchers</p>
-        <div class="u-expanded-width u-list u-list-2">
-          <div class="u-repeater u-repeater-2">
-            <div class="u-container-style u-list-item u-repeater-item">
-              <div class="u-container-layout u-similar-container u-container-layout-4">
-                <img alt="" class="u-expanded-width u-image u-image-default u-image-4" data-image-width="2000" data-image-height="1333" src="images/Shop-Logo.png">
-                <h3 class="u-text u-text-default u-text-9">5 mb/s 1GB</h3>
-                <p class="u-text u-text-10"> Voucher Details</p>
-                <ul>
-                    <li>PRICE R10</li>
-                    <li>1 GB of Data</li>
-                    <li>5 Mb/s</li>
-                    <li>Unlimited Devices</li>
-                    <li>Valid for 84 Days</li>
-                  </ul>
-              </div>
-            </div>
-            <div class="u-container-style u-list-item u-repeater-item">
-              <div class="u-container-layout u-similar-container u-container-layout-5">
-                <img alt="" class="u-expanded-width u-image u-image-default u-image-5" data-image-width="2000" data-image-height="1333" src="images/Shop-Logo.png">
-                <h3 class="u-text u-text-default u-text-11">5 mb/s 5B</h3>
-                <p class="u-text u-text-12"> Voucher Details</p>
-                <ul>
-                    <li>PRICE R40</li>
-                    <li>10 GB of Data</li>
-                    <li>5 Mb/s</li>
-                    <li>Unlimited Devices</li>
-                    <li>Valid for 84 Days</li>
-                  </ul>
-              </div>
-            </div>
-            <div class="u-container-style u-list-item u-repeater-item">
-              <div class="u-container-layout u-similar-container u-container-layout-6">
-                <img alt="" class="u-expanded-width u-image u-image-default u-image-6" data-image-width="2000" data-image-height="1333" src="images/Shop-Logo.png">
-                <h3 class="u-text u-text-default u-text-13">5 mb/s 10GB</h3>
-                <p class="u-text u-text-14"> Voucher Details</p>
-                <ul>
-                    <li>PRICE R80</li>
-                    <li>10 GB of Data</li>
-                    <li>5 Mb/s</li>
-                    <li>Unlimited Devices</li>
-                    <li>Valid for 84 Days</li>
-                  </ul>
-              </div>
-            </div>
-            </div>
-          </div>
-          <div style="padding-bottom: 20px">
-            <h3> Choose your Voucher</h3>
-            <div>
-              <div id="redeem">
-                <input type="radio" id="51hr" name="radio" value="1HTIME">
-                <label for="1HTIME"> 5 mb/s 1hr </label><br>
-                <input type="radio" id="53hr" name="radio" value="3HTIME">
-                <label for="3HTIME"> 5 mb/s 3hr </label><br>
-                <input type="radio" id="524hr" name="radio" value="24HTIME">
-                <label for="24HTIME"> 5 mb/s 24hr </label><br>
-                <input type="radio" id="51gb" name="radio" value="1GDATA">
-                <label for="1GDATA"> 5 mb/s 1GB </label><br>
-                <input type="radio" id="55gb" name="radio" value="5GDATA">
-                <label for="5GDATA"> 5 mb/s 5GB </label><br>
-                <input type="radio" id="510gb" name="radio" value="10GDATA">
-                <label for="10GDATA"> 5 mb/s 10GB </label><br>
-                <label for="voucherPin">Voucher Pin:</label>
-                <input type="text" id="voucherPin" name="voucherPin"><br>
-                <label for="phoneNumber">Phone number:</label>
-                <input type="text" id="phoneNumber" name="phoneNumber"><br>
-                  <button id=submit type="submit" value="Submit">Submit</button>
-              </div>
-            </div>
-              <div style="padding-bottom: 20px">
-                <h3>Find Lost Voucher Code</h3>
-                    <div id="query">
-                        <label for="usedPhoneNumber">Phone number:</label>
-                        <input type="text" id="usedPhoneNumber" name="voucherPin"><br>
-                        <label for="usedVoucherPin">Enter the voucher pin you used to buy the WiFi access code:</label>
-                        <input type="text" id="usedVoucherPin" name="phoneNumber"><br>
-                  </div>
-                  <button id="queryButton" type="submit" value="Submit">Query</button>
-              </div>
         </div>
       </div>
     </section>
+
+    <section class="u-clearfix u-section-4" id="sec-62b5">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <img class="u-align-center-xs u-image u-image-default u-image-1" src="captiveportal-OneForYou.jpg" alt="" data-image-width="224" data-image-height="224">
+        <h1 class="u-align-center u-text u-text-default u-text-1">CHOOSE YOUR<br>VOUCHER
+        </h1>
+        <div class="u-align-center u-expanded-width-xs u-form u-form-1">
+          <!--<form  class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" name="form" style="padding: 10px;" onsubmit="myFunction()">-->
+          <form id="One4YouForm" action="https://voucherapiprod.blackequations.co.za/redeem" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom" name="form" style="padding: 10px;">
+            <div class="u-form-group u-form-radiobutton u-form-group-1">
+              <div class="u-form-radio-button-wrapper">
+                <input type="radio" name="radiobutton" value="TIME30M" required="required">
+                <label class="u-label" for="radiobutton">R1 - 30min</label>
+                <br>
+                <input type="radio" name="radiobutton" value="TIME1H" required="required">
+                <label class="u-label" for="radiobutton">R2 - 60min</label>
+                <br>
+                <input type="radio" name="radiobutton" value="TIME3H" required="required">
+                <label class="u-label" for="radiobutton">R5 _ 3Hr</label>
+                <br>
+                <input type="radio" name="radiobutton" value="TIME10H" required="required">
+                <label class="u-label" for="radiobutton">R8 - 10Hr</label>
+                <br>
+                <input type="radio" name="radiobutton" value="TIME1D" required="required">
+                <label class="u-label" for="radiobutton">R15 - 24Hr</label>
+                <br>
+                <input type="radio" name="radiobutton" value="TIME15D" required="required">
+                <label class="u-label" for="radiobutton">R40 - 15Days</label>
+                <br>
+                <input type="radio" name="radiobutton" value="TIME28D" required="required">
+                <label class="u-label" for="radiobutton">R60 - 28 Days (**Special**)</label>
+                <br>
+                <input type="radio" name="radiobutton" value="DATA1G" required="required">
+                <label class="u-label" for="radiobutton">R10 - 1Gig</label>
+                <br>
+                <input type="radio" name="radiobutton" value="DATA5G" required="required">
+                <label class="u-label" for="radiobutton">R40 - 5Gig</label>
+                <br>
+                <input type="radio" name="radiobutton" value="DATA10G" required="required">
+                <label class="u-label" for="radiobutton">R80 - 10Gig</label>
+                <br>
+                <input type="radio" name="radiobutton" value="DATA100G" required="required">
+                <label class="u-label" for="radiobutton">R120 - 100Gig</label>
+                <br>
+                <input type="radio" name="radiobutton" value="DATA300G" required="required">
+                <label class="u-label" for="radiobutton">R200 - 300Gig</label>
+                <br>
+                <input type="radio" name="radiobutton" value="DATA500G" required="required">
+                <label class="u-label" for="radiobutton">R300 - 500Gig</label>
+                <br>
+              </div>
+            </div>
+            <div class="u-form-group u-form-group-2">
+              <label for="text-76cf" class="u-label">Voucher Pin</label>
+              <input type="text" placeholder="Enter 1ForYou 16-Digit pin" id="voucherPin" name="number-1" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="required" maxlength="16">
+            </div>
+       
+            <div class="u-form-group u-form-phone u-form-group-5">
+              <label for="phone-3236" class="u-label">Cellphone</label>
+              <input type="tel" pattern="\+?\d{0,2}[\s\(\-]?([0-9]{3})[\s\)\-]?([\s\-]?)([0-9]{3})[\s\-]?([0-9]{2})[\s\-]?([0-9]{2})" placeholder="Enter your cellphone (e.g. 0789485736)" id="phoneNumber" name="phone" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="" maxlength="10">
+            </div>
+            <div class="u-align-center u-form-group u-form-submit">
+              <a href="#" id="voucherButton" class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-custom-color-1 u-radius-10 u-btn-1">Submit</a>
+              <input type="submit" value="submit" class="u-form-control-hidden">
+          
+            </div>
+            <!--<input type="button" value="submit" onclick="JavaScript:return Validator();" />-->
+            <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
+            <div class="u-form-send-message u-form-send-error "> Unable to send your message. Please fix errors then try again. </div>
+            <input type="hidden" value="" name="recaptchaResponse">
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="u-clearfix u-section-5" id="sec-1046">
+      <div class="u-align-left u-clearfix u-sheet u-sheet-1">
+        <img class="u-image u-image-default u-preserve-proportions u-image-1" src="captiveportal-FOCUSLARGE1.png" alt="" data-image-width="756" data-image-height="756">
+        <h1 class="u-align-center u-text u-text-default u-text-1">ENTER YOUR&nbsp;<br>FOCUS VOUCHER
+        </h1>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-6" id="sec-f89f">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <div class="u-align-center u-form u-form-1">
+          <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom" name="form-2" style="padding: 10px;">
+            <div class="u-form-group u-form-name">
+              <label for="name-5084" class="u-label">User</label>
+              <input type="text" placeholder="Enter your Name" id="name-5084" name="name" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
+            </div>
+            <div class="u-form-group u-form-group-2">
+              <label for="text-61ba" class="u-label">Password</label>
+              <input type="text" placeholder="" id="text-61ba" name="text" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="required">
+            </div>
+            <div class="u-form-group u-form-group-3">
+              <label for="text-ddf3" class="u-label">Voucher</label>
+              <input type="text" placeholder="" id="text-ddf3" name="text-1" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
+            </div>
+            <div class="u-form-agree u-form-group u-form-group-4">
+              <input type="checkbox" id="agree-b9d5" name="agree" class="u-agree-checkbox" required="">
+              <label for="agree-b9d5" class="u-label">I accept the <a href="#">Terms and Conditions</a>
+              </label>
+            </div>
+            <div class="u-align-center u-form-group u-form-submit">
+              <a href="#" class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-custom-color-1 u-radius-10 u-btn-1">Login<br>
+              </a>
+              <input type="submit" value="submit" class="u-form-control-hidden">
+            </div>
+            <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
+            <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div>
+            <input type="hidden" value="" name="recaptchaResponse">
+          </form>
+        </div>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-7" id="sec-b21f">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h1 class="u-align-center u-text u-text-default-lg u-text-default-md u-text-default-xl u-text-1">FOCUS&nbsp;CONNE​CT&nbsp;<br>PACKAGES
+        </h1>
+      </div>
+    </section>
+    <section class="u-align-center u-clearfix u-section-8" id="sec-6c24">
+      <div class="u-align-left u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <div class="u-expanded-width u-list u-list-1">
+          <div class="u-repeater u-repeater-1">
+            <div class="u-border-2 u-border-custom-color-1 u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1"><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-1"><img src="captiveportal-1.png" alt=""></span>
+                <h3 class="u-align-center u-text u-text-default u-text-1">FOCUS CONNECT<br>30min
+                </h3>
+                <p class="u-align-center u-text u-text-2">R1<br>internet 30min<br>5Mb/s<br>unlimited<br>1 device<br>valid for 24Hr
+                </p>
+              </div>
+            </div>
+            <div class="u-align-center u-border-2 u-border-custom-color-1 u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-2"><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-2"><img src="captiveportal-1.png" alt=""></span>
+                <h3 class="u-align-center u-text u-text-default u-text-3">FOCUS CONNECT<br>60min
+                </h3>
+                <p class="u-align-center u-text u-text-4"> R2<br>internet 60min<br>5Mb/s<br>unlimited<br>1 device<br>valid for 24Hr
+                </p>
+              </div>
+            </div>
+            <div class="u-border-2 u-border-custom-color-1 u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-3"><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-3"><img src="captiveportal-1.png" alt=""></span>
+                <h3 class="u-align-center u-text u-text-default u-text-5">FOCUS CONNECT<br>3Hr
+                </h3>
+                <p class="u-align-center u-text u-text-6"> R5<br>internet 180min<br>5Mb/s<br>unlimited<br>1 device<br>valid for 24Hr
+                </p>
+              </div>
+            </div>
+            <div class="u-border-2 u-border-custom-color-1 u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-4"><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-4"><img src="captiveportal-1.png" alt=""></span>
+                <h3 class="u-align-center u-text u-text-default u-text-7">FOCUS CONNECT<br>10Hr
+                </h3>
+                <p class="u-align-center u-text u-text-8"> R8<br>internet 600min<br>5Mb/s<br>unlimited<br>1 device<br>valid for 24Hr
+                </p>
+              </div>
+            </div>
+            <div class="u-border-2 u-border-custom-color-1 u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-5"><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-5"><img src="captiveportal-1.png" alt=""></span>
+                <h3 class="u-align-center u-text u-text-default u-text-9">FOCUS CONNECT<br>24Hr
+                </h3>
+                <p class="u-align-center u-text u-text-10"> R15<br>internet 1440min<br>5Mb/s<br>unlimited<br>1 device<br>valid for 24Hr
+                </p>
+              </div>
+            </div>
+            <div class="u-border-2 u-border-custom-color-1 u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-6"><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-6"><img src="captiveportal-1.png" alt=""></span>
+                <h3 class="u-align-center u-text u-text-default u-text-11">FOCUS CONNECT<br>15Days
+                </h3>
+                <p class="u-align-center u-text u-text-12"> R40<br>internet 15days<br>5Mb/s<br>unlimited<br>1 device<br>valid for 15days
+                </p>
+              </div>
+            </div>
+            <div class="u-border-2 u-border-custom-color-1 u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-7"><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-7"><img src="captiveportal-1.png" alt=""></span>
+                <h3 class="u-align-center u-text u-text-default u-text-13">FOCUS CONNECT<br>28Days
+                </h3>
+                <p class="u-align-center u-text u-text-14"> R60<br>internet 28days<br>5Mb/s<br>unlimited<br>1 device<br>valid for 28days
+                </p>
+              </div>
+            </div>
+            <div class="u-border-2 u-border-custom-color-1 u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-8"><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-8"><img src="captiveportal-1.png" alt=""></span>
+                <h3 class="u-align-center u-text u-text-default u-text-15"> FOCUS CONNECT<br>1Gig
+                </h3>
+                <p class="u-align-center u-text u-text-16"> R10<br>1Gig of data<br>10Mb/s<br>unlimited devices<br>valid for 28days
+                </p>
+              </div>
+            </div>
+            <div class="u-border-2 u-border-custom-color-1 u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-9"><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-9"><img src="captiveportal-1.png" alt=""></span>
+                <h3 class="u-align-center u-text u-text-default u-text-17"> FOCUS CONNECT<br>5Gig
+                </h3>
+                <p class="u-align-center u-text u-text-18"> R40<br>5Gig of data<br>10Mb/s<br>unlimited devices<br>valid for 28days
+                </p>
+              </div>
+            </div>
+            <div class="u-border-2 u-border-custom-color-1 u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-10"><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-10"><img src="captiveportal-1.png" alt=""></span>
+                <h3 class="u-align-center u-text u-text-default u-text-19"> FOCUS CONNECT<br>10Gig
+                </h3>
+                <p class="u-align-center u-text u-text-20"> R80<br>10Gig of data<br>10Mb/s<br>unlimited devices<br>valid for 56days
+                </p>
+              </div>
+            </div>
+            <div class="u-border-2 u-border-custom-color-1 u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-11"><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-11"><img src="captiveportal-1.png" alt=""></span>
+                <h3 class="u-align-center u-text u-text-default u-text-21"> FOCUS CONNECT<br>100Gig
+                </h3>
+                <p class="u-align-center u-text u-text-22"> R120<br>100Gig of data<br>10Mb/s<br>unlimited devices<br>valid for 84days
+                </p>
+              </div>
+            </div>
+            <div class="u-border-2 u-border-custom-color-1 u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-12"><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-12"><img src="captiveportal-1.png" alt=""></span>
+                <h3 class="u-align-center u-text u-text-default u-text-23"> FOCUS CONNECT<br>300Gig
+                </h3>
+                <p class="u-align-center u-text u-text-24"> R200<br>300Gig of data<br>10Mb/s<br>unlimited devices<br>valid for 84days
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-9" id="sec-ff60">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h1 class="u-align-center u-text u-text-1">LOST<br>VOUCHER PIN
+        </h1>
+        <div class="u-align-center u-form u-form-1">
+          <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom" name="form-1" style="padding: 10px;">
+            <div class="u-form-group u-form-phone u-form-group-1">
+              <label for="phone-44ee" class="u-label">Cellphone</label>
+              <input type="tel" pattern="\+?\d{0,3}[\s\(\-]?([0-9]{2,3})[\s\)\-]?([\s\-]?)([0-9]{3})[\s\-]?([0-9]{2})[\s\-]?([0-9]{2})" placeholder="Enter your cellphone (e.g. 0786458235)" id="phone-44ee" name="phone" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
+            </div>
+            <div class="u-form-group u-form-group-2">
+              <label for="text-d977" class="u-label">Enter 16-Digit 1ForYou Voucher Pin</label>
+              <input type="text" placeholder="Use the 1ForYou voucher Pin Used to purchase Wi-Fi access." id="text-d977" name="number" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="required" maxlength="16">
+            </div>
+            <div class="u-align-center u-form-group u-form-submit">
+              <a href="#" class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-custom-color-1 u-radius-10 u-btn-1">Submit</a>
+              <input type="submit" value="submit" class="u-form-control-hidden">
+            </div>
+            <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
+            <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div>
+            <input type="hidden" value="" name="recaptchaResponse">
+          </form>
+        </div>
+      </div>
+    </section>
+    
     
     
   </body>

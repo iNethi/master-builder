@@ -131,7 +131,10 @@ def redeem_voucher():
     voucher_choice = request.json.get('voucherChoice')
     amount = ""  # this amount variable is the rand amount each voucher corresponds to. We assign it a Radius profile
     # code and then convert it to the rand amount when processing the 1FORYOU API call in the redeem() method.
-    if voucher_choice == '1GDATA':
+
+    amount = voucher_choice
+    
+    '''if voucher_choice == '1GDATA':
         amount = "FCD1"  # update to match your Radius profile code
     elif voucher_choice == '10GDATA':
         amount = "FCD10"  # update to match your Radius profile code
@@ -149,7 +152,7 @@ def redeem_voucher():
         amount = "FCTD15"  # update to match your Radius profile code
     elif voucher_choice == '28DAYTIME':
         amount = "FCTD28"  # update to match your Radius profile code
-
+    '''
 
     voucher_pin = request.json.get('voucherPin')
     cellphone_number = request.json.get('cellphoneNumber')

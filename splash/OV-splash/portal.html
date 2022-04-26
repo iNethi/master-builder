@@ -60,7 +60,7 @@
                  console.log(phoneNumber)
                  $.ajax({
                      type: "POST",
-                     url: "http://voucherapi.inethimac.net:5000/query",
+                     url: "https://voucherapiprod.blackequations.co.za/query",
                      contentType: "application/json",
                      data: JSON.stringify(data),
                  success: function (data, status) {
@@ -178,7 +178,7 @@
                
                  $.ajax({
                      type: "POST",
-                     url: "https://flaskprod.blackequations.co.za/redeem",
+                     url: "https://voucherapiprod.blackequations.co.za/redeem",
                      contentType: "application/json",
                      data: JSON.stringify(data),
                  success: function (data, status) {
@@ -394,46 +394,46 @@
         </h1>
         <div class="u-align-center u-expanded-width-xs u-form u-form-1">
           <!--<form  class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" name="form" style="padding: 10px;" onsubmit="myFunction()">-->
-          <form id="One4YouForm" action="https://flaskprod.blackequations.co.za/redeem" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom" name="form" style="padding: 10px;">
+          <form id="One4YouForm" action="https://voucherapiprod.blackequations.co.za/redeem" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom" name="form" style="padding: 10px;">
             <div class="u-form-group u-form-radiobutton u-form-group-1">
               <div class="u-form-radio-button-wrapper">
-                <input type="radio" name="radiobutton" value="R1 - 30min" required="required">
+                <input type="radio" name="radiobutton" value="TIME30M" required="required">
                 <label class="u-label" for="radiobutton">R1 - 30min</label>
                 <br>
-                <input type="radio" name="radiobutton" value="R2 - 60min" required="required">
+                <input type="radio" name="radiobutton" value="TIME1H" required="required">
                 <label class="u-label" for="radiobutton">R2 - 60min</label>
                 <br>
-                <input type="radio" name="radiobutton" value="R5 _ 3Hr" required="required">
+                <input type="radio" name="radiobutton" value="TIME3H" required="required">
                 <label class="u-label" for="radiobutton">R5 _ 3Hr</label>
                 <br>
-                <input type="radio" name="radiobutton" value="R8 - 10Hr" required="required">
+                <input type="radio" name="radiobutton" value="TIME10H" required="required">
                 <label class="u-label" for="radiobutton">R8 - 10Hr</label>
                 <br>
-                <input type="radio" name="radiobutton" value="R15 - 24Hr" required="required">
+                <input type="radio" name="radiobutton" value="TIME1D" required="required">
                 <label class="u-label" for="radiobutton">R15 - 24Hr</label>
                 <br>
-                <input type="radio" name="radiobutton" value="R40 - 15Days" required="required">
+                <input type="radio" name="radiobutton" value="TIME15D" required="required">
                 <label class="u-label" for="radiobutton">R40 - 15Days</label>
                 <br>
-                <input type="radio" name="radiobutton" value="R60 - 28 Days (**Special**)" required="required">
+                <input type="radio" name="radiobutton" value="TIME28D" required="required">
                 <label class="u-label" for="radiobutton">R60 - 28 Days (**Special**)</label>
                 <br>
-                <input type="radio" name="radiobutton" value="R10 - 1Gig" required="required">
+                <input type="radio" name="radiobutton" value="DATA1G" required="required">
                 <label class="u-label" for="radiobutton">R10 - 1Gig</label>
                 <br>
-                <input type="radio" name="radiobutton" value="R40 - 5Gig" required="required">
+                <input type="radio" name="radiobutton" value="DATA5G" required="required">
                 <label class="u-label" for="radiobutton">R40 - 5Gig</label>
                 <br>
-                <input type="radio" name="radiobutton" value="R80 - 10Gig" required="required">
+                <input type="radio" name="radiobutton" value="DATA10G" required="required">
                 <label class="u-label" for="radiobutton">R80 - 10Gig</label>
                 <br>
-                <input type="radio" name="radiobutton" value="R120 - 100Gig" required="required">
+                <input type="radio" name="radiobutton" value="DATA100G" required="required">
                 <label class="u-label" for="radiobutton">R120 - 100Gig</label>
                 <br>
-                <input type="radio" name="radiobutton" value="R200 - 300Gig" required="required">
+                <input type="radio" name="radiobutton" value="DATA300G" required="required">
                 <label class="u-label" for="radiobutton">R200 - 300Gig</label>
                 <br>
-                <input type="radio" name="radiobutton" value="R300 - 500Gig" required="required">
+                <input type="radio" name="radiobutton" value="DATA500G" required="required">
                 <label class="u-label" for="radiobutton">R300 - 500Gig</label>
                 <br>
               </div>
