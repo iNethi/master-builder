@@ -3,8 +3,8 @@
 ###########
 
 # pull official base image
-#FROM python:3.9.5-slim as builder
-FROM python:3.9-slim-buster as builder
+FROM python:3.9.5-slim as builder
+#FROM python:3.9-slim-buster as builder
 
 # set work directory
 WORKDIR /usr/src/app
