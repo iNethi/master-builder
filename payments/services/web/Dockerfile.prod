@@ -3,7 +3,8 @@
 ###########
 
 # pull official base image
-FROM python:3.9.5-slim as builder
+#FROM python:3.9.5-slim as builder
+FROM python:3.9-slim-buster as builder
 
 # set work directory
 WORKDIR /usr/src/app
@@ -14,7 +15,6 @@ ENV PYTHONUNBUFFERED 1
 
 # install system dependencies
 RUN apt-get update && \
-    apt-get upgrade -y && \
     apt-get install -y  gcc build-essential libpq-dev libmariadb-dev
 
 # lint
