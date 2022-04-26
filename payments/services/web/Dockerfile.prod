@@ -14,7 +14,7 @@ ENV PYTHONUNBUFFERED 1
 
 # install system dependencies
 RUN apt-get update && \
-    apt-get upgrade && \
+    apt-get upgrade -y && \
     apt-get install -y  gcc build-essential libpq-dev libmariadb-dev
 
 # lint
