@@ -62,6 +62,7 @@
                  $.ajax({
                      type: "POST",
                      url: "https://voucherapiprod.blackequations.co.za/query",
+                     headers: {  'Access-Control-Allow-Origin': '*' },
                      contentType: "application/json",
                      data: JSON.stringify(data),
                  success: function (data, status) {
@@ -180,6 +181,7 @@
                  $.ajax({
                      type: "POST",
                      url: "https://voucherapiprod.blackequations.co.za/redeem",
+                     headers: {  'Access-Control-Allow-Origin': '*' },
                      contentType: "application/json",
                      data: JSON.stringify(data),
                  success: function (data, status) {

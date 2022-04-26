@@ -80,7 +80,7 @@ def read_root():
 
 
 @app.route('/query', methods=['POST'])
-@cross_origin(origin='voucherapi.inethimac.net', headers=['application/json', 'Authorization'])
+@cross_origin(origin='voucherapiprod.blackequations.co.za', headers=['application/json', 'Authorization'])
 def query_voucher():
     """
     An endpoint that relies on the user submitting a 1FORYOU pin and phone number that is used to query the database to
@@ -121,7 +121,7 @@ def query_voucher():
 
 
 @app.route('/redeem', methods=['POST'])
-@cross_origin(origin='flaskprod.inethimac.net', headers=['application/json', 'Authorization'])
+@cross_origin(origin='voucherapiprod.blackequations.co.za', headers=['application/json', 'Authorization'])
 def redeem_voucher():
     """
 

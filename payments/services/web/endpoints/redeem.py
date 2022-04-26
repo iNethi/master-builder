@@ -95,7 +95,7 @@ def send_request(amount, request_id, voucher_pin, cellphone_number, access_token
     })
     headers = {
         'Authorization': 'Bearer ' + access_token,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
     }
     response = requests.post(url, headers=headers, data=payload)
     return response
