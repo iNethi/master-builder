@@ -6,6 +6,9 @@ This is the starting place to build iNethi on your own server.
 - [View the the TODO list](https://github.com/iNethi/master-builder/blob/master/TODO.md)
 - [View Contributors](https://github.com/iNethi/master-builder/blob/master/CONTRIBUTORS.md)
 
+# A collection of awesome self-hosted services
+iNethi essentially creates a platform that brings a lot of awesome self-hosted services together. It provides a secure reverse proxy in front of these services using Traefik, creates a nice splash page to access these services, synchronization of content  between a global iNEthi cloud and your iNethi and will soon provide single-sign on to many of these services. A great resource for many self-hosted services that can be ported to iNethi is here [Self hosted servces](https://github.com/awesome-selfhosted/awesome-selfhosted/blob/master/README.md)
+
 # Usage
 This is an open source solution that is freely available to everyone. With iNethi you can build a set of local services to share content amongst your local community and build a small ISP to sell Internet vouchers. [More detail...](https://splashg.inethi.net)
 
