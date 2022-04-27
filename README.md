@@ -101,7 +101,7 @@ Once all the docker are running there are some remaining configurations steps
 
 ### Choose a master username and password and storage location
 
-- user: inethiadmin (suggestions)
+- user: inethiadmin (suggestion)
 - password: (pick a secure password)
 - storage location: (leave as default)
 
@@ -132,11 +132,11 @@ Add External storages
 
 Add the following:
 - Folder name: Rshare , External storage: Local, Configuration /mnt/Rshare, Available for Public, Options: Enable Sharing,  Read only
-- Folder name: Rvideo, External storage: Local, Configuration /mnt/Rvideos,  Available for Public, Options: Enable Sharing,  Read only
+- Folder name: Rvideo, External storage: Local, Configuration /mnt/Rvideo,  Available for Public, Options: Enable Sharing,  Read only
 - Folder name: Rmusic, External storage: Local, Configuration /mnt/Rmusic,  Available for Public, Options: Enable Sharing,  Read only
 - Folder name: Rphoto, External storage: Local, Configuration /mnt/Rphoto,  Available for Public, Options: Enable Sharing,  Read only
 - Folder name: RWshare , External storage: Local, Configuration /mnt/Rshare, Available for admin, Options: Enable Sharing
-- Folder name: RWvideo, External storage: Local, Configuration /mnt/Rvideos,  Available for admin, Options: Enable Sharing
+- Folder name: RWvideo, External storage: Local, Configuration /mnt/Rvideo,  Available for admin, Options: Enable Sharing
 - Folder name: RWmusic, External storage: Local, Configuration /mnt/Rmusic,  Available for admin, Options: Enable Sharing
 - Folder name: RWphoto, External storage: Local, Configuration /mnt/Rphoto,  Available for admin, Options: Enable Sharing
 
@@ -145,9 +145,32 @@ Add the following:
 
 - To setup go to [https://jellyfin.inethilocal.net](https://jellyfin.inethilocal.net)
 
+### Complete Tell us about yourself
 
+- Username: inethiadmin (suggestion)
+- Password: select a strong password
 
-### Choose a master username and password and storage location
+### Add video library
+
+- Select Add Media library
+- Content type: Movies
+- Display name: Videos
+- Folders (+)
+- Folder: /mnt/Rvideo
+- Select OK
+
+### Add music library
+
+- Select Add Media library
+- Content type: Music
+- Display name: Music
+- Folders (+)
+- Folder: /mnt/Rmusic
+- Select OK
+
+# Add content
+
+To add music and video content that van be viewed on Jellyfin. Open Nextcloud, login as administrator or a user with administrator priveledges and Drag videos to the RWVideo folder or Drag music to the RWMusic folder
 
 # Features in the works
 - Payment integrations
