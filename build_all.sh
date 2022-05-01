@@ -19,11 +19,14 @@ sudo apt-get update
 sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 sudo apt-get -y install docker-compose
 
+# Make docker run as non root
+sudo usermod -aG docker $USER
+sudo chmod 666 /var/run/docker.sock
 
 # customize with your own.
 sudo mkdir -p /mnt/data
 # make sure all future data in this folder can be created as non root
-sudo chown -R $USER:$USER /mnt/data
+sudo chown  $USER:$USER /mnt/data
 
 options=("jellyfin" "keycloak" "nginx(splash)" "moodle" "nextcloud" "wordpress" "unifi" "radiusdesk" "payments")
 entrypoint=web
