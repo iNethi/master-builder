@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  onlyoffice:
+      image: "onlyoffice/documentserver"
+      container_name: inethi-onlyoffice
+      tty: true
+      restart: always
+
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.onlyoffice.rule=Host(`${TRAEFIK_API_RULE_HOST}.${inethiDN}`)"
+        - "traefik.http.routers.onlyoffice.entrypoints=${TRAEFIK_ENTRYPOINT}"
+
+networks:
+  default:
+    external:
+      name: "${INETHI_NETWORK}"
+      
+      

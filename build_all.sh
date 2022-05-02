@@ -28,6 +28,9 @@ sudo mkdir -p /mnt/data
 # make sure all future data in this folder can be created as non root
 sudo chown  $USER:$USER /mnt/data
 
+## NOTES
+# Need to add opton to capture email for fields in inethi-traefikssl
+
 options=("jellyfin" "keycloak" "nginx(splash)" "moodle" "nextcloud" "wordpress" "unifi" "radiusdesk" "payments")
 entrypoint=web
 
