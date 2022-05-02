@@ -11,10 +11,13 @@ services:
         - "traefik.enable=true"
         - "traefik.http.routers.onlyoffice.rule=Host(`${TRAEFIK_API_RULE_HOST}.${inethiDN}`)"
         - "traefik.http.routers.onlyoffice.entrypoints=${TRAEFIK_ENTRYPOINT}"
+        - "traefik.http.routers.onlyoffice.middlewares=onlyoffice-headers"
+        - "traefik.http.middlewares.onlyoffice-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
+        - "traefik.http.middlewares.onlyoffice-headers.headers.accessControlAllowOrigin=*"
 
 networks:
   default:
     external:
       name: "${INETHI_NETWORK}"
-      
+
       
