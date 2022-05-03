@@ -24,7 +24,7 @@ services:
         KEYCLOAK_USER: "${KEYCLOAK_USER}" 
         KEYCLOAK_PASSWORD: "${KEYCLOAK_PASSWORD}"
         DB_VENDOR: MYSQL
-        DB_ADDR: inethi-traefik-mysql-keycloak
+        DB_ADDR: inethi-mysql-keycloak
         DB_DATABASE: keycloak
         DB_USER: keycloak
         DB_PASSWORD: inethi2018
