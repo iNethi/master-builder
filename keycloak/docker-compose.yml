@@ -3,7 +3,7 @@ version: '3'
 services:
   mysql:
       image: mysql:5.7
-      command: start
+    
       container_name: inethi-mysql-keycloak
       restart: always
       environment:
@@ -20,6 +20,7 @@ services:
 
   keycloak:
       image: quay.io/keycloak/keycloak:latest
+      command: start
       container_name: inethi-keycloak
       environment:
         KEYCLOAK_USER: "${KEYCLOAK_USER}" 
