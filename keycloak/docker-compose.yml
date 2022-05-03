@@ -20,7 +20,7 @@ services:
 
   keycloak:
       image: quay.io/keycloak/keycloak:latest
-      command: start
+      command: start-dev
       container_name: inethi-keycloak
       environment:
         HOSTNAME: "keycloak.inethicloud.net"
