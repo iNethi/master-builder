@@ -38,6 +38,7 @@ services:
       - "traefik.http.routers.keycloak.rule=Host(`${KEYCLOAK_TRAEFIK_API_RULE}`)"
       - "traefik.http.routers.keycloak.entrypoints=${TRAEFIK_ENTRYPOINT}"
 
+# network for inethi
 networks:
   default:
     external:
