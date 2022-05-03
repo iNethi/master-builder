@@ -19,7 +19,7 @@ services:
         - "traefik.http.routers.mysql-keycloak.entrypoints=${TRAEFIK_ENTRYPOINT}"
 
   keycloak:
-      image: quay.io/keycloak/keycloak:latest
+      image: jboss/keycloak
       command: start-dev
       container_name: inethi-keycloak
       environment:
