@@ -23,6 +23,7 @@ services:
       command: start
       container_name: inethi-keycloak
       environment:
+        HOSTNAME: "keycloak.inethicloud.net"
         KEYCLOAK_USER: "${KEYCLOAK_USER}" 
         KEYCLOAK_PASSWORD: "${KEYCLOAK_PASSWORD}"
         DB_VENDOR: MYSQL
