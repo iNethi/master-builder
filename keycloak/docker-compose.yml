@@ -20,7 +20,7 @@ services:
 
   keycloak:
       image: jboss/keycloak
-      command: start-dev
+   
       container_name: inethi-keycloak
       environment:
         - "HOSTNAME=keycloak.inethicloud.net"
