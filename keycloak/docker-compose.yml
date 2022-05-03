@@ -33,6 +33,7 @@ services:
         DB_DATABASE: keycloak
         DB_USER: keycloak
         DB_PASSWORD: inethi2018
+        PROXY_ADDRESS_FORWARDING: true
         # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the MySQL JDBC driver documentation in order to use it.
         #JDBC_PARAMS: "connectTimeout=30000"
       #ports:
@@ -42,8 +43,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.keycloak.rule=Host(`${KEYCLOAK_TRAEFIK_API_RULE}`)"
       - "traefik.http.routers.keycloak.entrypoints=${TRAEFIK_ENTRYPOINT}"
-      - "traefik.http.services.uisp.loadbalancer.server.scheme=http"
-      - "traefik.http.services.uisp.loadbalancer.server.port=8080"
+      - "traefik.http.routers.keycloak.tls.certresolver=sslresolver"
+      - "traefik.http.services.keycloak.loadbalancer.server.port=8080"
 
 # network for inethi
 networks:
