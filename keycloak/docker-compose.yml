@@ -42,8 +42,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.keycloak.rule=Host(`${KEYCLOAK_TRAEFIK_API_RULE}`)"
       - "traefik.http.routers.keycloak.entrypoints=${TRAEFIK_ENTRYPOINT}"
-      - "traefik.http.services.uisp.loadbalancer.server.scheme=https"
-      - "traefik.http.services.uisp.loadbalancer.server.port=8443"
+      - "traefik.http.services.uisp.loadbalancer.server.scheme=http"
+      - "traefik.http.services.uisp.loadbalancer.server.port=8080"
 
 # network for inethi
 networks:
