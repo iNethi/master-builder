@@ -9,28 +9,41 @@ def redeem():
     Makes an API call to 1FORYOU using details provided by the redeem_voucher() endpoint.
     :return: an HTTP response indicating whether the 1FORYOU voucher redemption was successful
     """
+
     error_response = {"keegan_says": "unclassified"}  # this needs to contain a very specific key that wont be
     # returned by flash
     amount = -1
     voucher_choice = request.json.get('voucherChoice')
-    if voucher_choice == '1GDATA':
-        amount = 1000
-    elif voucher_choice == '10GDATA':
-        amount = 8000
-    elif voucher_choice == '100GDATA':
-        amount = 12000
-    elif voucher_choice == '5GDATA':
-        amount = 4000
-    elif voucher_choice == '1HTIME':
+
+    if voucher_choice == 'TIME30M':
+        amount = 100
+    if voucher_choice == 'TIME1H':
         amount = 200
-    elif voucher_choice == '24HTIME':
-        amount = 1500
-    elif voucher_choice == '3HTIME':
+    if voucher_choice == 'TIME3H':
         amount = 500
-    elif voucher_choice == '15DAYTIME':
+    if voucher_choice == 'TIME10H':
+        amount = 800
+    if voucher_choice == 'TIME1D':
+        amount = 1500
+    if voucher_choice == 'TIME15D':
         amount = 4000
-    elif voucher_choice == '28DAYTIME':
+    if voucher_choice == 'TIME28D':
         amount = 6000
+
+    if voucher_choice == 'DATA1G':
+        amount = 1000
+    elif voucher_choice == 'DATA5G':
+        amount = 4000
+    elif voucher_choice == 'DATA10G':
+        amount = 8000
+    elif voucher_choice == 'DATA100G':
+        amount = 12000
+    elif voucher_choice == 'DATA300G':
+        amount = 20000
+    elif voucher_choice == 'DATA500G':
+        amount = 30000
+    
+
     voucher_pin = request.json.get('voucherPin')
     cellphone_number = request.json.get('cellphoneNumber')
     cellphone_number = "27" + cellphone_number[1:]  # remove the first digit and add SA code
@@ -82,7 +95,7 @@ def send_request(amount, request_id, voucher_pin, cellphone_number, access_token
     })
     headers = {
         'Authorization': 'Bearer ' + access_token,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
     }
     response = requests.post(url, headers=headers, data=payload)
     return response

@@ -80,7 +80,7 @@ def read_root():
 
 
 @app.route('/query', methods=['POST'])
-@cross_origin(origin='voucherapi.inethimac.net', headers=['application/json', 'Authorization'])
+@cross_origin(origin='voucherapiprod.blackequations.co.za', headers=['application/json', 'Authorization'])
 def query_voucher():
     """
     An endpoint that relies on the user submitting a 1FORYOU pin and phone number that is used to query the database to
@@ -91,7 +91,7 @@ def query_voucher():
     """
     voucher_pin = request.json.get('voucherPin')  # 1FORYOU voucher pin
     cellphone_number = request.json.get('cellphoneNumber')  # user's cellphone number
-    match = Vouchers.query.filter_by(used=True, voucher_pin=voucher_pin, phone_number=cellphone_number).first()  #
+    match = Vouchers.query.filter_by( voucher_pin=voucher_pin, phone_number=cellphone_number).first()  #
     # check if a Radius voucher has been purchased
     print(type(match))
     if match is None:  # if no Radius voucher has not been purchased with the users details
@@ -121,7 +121,7 @@ def query_voucher():
 
 
 @app.route('/redeem', methods=['POST'])
-@cross_origin(origin='flaskprod.inethimac.net', headers=['application/json', 'Authorization'])
+@cross_origin(origin='voucherapiprod.blackequations.co.za', headers=['application/json', 'Authorization'])
 def redeem_voucher():
     """
 
@@ -131,7 +131,10 @@ def redeem_voucher():
     voucher_choice = request.json.get('voucherChoice')
     amount = ""  # this amount variable is the rand amount each voucher corresponds to. We assign it a Radius profile
     # code and then convert it to the rand amount when processing the 1FORYOU API call in the redeem() method.
-    if voucher_choice == '1GDATA':
+
+    amount = voucher_choice
+    
+    '''if voucher_choice == '1GDATA':
         amount = "FCD1"  # update to match your Radius profile code
     elif voucher_choice == '10GDATA':
         amount = "FCD10"  # update to match your Radius profile code
@@ -149,7 +152,7 @@ def redeem_voucher():
         amount = "FCTD15"  # update to match your Radius profile code
     elif voucher_choice == '28DAYTIME':
         amount = "FCTD28"  # update to match your Radius profile code
-
+    '''
 
     voucher_pin = request.json.get('voucherPin')
     cellphone_number = request.json.get('cellphoneNumber')

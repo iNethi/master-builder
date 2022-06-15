@@ -1,0 +1,17 @@
+version: "3.3"
+
+services:
+  dnsmasq:
+    container_name: inethi-dnsmasq
+    restart: always
+    image: jpillora/dnsmasq:latest
+    ports:
+      - 53:53/udp
+      - "5380:8080"
+    volumes:
+      - "${DNSMASQ_VOLUME}/dnsmasq.conf:/etc/dnsmasq.conf:ro"
+
+networks:
+  default:
+    external:
+      name: "${INETHI_NETWORK}"

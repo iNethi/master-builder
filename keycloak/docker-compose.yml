@@ -3,6 +3,7 @@ version: '3'
 services:
   mysql:
       image: mysql:5.7
+    
       container_name: inethi-mysql-keycloak
       restart: always
       environment:
@@ -18,16 +19,22 @@ services:
         - "traefik.http.routers.mysql-keycloak.entrypoints=${TRAEFIK_ENTRYPOINT}"
 
   keycloak:
-      image: quay.io/keycloak/keycloak:latest
+      image: jboss/keycloak
+   
       container_name: inethi-keycloak
       environment:
-        KEYCLOAK_USER: "${KEYCLOAK_USER}" 
-        KEYCLOAK_PASSWORD: "${KEYCLOAK_PASSWORD}"
-        DB_VENDOR: MYSQL
-        DB_ADDR: inethi-traefik-mysql-keycloak
-        DB_DATABASE: keycloak
-        DB_USER: keycloak
-        DB_PASSWORD: inethi2018
+        - "HOSTNAME=keycloak.inethicloud.net"
+        - "KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN_USER}" 
+        - "KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}"
+        - "KEYCLOAK_USER=${KEYCLOAK_USER}" 
+        - "KEYCLOAK_PASSWORD=${KEYCLOAK_PASSWORD}"
+        - "DB_VENDOR=MYSQL"
+        - "DB_ADDR=inethi-mysql-keycloak"
+        - "DB_DATABASE=keycloak"
+        - "DB_USER=keycloak"
+        - "DB_PASSWORD=inethi2018"
+        - "PROXY_ADDRESS_FORWARDING=true"
+       
         # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the MySQL JDBC driver documentation in order to use it.
         #JDBC_PARAMS: "connectTimeout=30000"
       #ports:
@@ -37,7 +44,11 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.keycloak.rule=Host(`${KEYCLOAK_TRAEFIK_API_RULE}`)"
       - "traefik.http.routers.keycloak.entrypoints=${TRAEFIK_ENTRYPOINT}"
+      - "traefik.http.routers.keycloak.tls.certresolver=sslresolver"
+      - "traefik.http.services.keycloak.loadbalancer.server.port=8080"
+      
 
+# network for inethi
 networks:
   default:
     external:

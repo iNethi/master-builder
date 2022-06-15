@@ -6,6 +6,9 @@ This is the starting place to build iNethi on your own server.
 - [View the the TODO list](https://github.com/iNethi/master-builder/blob/master/TODO.md)
 - [View Contributors](https://github.com/iNethi/master-builder/blob/master/CONTRIBUTORS.md)
 
+# A collection of awesome self-hosted services
+iNethi essentially creates a platform that brings a lot of awesome self-hosted services together. It provides a secure reverse proxy in front of these services using Traefik, creates a nice splash page to access the web serivces, synchronization of content  between a global iNethi cloud and your iNethi, and will soon provide single sign-on to many of these services. A great resource for many self-hosted services that can be ported to iNethi is here [Self hosted servces](https://github.com/awesome-selfhosted/awesome-selfhosted/blob/master/README.md)
+
 # Usage
 This is an open source solution that is freely available to everyone. With iNethi you can build a set of local services to share content amongst your local community and build a small ISP to sell Internet vouchers. [More detail...](https://splashg.inethi.net)
 
@@ -94,16 +97,22 @@ Once all the docker are running there are some remaining configurations steps
 
 ## Nextcloud
 
-Set up the connection to the database
+- To setup go to [https://nextcloud.inethilocal.net](https://nextcloud.inethilocal.net)
 
-- user: admin
-- password: iNethi#2018
+### Choose a master username and password and storage location
 
-### Select MySQL/MariaDB (under configure the database)
+- user: inethiadmin (suggestion)
+- password: (pick a secure password)
+- storage location: (leave as default)
+
+### configure database
+
+Select MySQL/MariaDB (under configure the database)
+
 - Database user: inethi
-- password: inethi2018
+- password: iNethi#2021
 - database name: inethi_nextcloud
-- database: mariadb
+- database: inethi-mysql
 
 Once Nextcloud launches login as administrator
 
@@ -118,13 +127,50 @@ Add a Public Group
 
 Add External storages
 
-- Select Administator user
+- Select Administator user - select Settings
 - Bottom left - select External storages
 
 Add the following:
-- Folder name: Share, External storage: Local, Configuration /mnt/Rshare
-- Folder name: Shared Videos, External storage: Local, Configuration /mnt/Rvideos
-- Folder name: Shared Music, External storage: Local, Configuration /mnt/Rmusic
+- Folder name: Rshare , External storage: Local, Configuration /mnt/Rshare, Available for Public, Options: Enable Sharing,  Read only
+- Folder name: Rvideo, External storage: Local, Configuration /mnt/Rvideo,  Available for Public, Options: Enable Sharing,  Read only
+- Folder name: Rmusic, External storage: Local, Configuration /mnt/Rmusic,  Available for Public, Options: Enable Sharing,  Read only
+- Folder name: Rphoto, External storage: Local, Configuration /mnt/Rphoto,  Available for Public, Options: Enable Sharing,  Read only
+- Folder name: RWshare , External storage: Local, Configuration /mnt/Rshare, Available for admin, Options: Enable Sharing
+- Folder name: RWvideo, External storage: Local, Configuration /mnt/Rvideo,  Available for admin, Options: Enable Sharing
+- Folder name: RWmusic, External storage: Local, Configuration /mnt/Rmusic,  Available for admin, Options: Enable Sharing
+- Folder name: RWphoto, External storage: Local, Configuration /mnt/Rphoto,  Available for admin, Options: Enable Sharing
+
+
+## Jellyfin
+
+- To setup go to [https://jellyfin.inethilocal.net](https://jellyfin.inethilocal.net)
+
+### Complete Tell us about yourself
+
+- Username: inethiadmin (suggestion)
+- Password: select a strong password
+
+### Add video library
+
+- Select Add Media library
+- Content type: Movies
+- Display name: Videos
+- Folders (+)
+- Folder: /mnt/Rvideo
+- Select OK
+
+### Add music library
+
+- Select Add Media library
+- Content type: Music
+- Display name: Music
+- Folders (+)
+- Folder: /mnt/Rmusic
+- Select OK
+
+# Add content
+
+To add music and video content that van be viewed on Jellyfin. Open Nextcloud, login as administrator or a user with administrator priveledges and Drag videos to the RWVideo folder or Drag music to the RWMusic folder
 
 # Features in the works
 - Payment integrations

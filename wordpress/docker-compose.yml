@@ -27,7 +27,7 @@ services:
     image: mariadb:latest
     container_name: inethi-mariadb
     volumes:
-      - "${MARIADB_MOUNT}:/var/lib/mysql"
+      - wordpress_data:/var/lib/mysql
     environment:
       - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
       - "MYSQL_USER=${WORDPRESS_DB_USER}"
@@ -51,6 +51,8 @@ services:
       - "traefik.http.routers.adminer.rule=Host(`${TRAEFIK_API_RULE_ADMINER}.${inethiDN}`)"
       - "traefik.http.routers.adminer.entrypoints=${TRAEFIK_ENTRYPOINT}"
      
+volumes:
+  wordpress_data:
 
 networks:
   default:

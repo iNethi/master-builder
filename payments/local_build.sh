@@ -1,6 +1,5 @@
 source ../root.conf
 source ./.env
-source ./secrets/secret_passwords.env
 mkdir -p $PAYMENTAPI_VOLUME_DEV
 mkdir -p $PAYMENTAPI_VOLUME_PROD
 mkdir -p $VOUCHER_VOLUME/html/

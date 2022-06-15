@@ -1,7 +1,36 @@
 #!/bin/bash
 
+
+# install all dependencies
+sudo apt-get update
+sudo apt-get install -y \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt-get update
+sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+sudo apt-get -y install docker-compose
+
+# Make docker run as non root
+sudo usermod -aG docker $USER
+sudo chmod 666 /var/run/docker.sock
+
 # customize with your own.
 sudo mkdir -p /mnt/data
+# make sure all future data in this folder can be created as non root
+sudo chown  $USER:$USER /mnt/data
+
+## NOTES
+# Need to add opton to capture email for fields in inethi-traefikssl
+
 options=("jellyfin" "keycloak" "nginx(splash)" "moodle" "nextcloud" "wordpress" "unifi" "radiusdesk" "payments")
 entrypoint=web
 
@@ -24,6 +53,16 @@ while menu && read -rp "$prompt" num && [[ "$num" ]]; do
     [[ "${choices[num]}" ]] && choices[num]="" || choices[num]="+"
 done
 
+
+echo
+echo Set General master secure password for all services
+read -p 'master password: '  MASTER_PASSWORD
+# Set for Nextcloud
+mkdir -p ./nextcloud/secrets
+echo export MYSQL_ROOT_PASSWORD=$MASTER_PASSWORD > ./nextcloud/secrets/secret_passwords.env
+echo export MYSQL_PASSWORD=$MASTER_PASSWORD >> ./nextcloud/secrets/secret_passwords.env
+echo
+
 # Select domain namec
 read -p 'Doman name: ' domainName
 
@@ -36,12 +75,15 @@ select yn in "Yes" "No"; do
     esac
 done
 
+echo
 printf "You selected"; msg=" nothing"
 for i in ${!options[@]}; do
     [[ "${choices[i]}" ]] && {
         printf " %s" "[${options[i]}]"; msg="";
     }
 done
+
+
 
 echo "$msg"
 
@@ -56,18 +98,22 @@ if [ "$entrypoint" = websecure ]; then
         read -p 'AWS_ACCESS_KEY_ID: '  AWS_ACCESS_KEY_ID
         read -p 'AWS_SECRET_ACCESS_KEY: ' AWS_SECRET_ACCESS_KEY
         read -p 'AWS_HOSTED_ZONE_ID: ' AWS_HOSTED_ZONE_ID
-        sudo mkdir traefikssl/secrets/
-        sudo touch traefikssl/secrets/secrets_passwords.env
-        echo AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID > traefikssl/secrets/secret_keys.env
-        echo AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY >> traefikssl/secrets/secret_keys.env
-        echo AWS_HOSTED_ZONE_ID=$AWS_HOSTED_ZONE_ID >> traefikssl/secrets/secret_keys.env
+        mkdir -p ./traefikssl/secrets/
+        echo AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID > ./traefikssl/secrets/secret_keys.env
+        echo AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY >> ./traefikssl/secrets/secret_keys.env
+        echo AWS_HOSTED_ZONE_ID=$AWS_HOSTED_ZONE_ID >> ./traefikssl/secrets/secret_keys.env
     fi
 else
     echo You chose insecure Domain Name: http://$domainName
 fi
+
+
+
 echo
 printf "Starting to build dockers ... "
 echo
+
+
 
 # # Send the environmental variables to other scripts
 echo export inethiDN=$domainName > ./root.conf
@@ -75,7 +121,7 @@ echo export TRAEFIK_ENTRYPOINT=$entrypoint >> ./root.conf
 
 printf "Create docker traefik bridge: traefik-bridge ..."
 echo
-sudo docker network create --attachable -d bridge inethi-bridge-traefik
+docker network create --attachable -d bridge inethi-bridge-traefik
 
 printf "Pulling dnsmasq and traefik..."
 echo
