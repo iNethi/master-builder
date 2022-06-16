@@ -22,7 +22,7 @@ services:
       - --certificatesresolvers.letsencrypt.acme.dnschallenge=true
       - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=route53
       #- --certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
-      - --certificatesresolvers.letsencrypt.acme.email=<add your email here>
+      - "--certificatesresolvers.letsencrypt.acme.email=${email}"
       - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
       
       # Set up an insecure listener that redirects all traffic to TLS
