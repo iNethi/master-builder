@@ -174,7 +174,7 @@ To add music and video content that van be viewed on Jellyfin. Open Nextcloud, l
 
 # Added Synchronization
 
-You can contact inethi to get some space on the global iNethi cloud - this contact will synchronize with your local iNethi instance. We will allocate a folder for you (with up to 1GB storage). Contact us at inethi4us@gmail.com for pricing arrangement if you require more storage.
+You can contact iNethi to get some space on the global iNethi cloud - a folder allocated for your organization will synchronize with your local iNethi instance. We will allocate a folder for you (with up to 1GB storage). Contact us at inethi4us@gmail.com for pricing arrangement if you require more storage.
 
 You will receive a login to the global iNethi storage and a Webdav link you will need to enter when you rung the follow code
 ```
