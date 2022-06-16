@@ -172,6 +172,15 @@ Add the following:
 
 To add music and video content that van be viewed on Jellyfin. Open Nextcloud, login as administrator or a user with administrator priveledges and Drag videos to the RWVideo folder or Drag music to the RWMusic folder
 
+# Added Synchronization
+
+You can contact iNethi to get some space on the global iNethi cloud - a folder allocated for your organization will synchronize with your local iNethi instance. We will allocate a folder for you (with up to 1GB storage). Contact us at inethi4us@gmail.com for pricing arrangement if you require more storage.
+
+You will receive a login to the global iNethi storage and a Webdav link you will need to enter when you rung the follow code
+```
+./build_sync.sh
+```
+
 # Features in the works
 - Payment integrations
 - Improved building mechanisms

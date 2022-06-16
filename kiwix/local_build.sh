@@ -2,6 +2,10 @@
 source ../root.conf
 source ./.env
 mkdir -p $KIWIX_VOLUME
+
+
+
+
 cd ./data
 files=$(find *.zim)
 mv *.zim $KIWIX_VOLUME
