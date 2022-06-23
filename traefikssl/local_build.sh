@@ -13,3 +13,12 @@ fi
 sudo cp ./secrets/* $TRAEFIKSSL_VOLUME_SECRETS
 docker-compose config
 docker-compose up -d
+echo
+echo Waiting for your DNS host to respond to build certificate - waiting for 6 minutes
+echo Go make some cofee ... 
+echo
+sleep 300
+docker-compose up -d --force-recreate
+sleep 60
+echo Done with certificate setup
+echo
