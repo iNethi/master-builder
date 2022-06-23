@@ -31,7 +31,7 @@ sudo chown  $USER:$USER /mnt/data
 ## NOTES
 # Need to add opton to capture email for fields in inethi-traefikssl
 
-options=("jellyfin" "keycloak" "nginx(splash)" "moodle" "nextcloud" "wordpress" "unifi" "radiusdesk" "payments" "kiwix")
+options=("jellyfin" "keycloak" "nginx(splash)" "moodle" "nextcloud" "wordpress" "unifi" "radiusdesk" "kiwix")
 entrypoint=web
 
 menu() {
@@ -238,14 +238,6 @@ docker network create --attachable -d bridge inethi-bridge-traefik
 }
 
 [[ "${choices[8]}" ]] && {
-    printf "Building Payment system docker ... "
-    cd ./payments
-    ./local_build.sh
-    cd ..
-}
-
-
-[[ "${choices[9]}" ]] && {
     printf "Building Kiwix system docker ... "
     cd ./kiwix
     ./local_build.sh
