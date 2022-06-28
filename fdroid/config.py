@@ -44,7 +44,7 @@ build_tools = "25.0.2"
 # The same policy is applied to the archive repo, if there is one.
 # repo_maxage = 0
 
-repo_url = "https://fdroid.inethicloud.net"
+repo_url = "https://fdroid.inethilocal.net"
 repo_name = "iNethi FDROID"
 repo_icon = "inethi-transparent.png"
 repo_description = """
