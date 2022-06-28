@@ -19,7 +19,7 @@
             event.preventDefault();
             event.stopPropagation();
             event.stopImmediatePropagation();
-             //const doc = new jsPDF();
+             const doc = new jsPDF();
              let sendRequest = true;
              let voucherPin = document.getElementById("usedVoucherPin").value;
              voucherPin = voucherPin.replace(/\s+/g, '');
@@ -96,7 +96,7 @@
                      console.log(errMsg)
                      console.log(typeof(errMsg))
 
-                     if(alert("There has been an error processing your payment. Please notify an admin or try again later")){}
+                     if(alert("There has been an error retrieving your Voucher. Please notify an admin or try again later")){}
                          else {
                            window.location.reload();
                          }
@@ -129,7 +129,7 @@
               event.stopPropagation();
               event.stopImmediatePropagation();
 
-             //const doc = new jsPDF();
+             const doc = new jsPDF();
              let sendRequest = true;
              const voucherChoice = $("input[name='" + "radiobutton" + "']:checked").val();
              if (typeof(voucherChoice) === 'undefined') {
@@ -179,7 +179,7 @@
                      "cellphoneNumber": phoneNumber
                  }
                  console.log(data)
-               
+              
                  $.ajax({
                      type: "POST",
                      url: "https://paymentapiprod.blackequations.co.za/redeem",
@@ -192,8 +192,8 @@
                      const response_code = JSON.stringify(json_obj_response_code);
                      // const json = JSON.parse(message);
                      if (response_code === '0') {
-                         //doc.text(message, 10, 10);
-                         //doc.save("response.pdf");
+                         doc.text(message, 10, 10);
+                         doc.save("response.pdf");
                          if(alert("Your voucher code is: " + message + "\nPlease write this down as clicking ok will remove " +
                              "it from your screen.")){}
                          else {
