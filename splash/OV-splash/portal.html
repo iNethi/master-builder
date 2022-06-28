@@ -15,8 +15,11 @@
 
     <script>
       $(document).ready(function(){
-         $('#queryButton').click(function(){
-             const doc = new jsPDF();
+        $("#queryForm").submit(function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+             //const doc = new jsPDF();
              let sendRequest = true;
              let voucherPin = document.getElementById("usedVoucherPin").value;
              voucherPin = voucherPin.replace(/\s+/g, '');
@@ -49,7 +52,7 @@
              }
              if (sendRequest) {
                  $("#queryButton").attr("disabled", true);
-                 $( "#queryButton" ).fadeTo( "fast" , 0.1, function() {
+                 $("#queryButton" ).fadeTo( "fast" , 0.1, function() {
                        // Animation complete.
                  });
 
@@ -61,7 +64,7 @@
                  console.log(phoneNumber)
                  $.ajax({
                      type: "POST",
-                     url: "https://voucherapiprod.blackequations.co.za/query",
+                     url: "https://paymentapiprod.blackequations.co.za/query",
                      contentType: "application/json",
                      data: JSON.stringify(data),
                  success: function (data, status) {
@@ -179,7 +182,7 @@
                
                  $.ajax({
                      type: "POST",
-                     url: "https://voucherapiprod.blackequations.co.za/redeem",
+                     url: "https://paymentapiprod.blackequations.co.za/redeem",
                      contentType: "application/json",
                      data: JSON.stringify(data),
                  success: function (data, status) {
@@ -617,17 +620,17 @@
         <h1 class="u-align-center u-text u-text-1">LOST<br>VOUCHER PIN
         </h1>
         <div class="u-align-center u-form u-form-1">
-          <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom" name="form-1" style="padding: 10px;">
+          <form id="queryForm" action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom" name="form-1" style="padding: 10px;">
             <div class="u-form-group u-form-phone u-form-group-1">
               <label for="phone-44ee" class="u-label">Cellphone</label>
-              <input type="tel" pattern="\+?\d{0,3}[\s\(\-]?([0-9]{2,3})[\s\)\-]?([\s\-]?)([0-9]{3})[\s\-]?([0-9]{2})[\s\-]?([0-9]{2})" placeholder="Enter your cellphone (e.g. 0786458235)" id="phone-44ee" name="phone" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
+              <input type="tel" pattern="\+?\d{0,3}[\s\(\-]?([0-9]{2,3})[\s\)\-]?([\s\-]?)([0-9]{3})[\s\-]?([0-9]{2})[\s\-]?([0-9]{2})" placeholder="Enter your cellphone (e.g. 0786458235)" id="usedPhoneNumber" name="phone" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
             </div>
             <div class="u-form-group u-form-group-2">
               <label for="text-d977" class="u-label">Enter 16-Digit 1ForYou Voucher Pin</label>
-              <input type="text" placeholder="Use the 1ForYou voucher Pin Used to purchase Wi-Fi access." id="text-d977" name="number" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="required" maxlength="16">
+              <input type="text" placeholder="Use the 1ForYou voucher Pin Used to purchase Wi-Fi access." id="usedVoucherPin" name="number" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="required" maxlength="16">
             </div>
             <div class="u-align-center u-form-group u-form-submit">
-              <a href="#" class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-custom-color-1 u-radius-10 u-btn-1">Submit</a>
+              <a href="#" id="queryButton" class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-custom-color-1 u-radius-10 u-btn-1">Submit</a>
               <input type="submit" value="submit" class="u-form-control-hidden">
             </div>
             <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
