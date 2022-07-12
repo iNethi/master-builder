@@ -1,0 +1,23 @@
+version: "2.1"
+services:
+  minetest_server:
+    image: lscr.io/linuxserver/minetest:latest
+    container_name: inethi-minetest-server
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - CLI_ARGS="--gameid inethi --port 30000"
+    volumes:
+      - "${MINETEST_VOLUME}:/config/.minetest"
+    ports:
+      - 30000:30000/udp
+    restart: unless-stopped
+
+networks:
+  default:
+    external:
+      name: "${INETHI_NETWORK}"
+
+
+
