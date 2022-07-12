@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  onlyoffice:
+      image: "onlyoffice/communityserver"
+      container_name: inethi-onlyoffice
+      hostname: inethi-onlyoffice
+      restart: always
+      privileged: true
+      tty: true
+      stdin_open: true
+      ports:
+        - "${ONLYOFFICE_PORT1}:80"
+        - "${ONLYOFFICE_PORT2}:443"
+      networks:
+        default:
+          ipv4_address: "${ONLYOFFICE_IPV4}"
+
+networks:
+  default:
+    external:
+      name: "${INETHI_NETWORK}"
+
+

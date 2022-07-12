@@ -1,11 +1,37 @@
 #!/bin/bash
 
+
+# install all dependencies
+sudo apt-get update
+sudo apt-get install -y \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt-get update
+sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+sudo apt-get -y install docker-compose
+
+# Make docker run as non root
+sudo usermod -aG docker $USER
+sudo chmod 666 /var/run/docker.sock
+
 # customize with your own.
 sudo mkdir -p /mnt/data
 # make sure all future data in this folder can be created as non root
-sudo chown -R $USER:$USER /mnt/data
+sudo chown  $USER:$USER /mnt/data
 
-options=("jellyfin" "keycloak" "nginx(splash)" "moodle" "nextcloud" "wordpress" "unifi" "radiusdesk" "payments")
+## NOTES
+# Need to add opton to capture email for fields in inethi-traefikssl
+
+options=("jellyfin" "keycloak" "nginx(splash)" "moodle" "nextcloud" "wordpress" "unifi" "radiusdesk" "kiwix")
 entrypoint=web
 
 menu() {
@@ -37,8 +63,11 @@ echo export MYSQL_ROOT_PASSWORD=$MASTER_PASSWORD > ./nextcloud/secrets/secret_pa
 echo export MYSQL_PASSWORD=$MASTER_PASSWORD >> ./nextcloud/secrets/secret_passwords.env
 echo
 
-# Select domain namec
-read -p 'Doman name: ' domainName
+
+
+# Select default email address
+read -p 'Default email address: ' emailAddress
+
 
 # Select https or http
 echo "Do you wish to deploy a secure site with https?"
@@ -46,6 +75,26 @@ select yn in "Yes" "No"; do
     case $yn in
         Yes ) entrypoint=websecure; break;;
         No ) entrypoint=web; break;;
+    esac
+done
+
+# Check if using default domain
+# TODO wget certificate and copy to docker shared folder
+
+echo "Do you wish to use the default inethi domain inethilocal.net?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) defaultDomain=1; domainName=inethilocal.net; wget https://splash.inethicloud.net/acme.json; break;;
+        No ) defaultDomain=0; read -p 'Domain name: ' domainName; break;;
+    esac
+done
+
+
+echo "Would you like iNethi to run a DNS to redirect hosts to your inethi domain"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) installDNS=1; break;;
+        No ) installDNS=0; break;;
     esac
 done
 
@@ -58,20 +107,26 @@ for i in ${!options[@]}; do
 done
 
 
-
 echo "$msg"
 
 if [ "$entrypoint" = websecure ]; then
     echo You chose secure Domain Name: https://$domainName
     echo
-    echo API keys are needed to setup https certificates
+
     if test -f traefikssl/secrets/secret_keys.env; then
         echo API key file exists
         cat traefikssl/secrets/secret_keys.env
     else
-        read -p 'AWS_ACCESS_KEY_ID: '  AWS_ACCESS_KEY_ID
-        read -p 'AWS_SECRET_ACCESS_KEY: ' AWS_SECRET_ACCESS_KEY
-        read -p 'AWS_HOSTED_ZONE_ID: ' AWS_HOSTED_ZONE_ID
+    	if [ "$defaultDomain" = 1 ]; then
+	    AWS_ACCESS_KEY_ID=xxx
+	    AWS_SECRET_ACCESS_KEY=xxx
+	    AWS_HOSTED_ZONE_ID=xxx
+    	else
+            echo API keys are needed to setup https certificates
+            read -p 'AWS_ACCESS_KEY_ID: '  AWS_ACCESS_KEY_ID
+            read -p 'AWS_SECRET_ACCESS_KEY: ' AWS_SECRET_ACCESS_KEY
+            read -p 'AWS_HOSTED_ZONE_ID: ' AWS_HOSTED_ZONE_ID
+	fi
         mkdir -p ./traefikssl/secrets/
         echo AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID > ./traefikssl/secrets/secret_keys.env
         echo AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY >> ./traefikssl/secrets/secret_keys.env
@@ -92,13 +147,14 @@ echo
 # # Send the environmental variables to other scripts
 echo export inethiDN=$domainName > ./root.conf
 echo export TRAEFIK_ENTRYPOINT=$entrypoint >> ./root.conf
+echo export email=$emailAddress >> ./root.conf
 
 printf "Create docker traefik bridge: traefik-bridge ..."
 echo
 docker network create --attachable -d bridge inethi-bridge-traefik
 
-printf "Pulling dnsmasq and traefik..."
-echo
+
+
 
 # Build traefik - compulsory docker
 
@@ -112,6 +168,14 @@ echo
 [ "$entrypoint" = web ] && {
     printf "Building Traefik docker... "
         cd ./traefik
+        ./local_build.sh
+        cd ..
+}
+
+
+[ "$installDNS" = 1 ] && {
+    printf "Building iNethi DNS ... "
+        cd ./dnsmasq
         ./local_build.sh
         cd ..
 }
@@ -174,8 +238,10 @@ echo
 }
 
 [[ "${choices[8]}" ]] && {
-    printf "Building Payment system docker ... "
-    cd ./payments
+    printf "Building Kiwix system docker ... "
+    cd ./kiwix
     ./local_build.sh
     cd ..
 }
+
+
