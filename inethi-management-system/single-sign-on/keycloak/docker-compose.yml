@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  mysql:
+      image: mysql
+      container_name: inethi-mysql-keycloak
+      restart: always
+      environment:
+        - "MYSQL_ROOT_PASSWORD={MYSQL_ROOT_PASSWORD}"
+        - "MYSQL_DATABASE=${MYSQL_DB}"
+        - "MYSQL_USER=${MYSQL_USER}"
+        - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
+      volumes:
+        - "${MYSQLDB_VOLUME}:/var/lib/mysql"
+      ports:
+        - "3306:3306"
+
+  keycloak:
+      image: jboss/keycloak
+      container_name: inethi-keycloak
+      restart: always
+      environment:
+        - "KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN_USER}"
+        - "KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}"
+        - "KEYCLOAK_USER=${KEYCLOAK_USER}"
+        - "KEYCLOAK_PASSWORD=${KEYCLOAK_PASSWORD}"
+        - "DB_VENDOR=MYSQL"
+        - "DB_ADDR=inethi-mysql-keycloak"
+        - "DB_DATABASE=${MYSQL_DB}"
+        - "DB_USER=${MYSQL_USER}"
+        - "DB_PASSWORD=${MYSQL_PASSWORD}"
+      ports:
+        - "8080:8080"
+      depends_on:
+        - inethi-mysql-keycloak

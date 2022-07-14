@@ -1,0 +1,15 @@
+version: "3"
+services:
+  inethi-user-management-frontend:
+    build: .
+    container_name: inethi-user-management-frontend
+    ports:
+      - '3000:3000'
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.moodle.rule=Host(`react.inethicloud.net`)"
+      - "traefik.http.routers.moodle.entrypoints=websecure"
+networks:
+  default:
+    external:
+      name: "inethi-bridge-traefik"
