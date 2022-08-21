@@ -6,7 +6,7 @@ services:
     build:
       context: ./services/web
       dockerfile: Dockerfile.prod
-    command: bash -c 'gunicorn --bind 0.0.0.0:80 manage:app'
+    command: bash -c 'gunicorn --bind 0.0.0.0:80 manage:app --log-level debug'
 
     environment:
       - FLASK_APP=endpoints/__init__.py
