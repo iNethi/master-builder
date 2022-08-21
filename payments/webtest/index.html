@@ -130,7 +130,7 @@
               event.stopPropagation();
               event.stopImmediatePropagation();
 
-             //const doc = new jsPDF();
+             const doc = new jsPDF();
              let sendRequest = true;
              const voucherChoice = $("input[name='" + "radiobutton" + "']:checked").val();
              if (typeof(voucherChoice) === 'undefined') {
@@ -195,7 +195,7 @@
                      // const json = JSON.parse(message);
                      if (response_code === '0') {
                          //doc.text(message, 10, 10);
-                         //doc.save("response.pdf");
+                         doc.save("response.pdf");
                          if(alert("Your voucher code is: " + message + "\nPlease write this down as clicking ok will remove " +
                              "it from your screen.")){}
                          else {
