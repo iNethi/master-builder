@@ -64,7 +64,8 @@
                  console.log(phoneNumber)
                  $.ajax({
                      type: "POST",
-                     url: "https://purchaseapiprod.blackequations.co.za/query",
+                     url: "https://paymentapiprod.blackequations.co.za/query",
+                     headers: {  'Access-Control-Allow-Origin': '*' },
                      contentType: "application/json",
                      data: JSON.stringify(data),
                  success: function (data, status) {
@@ -182,7 +183,8 @@
                
                  $.ajax({
                      type: "POST",
-                     url: "https://voucherapiprod.blackequations.co.za/redeem",
+                     url: "https://paymentapiprod.blackequations.co.za/redeem",
+                     headers: {  'Access-Control-Allow-Origin': '*' },
                      contentType: "application/json",
                      data: JSON.stringify(data),
                  success: function (data, status) {
@@ -334,7 +336,7 @@
         </h1>
         <div class="u-align-center u-expanded-width-xs u-form u-form-1">
           <!--<form  class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" name="form" style="padding: 10px;" onsubmit="myFunction()">-->
-          <form id="One4YouForm" action="https://voucherapiprod.blackequations.co.za/redeem" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom" name="form" style="padding: 10px;">
+          <form id="One4YouForm" action="https://paymentapiprod.blackequations.co.za/redeem" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom" name="form" style="padding: 10px;">
             <div class="u-form-group u-form-radiobutton u-form-group-1">
               <div class="u-form-radio-button-wrapper">
                 <input type="radio" name="radiobutton" value="TIME30M" required="required">
