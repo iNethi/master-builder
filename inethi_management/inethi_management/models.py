@@ -84,3 +84,6 @@ class DefaultPaymentLimits(models.Model):
 
     def __str__(self):
         return str(self.service_type_id)
+
+'''class PriceServiceMapping(models.Model):
+'''

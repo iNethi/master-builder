@@ -271,8 +271,12 @@
       });*/
   
       function copyFunction() {
-          document.getElementById("auth_user").value = document.getElementById("auth_voucher").value;
-          document.getElementById("auth_pass").value = document.getElementById("auth_voucher").value;
+          document.getElementById("auth_user").value = document.getElementById("auth_voucher").value.toLowerCase();
+          document.getElementById("auth_pass").value = document.getElementById("auth_voucher").value.toLowerCase();
+      }
+
+      function convertFunction() {
+          document.getElementById("auth_user").value = document.getElementById("auth_user").value.toLowerCase();
       }
   
       function viewdiv(id) {
@@ -311,11 +315,12 @@
               #PORTAL_MESSAGE#
           </div>
           <form name="login_form" method="post" action="#PORTAL_ACTION#">
-              <input type="text" name="auth_user" placeholder="User" id="auth_user">
+              <input onkeyup="convertFunction()" type="text" name="auth_user" placeholder="User" id="auth_user">
               <input type="password" name="auth_pass" placeholder="Password" id="auth_pass">
               <br />
               <input onkeyup="copyFunction()" type="text" name="auth_voucher" placeholder="Voucher" id="auth_voucher">
-  
+              
+
               <div class="login-help">
                  
                   <label class="label--checkbox">
@@ -408,19 +413,10 @@
                 <label class="u-label" for="radiobutton">R2 - 60min</label>
                 <br>
                 <input type="radio" name="radiobutton" value="TIME3H" required="required">
-                <label class="u-label" for="radiobutton">R5 _ 3Hr</label>
-                <br>
-                <input type="radio" name="radiobutton" value="TIME10H" required="required">
-                <label class="u-label" for="radiobutton">R8 - 10Hr</label>
-                <br>
-                <input type="radio" name="radiobutton" value="TIME1D" required="required">
-                <label class="u-label" for="radiobutton">R15 - 24Hr</label>
-                <br>
-                <input type="radio" name="radiobutton" value="TIME15D" required="required">
-                <label class="u-label" for="radiobutton">R40 - 15Days</label>
-                <br>
+                <label class="u-label" for="radiobutton">R5 - 24Hr</label>
+                <br>                
                 <input type="radio" name="radiobutton" value="TIME28D" required="required">
-                <label class="u-label" for="radiobutton">R60 - 28 Days (**Special**)</label>
+                <label class="u-label" for="radiobutton">R100 - 28 Days</label>
                 <br>
                 <input type="radio" name="radiobutton" value="DATA1G" required="required">
                 <label class="u-label" for="radiobutton">R10 - 1Gig</label>

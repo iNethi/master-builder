@@ -29,7 +29,8 @@ class ServiceTypes(models.Model):
 
 
 class Users(models.Model):
-    keycloak_id = models.CharField(max_length=100, unique=True, null=True, blank=True)
+    keycloak_id = models.CharField(
+        max_length=100, unique=True, null=True, blank=True)
     email_encrypt = models.CharField(max_length=100, null=True, blank=True)
     phonenum_encrypt = models.CharField(max_length=100, null=True, blank=True)
     joindate_time = models.DateTimeField()

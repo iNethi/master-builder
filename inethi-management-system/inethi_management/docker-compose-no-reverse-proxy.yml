@@ -1,20 +1,20 @@
 version: '3'
 
 services:
-  inethi-user-managament-api:
-    container_name: inethi-user-managament-api
+  inethi-user-management-api:
+    container_name: inethi-user-management-api
     build: .
     command: bash -c "python manage.py runserver"
     ports:
       - "8000:8000"
     depends_on:
-      - inethi-user-managament-mysql
+      - inethi-user-management-mysql
 
-  inethi-user-managament-mysql:
-    container_name: inethi-user-managament-mysql
+  inethi-user-management-mysql:
+    container_name: inethi-user-management-mysql
     image: mysql
     environment:
-      MYSQL_DATABASE: 'inethi-user-managament-api'
+      MYSQL_DATABASE: 'inethi-user-management-api'
       MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
     ports:
       - "3316:3306"

@@ -10,11 +10,13 @@ def redeem():
     :return: an HTTP response indicating whether the 1FORYOU voucher redemption was successful
     """
 
-    error_response = {"keegan_says": "unclassified"}  # this needs to contain a very specific key that wont be
+    # this needs to contain a very specific key that wont be
+    error_response = {"keegan_says": "unclassified"}
     # returned by flash
     amount = -1
     voucher_choice = request.json.get('voucherChoice')
 
+    '''
     if voucher_choice == 'TIME30M':
         amount = 100
     if voucher_choice == 'TIME1H':
@@ -42,14 +44,39 @@ def redeem():
         amount = 20000
     elif voucher_choice == 'DATA500G':
         amount = 30000
-    
+    '''
+
+    if voucher_choice == 'TIME30M':
+        amount = 100
+    if voucher_choice == 'TIME1H':
+        amount = 200
+    if voucher_choice == 'TIME1D':
+        amount = 500
+    if voucher_choice == 'TIME28D':
+        amount = 10000
+
+    if voucher_choice == 'DATA1G':
+        amount = 1000
+    elif voucher_choice == 'DATA5G':
+        amount = 4000
+    elif voucher_choice == 'DATA10G':
+        amount = 8000
+    elif voucher_choice == 'DATA100G':
+        amount = 12000
+    elif voucher_choice == 'DATA300G':
+        amount = 20000
+    elif voucher_choice == 'DATA500G':
+        amount = 30000
 
     voucher_pin = request.json.get('voucherPin')
     cellphone_number = request.json.get('cellphoneNumber')
-    cellphone_number = "27" + cellphone_number[1:]  # remove the first digit and add SA code
+    # remove the first digit and add SA code
+    cellphone_number = "27" + cellphone_number[1:]
     current_time = datetime.datetime.now()
-    time = current_time.year + current_time.month + current_time.day + current_time.hour + current_time.minute + current_time.second + current_time.microsecond
-    request_id = voucher_pin + "-" + cellphone_number + "-" + str(abs(hash(voucher_pin + cellphone_number + str(time))))
+    time = current_time.year + current_time.month + current_time.day + current_time.hour + \
+        current_time.minute + current_time.second + current_time.microsecond
+    request_id = voucher_pin + "-" + cellphone_number + "-" + \
+        str(abs(hash(voucher_pin + cellphone_number + str(time))))
     # print(request_id)
     access_token = generate_access_token()
     print("Sending request to flash")

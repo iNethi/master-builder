@@ -226,8 +226,6 @@ def purchase(request, format=None):
                 print("first elif (last payment does not exist)")
                 print(amount)
 
-
-
                 if voucher:
 
                      # Fetch a new voucher from the radius desk datbase

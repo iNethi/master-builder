@@ -7,6 +7,9 @@
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
 
+
+
+
     <title>FOCUS CAPTIVE PORTAL</title>
     <link rel="stylesheet" href="captiveportal-tidy.css" media="screen">
     <script src="captiveportal-jquery.js"></script>
@@ -14,6 +17,7 @@
     <script class="u-script" type="text/javascript" src="captiveportal-nicepage.js" defer=""></script>
 
     <script>
+      
       $(document).ready(function(){
         $("#queryForm").submit(function(event) {
             event.preventDefault();
@@ -64,7 +68,7 @@
                  console.log(phoneNumber)
                  $.ajax({
                      type: "POST",
-                     url: "https://purchaseapiprod.blackequations.co.za/query",
+                     url: "https://paymentapiprod.blackequations.co.za/query",
                      contentType: "application/json",
                      data: JSON.stringify(data),
                  success: function (data, status) {
@@ -96,7 +100,7 @@
                      console.log(errMsg)
                      console.log(typeof(errMsg))
 
-                     if(alert("There has been an error processing your payment. Please notify an admin or try again later")){}
+                     if(alert("There has been an error retrieving your Voucher. Please notify an admin or try again later")){}
                          else {
                            window.location.reload();
                          }
@@ -129,7 +133,7 @@
               event.stopPropagation();
               event.stopImmediatePropagation();
 
-             //const doc = new jsPDF();
+             const doc = new jsPDF();
              let sendRequest = true;
              const voucherChoice = $("input[name='" + "radiobutton" + "']:checked").val();
              if (typeof(voucherChoice) === 'undefined') {
@@ -179,10 +183,10 @@
                      "cellphoneNumber": phoneNumber
                  }
                  console.log(data)
-               
+              
                  $.ajax({
                      type: "POST",
-                     url: "https://voucherapiprod.blackequations.co.za/redeem",
+                     url: "https://paymentapiprod.blackequations.co.za/redeem",
                      contentType: "application/json",
                      data: JSON.stringify(data),
                  success: function (data, status) {
@@ -192,8 +196,8 @@
                      const response_code = JSON.stringify(json_obj_response_code);
                      // const json = JSON.parse(message);
                      if (response_code === '0') {
-                         //doc.text(message, 10, 10);
-                         //doc.save("response.pdf");
+                         doc.text(message, 10, 10);
+                         doc.save("response.pdf");
                          if(alert("Your voucher code is: " + message + "\nPlease write this down as clicking ok will remove " +
                              "it from your screen.")){}
                          else {
@@ -254,7 +258,7 @@
     }</script> 
 
     <script>
-
+      
       /*var keycloak = new Keycloak({
           "realm": "inethi",
           "auth-server-url": "https://keycloak.inethi.net/auth/",
@@ -271,8 +275,12 @@
       });*/
   
       function copyFunction() {
-          document.getElementById("auth_user").value = document.getElementById("auth_voucher").value;
-          document.getElementById("auth_pass").value = document.getElementById("auth_voucher").value;
+          document.getElementById("auth_user").value = document.getElementById("auth_voucher").value.toLowerCase();
+          document.getElementById("auth_pass").value = document.getElementById("auth_voucher").value.toLowerCase();
+      }
+
+      function convertFunction() {
+          document.getElementById("auth_user").value = document.getElementById("auth_user").value.toLowerCase();
       }
   
       function viewdiv(id) {
@@ -284,7 +292,7 @@
           var div = document.getElementById(id);
           div.style.display = "none"
       }
-  
+      
   
   </script>
 
@@ -292,6 +300,43 @@
     <meta property="og:title" content="FOCUS CAPTIVE PORTAL">
     <meta property="og:type" content="website">
   </head>
+
+  <style>
+  
+    .error-box {
+        
+        margin: 20px;
+        font-family: 'Source Serif Pro',serif;
+        background-color: rgb(255, 208, 208);
+        border: none;
+        color: black;
+        padding: 10px;
+        text-align: center;
+        font-size: 16px;
+        
+    }
+
+    .login-card {
+      font-size: 0.875rem;
+      padding: 10px;
+      width: 300px;
+      background-color: #F7F7F7;
+      margin: auto;
+      border-radius: 2px;
+      box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
+      overflow: hidden;
+
+      position: absolute;
+      z-index: 100;
+      right: 10px;
+      top: 100px;
+      display: block
+      }
+    
+  
+   
+    </style>
+
   <body data-home-page="FOCUS-CAPTIVE-PORTAL.html" data-home-page-title="FOCUS CAPTIVE PORTAL" class="u-body u-xl-mode">
     <section class="u-clearfix u-custom-color-1 u-section-1" id="sec-71a9">
       <div class="u-align-left u-clearfix u-sheet u-sheet-1">
@@ -299,13 +344,57 @@
       </div>
     </section>
 
+
+    <div class="login-card" , id="logincard">
+
+      <span> <i>To access the Internet enter your username and password or voucher number. </i></span>
+      <br />
+  
+      <br />
+      <div class="loginform">
+          <div id="error-message">
+              #PORTAL_MESSAGE#
+          </div>
+          <form name="login_form" method="post" action="#PORTAL_ACTION#">
+              <input onkeyup="convertFunction()" type="text" name="auth_user" placeholder="User" id="auth_user">
+              <input type="password" name="auth_pass" placeholder="Password" id="auth_pass">
+              <br />
+              <input onkeyup="copyFunction()" type="text" name="auth_voucher" placeholder="Voucher" id="auth_voucher">
+              
+
+              <div class="login-help">
+                 
+                  <label class="label--checkbox">
+                      <input type="checkbox" class="checkbox"
+                          onchange="document.getElementById('login').disabled = !this.checked;">
+                      <span>I agree with the <a href="http://10.2.0.10/iNethi_AUP.pdf">Acceptance User
+                              Policy</a> </span>
+                      
+                  </label>     
+                  
+              </div>
+              <br/>
+              <input name="redirurl" type="hidden" value="https://splash.inethilocal.net">
+              <input type="submit" name="accept" class="login login-submit" value="Login" id="login" disabled>
+              <button type="button" class="login-cancel" onclick="hidediv('logincard')" id="cancel">Cancel </button>
+              <br/>
+            
+          </form>
+      </div>
+  
+  
+  
   
   </div>
 
+  <button class="floatButton" type="button" onclick="viewdiv('logincard')">INTERNET</button>
 
     <section class="u-clearfix u-section-2" id="sec-061e">
       <div class="u-clearfix u-sheet u-sheet-1">
         <h1 class="u-align-center u-text u-text-default u-text-1">FOCUS CONNECT</h1>
+        <div class="error-box">
+          You entered an incorrect voucher code or username and password, Try again ...
+        </div>
         <div class="u-align-center u-clearfix u-expanded-width u-gutter-10 u-layout-custom-sm u-layout-custom-xs u-layout-wrap u-layout-wrap-1">
           <div class="u-gutter-0 u-layout">
             <div class="u-layout-row">
@@ -326,6 +415,30 @@
         </div>
       </div>
     </section>
+    <section class="u-clearfix u-section-3" id="sec-c8a6">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h1 class="u-align-center u-text u-text-default-lg u-text-default-md u-text-default-sm u-text-default-xl u-text-1">FOCUS LOCAL</h1>
+        <div class="u-clearfix u-expanded-width u-gutter-10 u-layout-custom-sm u-layout-custom-xs u-layout-wrap u-layout-wrap-1">
+          <div class="u-gutter-0 u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-1">
+                <div class="u-border-2 u-border-custom-color-1 u-container-layout u-valign-top-xs u-container-layout-1">
+                  <img class="u-align-center u-image u-image-default u-preserve-proportions u-image-1" src="captiveportal-inethi.png" alt="" data-image-width="225" data-image-height="225" data-href="https://splash.inethilocal.net">
+                  <p class="u-align-center u-text u-text-default u-text-2">FAST &amp; FREE CONTENT</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-2">
+                <div class="u-border-2 u-border-custom-color-1 u-container-layout u-container-layout-2">
+                  <img class="u-align-center u-image u-image-default u-image-2" src="captiveportal-ShopLogo.png" alt="" data-image-width="290" data-image-height="341" data-href="http://wordpress.blackequations.co.za" data-target="_blank">
+                  <p class="u-align-center u-text u-text-default u-text-3">BUSINESS LISTING &amp; OVTV</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
 
     <section class="u-clearfix u-section-4" id="sec-62b5">
       <div class="u-clearfix u-sheet u-sheet-1">
@@ -446,7 +559,7 @@
               <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1"><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-1"><img src="captiveportal-1.png" alt=""></span>
                 <h3 class="u-align-center u-text u-text-default u-text-1">FOCUS CONNECT<br>30min
                 </h3>
-                <p class="u-align-center u-text u-text-2">R1<br>internet 30min<br>5Mb/s<br>unlimited<br>1 device<br>valid for 3Hrs
+                <p class="u-align-center u-text u-text-2">R1<br>internet 30min<br>5Mb/s<br>unlimited<br>1 device<br>valid for 24Hr
                 </p>
               </div>
             </div>
@@ -454,23 +567,47 @@
               <div class="u-container-layout u-similar-container u-valign-top u-container-layout-2"><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-2"><img src="captiveportal-1.png" alt=""></span>
                 <h3 class="u-align-center u-text u-text-default u-text-3">FOCUS CONNECT<br>60min
                 </h3>
-                <p class="u-align-center u-text u-text-4"> R2<br>internet 60min<br>5Mb/s<br>unlimited<br>1 device<br>valid for 3Hrs
+                <p class="u-align-center u-text u-text-4"> R2<br>internet 60min<br>5Mb/s<br>unlimited<br>1 device<br>valid for 24Hr
                 </p>
               </div>
             </div>
             <div class="u-border-2 u-border-custom-color-1 u-container-style u-list-item u-repeater-item">
               <div class="u-container-layout u-similar-container u-valign-top u-container-layout-3"><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-3"><img src="captiveportal-1.png" alt=""></span>
-                <h3 class="u-align-center u-text u-text-default u-text-5">FOCUS CONNECT<br>24Hr
+                <h3 class="u-align-center u-text u-text-default u-text-5">FOCUS CONNECT<br>3Hr
                 </h3>
-                <p class="u-align-center u-text u-text-6"> R5<br>internet 24Hr<br>5Mb/s<br>10 Gigs<br>1 device<br>valid for 24Hrs
+                <p class="u-align-center u-text u-text-6"> R5<br>internet 180min<br>5Mb/s<br>unlimited<br>1 device<br>valid for 24Hr
                 </p>
               </div>
-            </div>            
+            </div>
+            <div class="u-border-2 u-border-custom-color-1 u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-4"><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-4"><img src="captiveportal-1.png" alt=""></span>
+                <h3 class="u-align-center u-text u-text-default u-text-7">FOCUS CONNECT<br>10Hr
+                </h3>
+                <p class="u-align-center u-text u-text-8"> R8<br>internet 600min<br>5Mb/s<br>unlimited<br>1 device<br>valid for 24Hr
+                </p>
+              </div>
+            </div>
+            <div class="u-border-2 u-border-custom-color-1 u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-5"><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-5"><img src="captiveportal-1.png" alt=""></span>
+                <h3 class="u-align-center u-text u-text-default u-text-9">FOCUS CONNECT<br>24Hr
+                </h3>
+                <p class="u-align-center u-text u-text-10"> R15<br>internet 1440min<br>5Mb/s<br>unlimited<br>1 device<br>valid for 24Hr
+                </p>
+              </div>
+            </div>
+            <div class="u-border-2 u-border-custom-color-1 u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-6"><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-6"><img src="captiveportal-1.png" alt=""></span>
+                <h3 class="u-align-center u-text u-text-default u-text-11">FOCUS CONNECT<br>15Days
+                </h3>
+                <p class="u-align-center u-text u-text-12"> R40<br>internet 15days<br>5Mb/s<br>unlimited<br>1 device<br>valid for 15days
+                </p>
+              </div>
+            </div>
             <div class="u-border-2 u-border-custom-color-1 u-container-style u-list-item u-repeater-item">
               <div class="u-container-layout u-similar-container u-valign-top u-container-layout-7"><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-7"><img src="captiveportal-1.png" alt=""></span>
                 <h3 class="u-align-center u-text u-text-default u-text-13">FOCUS CONNECT<br>28Days
                 </h3>
-                <p class="u-align-center u-text u-text-14"> R100<br>internet 28days<br>5Mb/s<br>300 Gigs<br>1 device<br>valid for 28days
+                <p class="u-align-center u-text u-text-14"> R60<br>internet 28days<br>5Mb/s<br>unlimited<br>1 device<br>valid for 28days
                 </p>
               </div>
             </div>

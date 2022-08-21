@@ -81,10 +81,10 @@ DATABASES = {
     'default': {
         # MySQL engine. Powered by the mysqlclient module.
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'inethi-user-managament-api',
+        'NAME': 'inethi-user-management-api',
         'USER': 'root',
         'PASSWORD': '',
-        'HOST': 'inethi-user-managament-mysql',
+        'HOST': 'inethi-user-management-mysql',
         'PORT': '3306',
     }
 }

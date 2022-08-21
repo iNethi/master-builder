@@ -12,15 +12,20 @@ if test -f ../acme.json; then
 fi
 sudo cp ./secrets/* $TRAEFIKSSL_VOLUME_SECRETS
 sudo mkdir -p $TRAEFIKSSL_VOLUME/letsencrypt
-sudo cp ./acme.json $TRAEFIKSSL_VOLUME/letsencrypt
-docker-compose config
-docker-compose up -d
-echo
-echo Waiting for your DNS host to respond to build certificate - waiting for 6 minutes
-echo Go make some cofee ... 
-echo
-sleep 300
-docker-compose up -d --force-recreate
-sleep 60
-echo Done with certificate setup
-echo
+
+if test -f ../acme.json; then
+	docker-compose -f docker-compose-noFetchCert.yml config
+	docker-compose -f docker-compose-noFetchCert.yml up -d --force-recreate
+else
+	docker-compose config
+	docker-compose up -d -force-recreate
+	echo
+	echo Waiting for your DNS host to respond to build certificate - waiting for 6 minutes
+	echo Go make some cofee ... 
+	echo
+	sleep 300
+	docker-compose up -d --force-recreate
+	sleep 60
+	echo Done with certificate setup
+	echo
+fi
