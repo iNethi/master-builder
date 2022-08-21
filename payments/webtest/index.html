@@ -194,7 +194,7 @@
                      const response_code = JSON.stringify(json_obj_response_code);
                      // const json = JSON.parse(message);
                      if (response_code === '0') {
-                         //doc.text(message, 10, 10);
+                         doc.text(message, 10, 10);
                          doc.save("response.pdf");
                          if(alert("Your voucher code is: " + message + "\nPlease write this down as clicking ok will remove " +
                              "it from your screen.")){}
