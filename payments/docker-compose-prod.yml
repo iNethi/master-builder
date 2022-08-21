@@ -2,7 +2,7 @@ version: '3'
 
 services:
   voucherapiprod:
-    container_name: inethi-payment-api-prod
+    container_name: inethi-paymentprod-api
     build:
       context: ./services/web
       dockerfile: Dockerfile.prod
