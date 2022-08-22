@@ -65,6 +65,7 @@
                  $.ajax({
                      type: "POST",
                      url: "https://paymentapiprod.blackequations.co.za/query",
+                     headers: {  'Access-Control-Allow-Origin': '*' },
                      contentType: "application/json",
                      data: JSON.stringify(data),
                  success: function (data, status) {
@@ -183,6 +184,7 @@
                  $.ajax({
                      type: "POST",
                      url: "https://paymentapiprod.blackequations.co.za/redeem",
+                     headers: {  'Access-Control-Allow-Origin': '*' },
                      contentType: "application/json",
                      data: JSON.stringify(data),
                  success: function (data, status) {
@@ -362,7 +364,7 @@
               </div>
               <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-2">
                 <div class="u-border-2 u-border-custom-color-1 u-container-layout u-container-layout-2">
-                  <img class="oneForYouvoucher u-align-center u-image u-image-round u-preserve-proportions u-radius-10 u-image-2" src="captiveportal-OneForYou-7.jpg" alt="" data-image-width="224" data-image-height="224" data-href="#sec-62b5" data-page-id="187521654">
+                  <img class="oneForYouvoucher u-align-center u-image u-image-round u-preserve-proportions u-radius-10 u-image-2" src="captiveportal-OneForYou.jpg" alt="" data-image-width="224" data-image-height="224" data-href="#sec-62b5" data-page-id="187521654">
                   <p class="u-align-center-xs u-text u-text-default u-text-3">Use your 1For voucher</p>
                 </div>
               </div>

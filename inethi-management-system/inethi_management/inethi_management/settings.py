@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = ['https://usermanagement.inethicloud.net/']
+CSRF_TRUSTED_ORIGINS = ['https://usermanagement.inethilocal.net/']
 
 CORS_ORIGIN_ALLOW_ALL = DEBUG
 
@@ -89,7 +90,7 @@ DATABASES = {
         'HOST': 'inethi-user-management-mysql',
         'PORT': '3306',
     },
-    'vouchers': {
+    'radiusdeskdb': {
         'NAME': 'rd',
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'rd',
@@ -99,6 +100,8 @@ DATABASES = {
     }
 
 }
+
+DATABASE_ROUTERS = ['inethi_management.radiusdesk.router.RadiusDeskRouter']
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
