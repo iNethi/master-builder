@@ -280,15 +280,6 @@
       function convertFunction() {
           document.getElementById("auth_user").value = document.getElementById("auth_user").value.toLowerCase();
       }
-
-      function copyFunction2() {
-          document.getElementById("auth_user2").value = document.getElementById("auth_voucher2").value.toLowerCase();
-          document.getElementById("auth_pass2").value = document.getElementById("auth_voucher2").value.toLowerCase();
-      }
-
-      function convertFunction2() {
-          document.getElementById("auth_user2").value = document.getElementById("auth_user2").value.toLowerCase();
-      }
   
       function viewdiv(id) {
           var div = document.getElementById(id);
@@ -487,15 +478,15 @@
           <form name="login_form" method="post" action="#PORTAL_ACTION#">
             <div class="u-form-group u-form-name">
               <label for="name-5084" class="u-label">User</label>
-              <input onkeyup="convertFunction2()" type="text" placeholder="Enter your User Name" id="auth_user2" name="auth_user" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
+              <input type="text" placeholder="Enter your Name" id="name-5084" name="name" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
             </div>
             <div class="u-form-group u-form-group-2">
               <label for="text-61ba" class="u-label">Password</label>
-              <input type="password" placeholder="" id="auth_pass2" name="auth_pass" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="required">
+              <input type="text" placeholder="" id="text-61ba" name="text" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="required">
             </div>
             <div class="u-form-group u-form-group-3">
               <label for="text-ddf3" class="u-label">Voucher</label>
-              <input onkeyup="copyFunction2()" type="text" placeholder="" id="auth_voucher2" name="auth_voucher" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
+              <input type="text" placeholder="" id="text-ddf3" name="text-1" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
             </div>
             <div class="u-form-agree u-form-group u-form-group-4">
               <input type="checkbox" id="agree-b9d5" name="agree" class="u-agree-checkbox" required="">
@@ -516,6 +507,7 @@
     </section>
 
 
+    
 
 
     <section class="u-clearfix u-section-7" id="sec-b21f">
