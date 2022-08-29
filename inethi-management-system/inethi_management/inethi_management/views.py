@@ -179,7 +179,7 @@ def purchase(request, format=None):
                     service_period_sec = PriceToPackageMap[str(amount)][1]
                     print("Profile", chosenProfile)
                     nextVoucher = Vouchers.objects.using('radiusdeskdb').filter(
-                        status="new", profile=chosenProfile).first()
+                        status="new", profile=chosenProfile).filter(batch__icontains="digital").first()
                     if (nextVoucher):
                         voucherName = nextVoucher.name
                     else:
@@ -250,7 +250,7 @@ def purchase(request, format=None):
                     service_period_sec = PriceToPackageMap[str(amount)][1]
                     print("Profile", chosenProfile)
                     nextVoucher = Vouchers.objects.using('radiusdeskdb').filter(
-                        status="new", profile=chosenProfile).first()
+                        status="new", profile=chosenProfile).filter(batch__icontains="digital").first()
                     if (nextVoucher):
                         voucherName = nextVoucher.name
                     else:
