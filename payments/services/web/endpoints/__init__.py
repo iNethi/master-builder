@@ -11,7 +11,8 @@ app = Flask(__name__)  # create an instance of the class
 
 app.config.from_object("endpoints.config.Config")
 app.config['CORS_HEADERS'] = 'application/json'
-cors = CORS(app, resources={r"/REDEEM": {"origins": "http://localhost:63342"}})  # this URL does not seem necessary
+# this URL does not seem necessary
+cors = CORS(app, resources={r"/REDEEM": {"origins": "http://localhost:63342"}})
 db = SQLAlchemy(app)
 
 
@@ -21,8 +22,11 @@ class Vouchers(db.Model):
 
     id: int = db.Column(db.Integer, primary_key=True)
     voucher_pin: str = db.Column(db.String(120), unique=True, nullable=True)
-    status: bool = db.Column(db.Enum("new","used","depleted","expired","issued"), default="new", nullable=False)
+    status: bool = db.Column(db.Enum(
+        "new", "used", "depleted", "expired", "issued"), default="new", nullable=False)
     name: str = db.Column(db.String(64), nullable=False)  # radius desk code
+    # needs this to pick up digital vouchers
+    batch: str = db.Column(db.String(128), nullable=False)
     profile: str = db.Column(db.String(120), nullable=False)  # profile
     phone_number: int = db.Column(db.String(20), nullable=True)
     paytype: str = db.Column(db.String(20), nullable=True)
@@ -31,6 +35,8 @@ class Vouchers(db.Model):
     def __init__(self, name: str, profile: str) -> None:
         self.name = name
         self.profile = profile
+
+
 '''
 class Vouchers(db.Mobel):
     CREATE TABLE `vouchers` (
@@ -73,6 +79,7 @@ class Vouchers(db.Mobel):
   UNIQUE KEY `ak_vouchers` (`name`)
 '''
 
+
 @app.get("/list")
 def read_root():
     data = Vouchers.query.all()
@@ -90,8 +97,10 @@ def query_voucher():
     voucher code if they did purchase one.
     """
     voucher_pin = request.json.get('voucherPin')  # 1FORYOU voucher pin
-    cellphone_number = request.json.get('cellphoneNumber')  # user's cellphone number
-    match = Vouchers.query.filter_by( voucher_pin=voucher_pin, phone_number=cellphone_number).first()  #
+    cellphone_number = request.json.get(
+        'cellphoneNumber')  # user's cellphone number
+    match = Vouchers.query.filter_by(
+        voucher_pin=voucher_pin, phone_number=cellphone_number).first()  #
     # check if a Radius voucher has been purchased
     print(type(match))
     if match is None:  # if no Radius voucher has not been purchased with the users details
@@ -133,7 +142,7 @@ def redeem_voucher():
     # code and then convert it to the rand amount when processing the 1FORYOU API call in the redeem() method.
 
     amount = voucher_choice
-    
+
     '''if voucher_choice == '1GDATA':
         amount = "FCD1"  # update to match your Radius profile code
     elif voucher_choice == '10GDATA':
@@ -156,13 +165,19 @@ def redeem_voucher():
 
     voucher_pin = request.json.get('voucherPin')
     cellphone_number = request.json.get('cellphoneNumber')
-    match = Vouchers.query.filter_by(status="new", profile=amount).first()  # check if a voucher is available
+    # check if a voucher is available
+    #match = Vouchers.query.filter_by(status="new", profile=amount).first()
+    # Only get digital vouchers
+    # check if a voucher is available
+    match = Vouchers.query.filter_by(status="new", profile=amount, Vouchers.batch.contains('digital')).first()
+
     print(type(match))
     if match is None:  # no voucher available
         print("None if statement activated.")
         confirmation = {
             "message": "We do not have any of these voucher available at this time",
-            "responseCode": 1  # response code of 1 indicates an error whereas 0 indicates a successful transaction
+            # response code of 1 indicates an error whereas 0 indicates a successful transaction
+            "responseCode": 1
             # and a radius voucher has been received
         }
         api_response = app.response_class(
@@ -183,7 +198,8 @@ def redeem_voucher():
     except Exception as e:
         confirmation = {
             "message": "Our system is not working at the moment. Please notify your provider or try again later",
-            "responseCode": 1  # response code of 1 indicates an error whereas 0 indicates a successful transaction
+            # response code of 1 indicates an error whereas 0 indicates a successful transaction
+            "responseCode": 1
             # and a radius voucher has been received
         }
         api_response = app.response_class(
@@ -202,7 +218,8 @@ def redeem_voucher():
         # never match a 1FORYOU response
         confirmation = {
             "message": "There has been an error processing your voucher",
-            "responseCode": 1  # response code of 1 indicates an error whereas 0 indicates a successful transaction
+            # response code of 1 indicates an error whereas 0 indicates a successful transaction
+            "responseCode": 1
             # and a radius voucher has been received
         }
         api_response = app.response_class(
@@ -218,7 +235,8 @@ def redeem_voucher():
         except Exception as e:
             confirmation = {
                 "message": "Our system is not working at the moment. Please notify your provider or try again later",
-                "responseCode": 1  # response code of 1 indicates an error whereas 0 indicates a successful transaction
+                # response code of 1 indicates an error whereas 0 indicates a successful transaction
+                "responseCode": 1
                 # and a radius voucher has been received
             }
             api_response = app.response_class(
@@ -255,40 +273,41 @@ def redeem_voucher():
             # Look at the different kinds of 2400 codes
             if response['responseMessage'] == "OneForYou_VoucherCancelled":
                 confirmation = {
-                "message": "This is a cancelled 1ForYou Voucher",
-                "responseCode": 1
+                    "message": "This is a cancelled 1ForYou Voucher",
+                    "responseCode": 1
                 }
             elif response['responseMessage'] == "OneForYou_VoucherExpired":
                 confirmation = {
-                "message": "This is an expired 1ForYou Voucher",
-                "responseCode": 1
+                    "message": "This is an expired 1ForYou Voucher",
+                    "responseCode": 1
                 }
 
             elif response['responseMessage'] == "OneForYou_InsufficientValue":
                 confirmation = {
-                "message": "Insufficient funds on the 1ForYou Voucher",
-                "responseCode": 1
+                    "message": "Insufficient funds on the 1ForYou Voucher",
+                    "responseCode": 1
                 }
-        
+
             elif response['responseMessage'] == "OneForYou_Error":
                 confirmation = {
-                "message": "There was an Error when using the 1ForYou Voucher",
-                "responseCode": 1
+                    "message": "There was an Error when using the 1ForYou Voucher",
+                    "responseCode": 1
                 }
-            
-            else: 
+
+            else:
                 confirmation = {
                     "message": "This 1ForYou Voucher cannot be used",
                     "responseCode": 1
                 }
-            
-            
-        elif response['responseCode'] == 2401:  # 2401 indicates the voucher has already been used
+
+        # 2401 indicates the voucher has already been used
+        elif response['responseCode'] == 2401:
             confirmation = {
                 "message": "This 1FORYOU voucher has already been used.",
                 "responseCode": 1
             }
-        elif response['responseCode'] == 2402:  # 2402 indicates the voucher cannot be found (pin is most likely
+        # 2402 indicates the voucher cannot be found (pin is most likely
+        elif response['responseCode'] == 2402:
             # incorrect)
             confirmation = {
                 "message": "1FORYOU voucher not found.",
@@ -312,7 +331,8 @@ def redeem_voucher():
         except Exception as e:
             confirmation = {
                 "message": "Our system is not working at the moment. Please notify your provider or try again later",
-                "responseCode": 1  # response code of 1 indicates an error whereas 0 indicates a successful transaction
+                # response code of 1 indicates an error whereas 0 indicates a successful transaction
+                "responseCode": 1
                 # and a radius voucher has been received
             }
             api_response = app.response_class(

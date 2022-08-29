@@ -1,6 +1,6 @@
-###########
-# BUILDER #
-###########
+####################
+# BUILDER FOR PROD #
+####################
 
 # pull official base image
 FROM python:3.9.5-slim as builder
@@ -15,7 +15,7 @@ ENV PYTHONUNBUFFERED 1
 
 
 # Force IP address of debian source
-RUN echo "95.211.219.65 deb.debian.org" >> /etc/hosts
+# RUN echo "95.211.219.65 deb.debian.org" >> /etc/hosts
 
 
 # install system dependencies
