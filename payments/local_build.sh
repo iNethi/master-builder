@@ -3,8 +3,8 @@ source ./.env
 mkdir -p $PAYMENTAPI_VOLUME_DEV
 mkdir -p $PAYMENTAPI_VOLUME_PROD
 mkdir -p $VOUCHER_VOLUME/html/
-cp -r ./services/web/* $PAYMENTAPI_VOLUME_DEV
-cp -r ./webtest/* $VOUCHER_VOLUME/html/
+#cp -r ./services/web/* $PAYMENTAPI_VOLUME_DEV
+#cp -r ./webtest/* $VOUCHER_VOLUME/html/
 
 
 #docker-compose config

@@ -6,7 +6,7 @@ services:
     build:
       context: ./services/web
       dockerfile: Dockerfile.prod
-    command: bash -c 'gunicorn --bind 0.0.0.0:80 manage:app --log-level debug'
+    command: bash -c 'gunicorn --bind 0.0.0.0:80 manage:app'
 
     volumes:
       - "${PAYMENTAPI_VOLUME_DEV}:/home/app/web"

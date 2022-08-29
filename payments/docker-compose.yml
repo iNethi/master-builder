@@ -6,7 +6,7 @@ services:
     build: ./services/web
     # sleep until postgres is up
     command: bash -c 'python manage.py run -h 0.0.0.0'
-  
+
     ports:
       - 5000:5000
     environment:
@@ -14,7 +14,9 @@ services:
       - FLASK_ENV=development
       - "DATABASE_URL=mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@rdmariadb/${MYSQL_DB}"
 
-  
+    volumes:
+      - "${PAYMENTAPI_VOLUME_DEV}:/home/app/web"
+
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.voucherapi.rule=Host(`${TRAEFIK_API_RULE_FLASK_DEV}.${inethiDN}`)"
@@ -24,12 +26,11 @@ services:
     container_name: inethi-voucher
     restart: always
     volumes:
-        - "${VOUCHER_VOLUME}/html:/usr/share/nginx/html"
+      - "${VOUCHER_VOLUME}/html:/usr/share/nginx/html"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.voucher.rule=Host(`${TRAEFIK_API_RULE_VOUCHER}.${inethiDN}`)"
       - "traefik.http.routers.voucher.entrypoints=${TRAEFIK_ENTRYPOINT}"
-
 
 networks:
   default:
