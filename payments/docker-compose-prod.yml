@@ -8,6 +8,9 @@ services:
       dockerfile: Dockerfile.prod
     command: bash -c 'gunicorn --bind 0.0.0.0:80 manage:app --log-level debug'
 
+    volumes:
+      - "${PAYMENTAPI_VOLUME_DEV}:/home/app/web"
+
     environment:
       - FLASK_APP=endpoints/__init__.py
       - FLASK_ENV=production

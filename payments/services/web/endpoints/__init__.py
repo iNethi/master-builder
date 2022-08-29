@@ -169,7 +169,8 @@ def redeem_voucher():
     #match = Vouchers.query.filter_by(status="new", profile=amount).first()
     # Only get digital vouchers
     # check if a voucher is available
-    match = Vouchers.query.filter_by(status="new", profile=amount, Vouchers.batch.contains('digital')).first()
+    match = Vouchers.query.filter_by(status="new", profile=amount).filter(
+        Vouchers.batch.ilike("%digital%")).first()
 
     print(type(match))
     if match is None:  # no voucher available
