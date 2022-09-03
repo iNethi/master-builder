@@ -12,7 +12,7 @@ from rest_framework import status
 import pytz
 
 PriceToPackageMap = {"1": ["TIME30M", 1800, "1W"], "2": ["TIME1H", 3600, "2W"], "5": [
-    "TIME3H", 10800, "1M"], "10": ["DATA1G", 2592000, "3M"], "15": ["TIME1D", 86400, "6M"]}
+    "TIME24H", 10800, "1M"], "10": ["DATA1G", 2592000, "3M"]}
 
 
 @api_view(['GET'])
