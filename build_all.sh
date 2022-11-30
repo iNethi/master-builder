@@ -1,43 +1,64 @@
 #!/bin/bash
-
-
+echo
+echo "Welcome to the iNethi builder system for Ubuntu"
+sleep 2
 # install all dependencies
-sudo apt-get update
-sudo apt-get install -y \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
+echo "Docker and Docker compose are needed to build this system"
+echo "Docker needs to be able to run as root"
+sleep 2
+echo "Do you wish to set this up now? (Yes=1/No=2)"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes )  sudo apt-get update || exit 1;
+               sudo apt-get install -y \
+                   ca-certificates \
+                   curl \
+                   gnupg \
+                   lsb-release || exit 1;
 
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+               sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg || exit 1;
 
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+               echo \
+                 "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+                 $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null || exit 1;
 
-sudo apt-get update
-sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
-sudo apt-get -y install docker-compose
+               sudo apt-get update || exit 1;
+               sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin || exit 1;
+               sudo apt-get -y install docker-compose || exit 1;
 
-# Make docker run as non root
-sudo usermod -aG docker $USER
-sudo chmod 666 /var/run/docker.sock
+               # Make docker run as non root
+               sudo usermod -aG docker $USER || echo "Cannot change permissions..."; exit 1;
+               sudo chmod 666 /var/run/docker.sock; echo "Please restart your machine now and rerun the script"; sleep 5; exit 0; break;;
+        No ) echo; break;;
+    esac
+done
 
 # customize with your own.
-sudo mkdir -p /mnt/data
+STORAGE_FOLDER=/mnt/data
+echo "/mnt/data is set as the main storage directory"
+echo "Do you wish to change this? (Yes=1/No=2)"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes )  read -p 'storage folder: '  STORAGE_FOLDER; break;;
+        No ) echo "Default storage folder selected"; break;;
+    esac
+done
+echo "$STORAGE_FOLDER" "is being used as the storage folder"
+sudo mkdir -p "$STORAGE_FOLDER"
+sleep 2
 # make sure all future data in this folder can be created as non root
-sudo chown  $USER:$USER /mnt/data
+sudo chown  $USER:$USER STORAGE_FOLDER || echo "Cannot change permissions..."; exit 1;
 
 ## NOTES
-# Need to add opton to capture email for fields in inethi-traefikssl
+# Need to add option to capture email for fields in inethi-traefikssl
 
-options=("jellyfin" "keycloak" "nginx(splash)" "moodle" "nextcloud" "wordpress" "unifi" "radiusdesk" "kiwix")
+options=("jellyfin" "keycloak" "nginx(splash)" "nextcloud" "wordpress" "unifi" "radiusdesk")
 entrypoint=web
 
 menu() {
-    echo "iNethi (Traefik) version 0.1.0 builder"
+    echo "iNethi version 0.1.0 builder"
     echo
-    echo "Avaliable options:"
+    echo "Available options:"
     for i in ${!options[@]}; do
         printf "%3d%s) %s\n" $((i+1)) "${choices[i]:- }" "${options[i]}"
     done
@@ -57,11 +78,6 @@ done
 echo
 echo Set General master secure password for all services
 read -p 'master password: '  MASTER_PASSWORD
-# Set for Nextcloud
-mkdir -p ./nextcloud/secrets
-echo export MYSQL_ROOT_PASSWORD=$MASTER_PASSWORD > ./nextcloud/secrets/secret_passwords.env
-echo export MYSQL_PASSWORD=$MASTER_PASSWORD >> ./nextcloud/secrets/secret_passwords.env
-echo
 
 
 
@@ -88,6 +104,25 @@ select yn in "Yes" "No"; do
         No ) defaultDomain=0; read -p 'Domain name: ' domainName; break;;
     esac
 done
+
+if [ "$defaultDomain" = 0 ];
+then
+  echo "You are using a custom domain"
+  echo "Please ensure your acme.json file is in the ./my-certificates/ folder..."
+  echo "Is your file present? If so type yes..."
+  select yn in "Yes" "No"; do
+      case $yn in
+          Yes ) echo "Your domain is "; echo "$domainName"; break;;
+      esac
+  done
+  if test -f my-certificates/acme.json; then
+    echo "acme.json exists"
+  else
+    echo "ERROR: acme.json does not exist"
+    exit 1
+else
+  echo "You are using the default iNethi domain"
+fi
 
 
 echo "Would you like iNethi to run a DNS to redirect hosts to your inethi domain"
@@ -211,6 +246,11 @@ docker network create --attachable -d bridge inethi-bridge-traefik
 
 [[ "${choices[4]}" ]] && {
     printf "Building Nextcloud docker ... "
+    # Set passwords for Nextcloud
+    mkdir -p ./nextcloud/secrets
+    echo export MYSQL_ROOT_PASSWORD=$MASTER_PASSWORD > ./nextcloud/secrets/secret_passwords.env
+    echo export MYSQL_PASSWORD=$MASTER_PASSWORD >> ./nextcloud/secrets/secret_passwords.env
+    echo
     cd ./nextcloud
     ./local_build.sh
     cd ..
