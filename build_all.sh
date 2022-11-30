@@ -47,7 +47,7 @@ echo "$STORAGE_FOLDER" "is being used as the storage folder"
 sudo mkdir -p "$STORAGE_FOLDER"
 sleep 2
 # make sure all future data in this folder can be created as non root
-sudo chown  $USER:$USER STORAGE_FOLDER || echo "Cannot change permissions..."; exit 1;
+sudo chown  $USER:$USER "$STORAGE_FOLDER" || exit 1;
 
 ## NOTES
 # Need to add option to capture email for fields in inethi-traefikssl
@@ -109,7 +109,7 @@ if [ "$defaultDomain" = 0 ];
 then
   echo "You are using a custom domain"
   echo "Please ensure your acme.json file is in the ./my-certificates/ folder..."
-  echo "Is your file present? If so type yes..."
+  echo "Is your file present? (yes=1/no=2)"
   select yn in "Yes" "No"; do
       case $yn in
           Yes ) echo "Your domain is "; echo "$domainName"; break;;
@@ -120,6 +120,7 @@ then
   else
     echo "ERROR: acme.json does not exist"
     exit 1
+  fi
 else
   echo "You are using the default iNethi domain"
 fi
@@ -216,7 +217,7 @@ docker network create --attachable -d bridge inethi-bridge-traefik
         cd ..
 }
 
-[[ "${choices[0]}" ]] && {
+[[ "${choices[5]}" ]] && {
     printf "Building jellyfin docker ... "
     cd ./jellyfin
     ./local_build.sh
@@ -230,12 +231,11 @@ docker network create --attachable -d bridge inethi-bridge-traefik
     cd ..
 }
 
-[[ "${choices[2]}" ]] && {
+[[ "${choices[0]}" ]] && {
     printf "Building nginx(splash) docker ... "
-    splash_storage=STORAGE_FOLDER
-    splash_storage+="/nginx"
+    splash_storage="NGINX_VOLUME=${STORAGE_FOLDER}/nginx"
     cd ./nginx-splash
-    echo export splash_storage > ./.env || exit 1
+    echo $splash_storage >> ./.env|| exit 1
     ./local_build.sh
     cd ..
 }
