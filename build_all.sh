@@ -1,7 +1,7 @@
 #!/bin/bash
 echo
 echo "Welcome to the iNethi builder system for Ubuntu"
-sleep 2
+sleep 1
 # install all dependencies
 echo "Docker and Docker compose are needed to build this system"
 echo "Docker needs to be able to run as root"
@@ -52,7 +52,7 @@ sudo chown  $USER:$USER STORAGE_FOLDER || echo "Cannot change permissions..."; e
 ## NOTES
 # Need to add option to capture email for fields in inethi-traefikssl
 
-options=("jellyfin" "keycloak" "nginx(splash)" "nextcloud" "wordpress" "unifi" "radiusdesk")
+options=("nginx(splash)")
 entrypoint=web
 
 menu() {
@@ -97,7 +97,7 @@ done
 # Check if using default domain
 # TODO wget certificate and copy to docker shared folder
 
-echo "Do you wish to use the default inethi domain inethilocal.net?"
+echo "Do you wish to use the default iNethi domain: inethilocal.net?"
 select yn in "Yes" "No"; do
     case $yn in
         Yes ) defaultDomain=1; domainName=inethilocal.net; wget https://splash.inethicloud.net/acme.json; break;;
@@ -176,6 +176,7 @@ fi
 echo
 printf "Starting to build dockers ... "
 echo
+sleep 1
 
 
 
@@ -231,7 +232,10 @@ docker network create --attachable -d bridge inethi-bridge-traefik
 
 [[ "${choices[2]}" ]] && {
     printf "Building nginx(splash) docker ... "
+    splash_storage=STORAGE_FOLDER
+    splash_storage+="/nginx"
     cd ./nginx-splash
+    echo export splash_storage > ./.env || exit 1
     ./local_build.sh
     cd ..
 }
