@@ -3,7 +3,7 @@
 This is the starting place to build iNethi on your own server. 
 
 - [Join our iNethi discord](https://discord.gg/ZxTSu7kufr) 
-- [View the the TODO list](https://github.com/iNethi/master-builder/blob/master/TODO.md)
+- [View the TODO list](https://github.com/iNethi/master-builder/blob/master/TODO.md)
 - [View Contributors](https://github.com/iNethi/master-builder/blob/master/CONTRIBUTORS.md)
 
 # A collection of awesome self-hosted services
