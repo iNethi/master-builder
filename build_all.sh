@@ -52,7 +52,7 @@ sudo chown  $USER:$USER "$STORAGE_FOLDER" || exit 1;
 ## NOTES
 # Need to add option to capture email for fields in inethi-traefikssl
 
-options=("nginx(splash)")
+options=("nginx(splash)" "keycloak")
 entrypoint=web
 
 menu() {
@@ -115,7 +115,7 @@ then
           Yes ) echo "Your domain is "; echo "$domainName"; break;;
       esac
   done
-  if test -f my-certificates/acme.json; then
+  if test -f ./my-certificates/acme.json; then
     echo "acme.json exists"
   else
     echo "ERROR: acme.json does not exist"
@@ -172,16 +172,12 @@ else
     echo You chose insecure Domain Name: http://$domainName
 fi
 
-
-
 echo
 printf "Starting to build dockers ... "
 echo
 sleep 1
 
-
-
-# # Send the environmental variables to other scripts
+# Send the environmental variables to other scripts
 echo export inethiDN=$domainName > ./root.conf
 echo export TRAEFIK_ENTRYPOINT=$entrypoint >> ./root.conf
 echo export email=$emailAddress >> ./root.conf
@@ -189,9 +185,6 @@ echo export email=$emailAddress >> ./root.conf
 printf "Create docker traefik bridge: traefik-bridge ..."
 echo
 docker network create --attachable -d bridge inethi-bridge-traefik
-
-
-
 
 # Build traefik - compulsory docker
 
@@ -217,20 +210,6 @@ docker network create --attachable -d bridge inethi-bridge-traefik
         cd ..
 }
 
-[[ "${choices[5]}" ]] && {
-    printf "Building jellyfin docker ... "
-    cd ./jellyfin
-    ./local_build.sh
-    cd ..
-}
-
-[[ "${choices[1]}" ]] && {
-    printf "Building keycloak docker ... "
-    cd ./keycloak
-     ./local_build.sh
-    cd ..
-}
-
 [[ "${choices[0]}" ]] && {
     printf "Building nginx(splash) docker ... "
     splash_storage="NGINX_VOLUME=${STORAGE_FOLDER}/nginx"
@@ -239,6 +218,29 @@ docker network create --attachable -d bridge inethi-bridge-traefik
     ./local_build.sh
     cd ..
 }
+
+[[ "${choices[1]}" ]] && {
+    printf "Building keycloak docker ... with admin user and inethi user"
+    my_sql_storage="MYSQLDB_VOLUME=${STORAGE_FOLDER}/mysql_keycloak"
+    cd ./keycloak
+    mysql_root_pass="KEYCLOAK_ADMIN_PASSWORD=${MASTER_PASSWORD}"
+    mysql_pass="KEYCLOAK_PASSWORD=${MASTER_PASSWORD}"
+    mysql_storage="MYSQLDB_VOLUME=${STORAGE_FOLDER}/keycloak"
+    echo $mysql_storage >> ./.env|| exit 1
+    echo $mysql_root_pass >> ./.env|| exit 1
+    echo $mysql_pass >> ./.env|| exit 1
+    ./local_build.sh
+    cd ..
+}
+
+[[ "${choices[5]}" ]] && {
+    printf "Building jellyfin docker ... "
+    cd ./jellyfin
+    ./local_build.sh
+    cd ..
+}
+
+
 
 [[ "${choices[3]}" ]] && {
     printf "Building Moodle docker ... "
