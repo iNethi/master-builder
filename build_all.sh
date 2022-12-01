@@ -4,7 +4,7 @@ echo "Welcome to the iNethi builder system for Ubuntu"
 sleep 1
 # install all dependencies
 echo "Docker and Docker compose are needed to build this system"
-echo "Docker needs to be able to run as root"
+echo "Docker needs to be able to run as non-root"
 sleep 2
 echo "Do you wish to set this up now? (Yes=1/No=2)"
 select yn in "Yes" "No"; do
@@ -52,12 +52,11 @@ sudo chown  $USER:$USER "$STORAGE_FOLDER" || exit 1;
 ## NOTES
 # Need to add option to capture email for fields in inethi-traefikssl
 
-options=("nginx(splash)" "keycloak")
+options=("nginx-splash" "keycloak" "nextcloud")
 entrypoint=web
-
+echo
 menu() {
     echo "iNethi version 0.1.0 builder"
-    echo
     echo "Available options:"
     for i in ${!options[@]}; do
         printf "%3d%s) %s\n" $((i+1)) "${choices[i]:- }" "${options[i]}"
@@ -233,24 +232,7 @@ docker network create --attachable -d bridge inethi-bridge-traefik
     cd ..
 }
 
-[[ "${choices[5]}" ]] && {
-    printf "Building jellyfin docker ... "
-    cd ./jellyfin
-    ./local_build.sh
-    cd ..
-}
-
-
-
-[[ "${choices[3]}" ]] && {
-    printf "Building Moodle docker ... "
-    cd ./moodle
-    ./local_build.sh
-    cd ..
-}
-
-
-[[ "${choices[4]}" ]] && {
+[[ "${choices[2]}" ]] && {
     printf "Building Nextcloud docker ... "
     # Set passwords for Nextcloud
     mkdir -p ./nextcloud/secrets
@@ -262,30 +244,44 @@ docker network create --attachable -d bridge inethi-bridge-traefik
     cd ..
 }
 
-[[ "${choices[5]}" ]] && {
+[[ "${choices[3]}" ]] && {
+    printf "Building jellyfin docker ... "
+    cd ./jellyfin
+    ./local_build.sh
+    cd ..
+}
+
+[[ "${choices[4]}" ]] && {
     printf "Building wordpress docker ... "
     cd ./wordpress
     ./local_build.sh
     cd ..
 }
 
-[[ "${choices[6]}" ]] && {
+[[ "${choices[5]}" ]] && {
     printf "Building Unifi Controller docker ... "
     cd ./unificontroller
     ./local_build.sh
     cd ..
 }
 
-[[ "${choices[7]}" ]] && {
+[[ "${choices[6]}" ]] && {
     printf "Building Radiusdesk docker ... "
     cd ./radiusdesk_2docker
     ./local_build.sh
     cd ..
 }
 
-[[ "${choices[8]}" ]] && {
+[[ "${choices[7]}" ]] && {
     printf "Building Kiwix system docker ... "
     cd ./kiwix
+    ./local_build.sh
+    cd ..
+}
+
+[[ "${choices[8]}" ]] && {
+    printf "Building Moodle docker ... "
+    cd ./moodle
     ./local_build.sh
     cd ..
 }
