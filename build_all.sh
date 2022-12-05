@@ -52,7 +52,7 @@ sudo chown  $USER:$USER "$STORAGE_FOLDER" || exit 1;
 ## NOTES
 # Need to add option to capture email for fields in inethi-traefikssl
 
-options=("nginx-splash" "keycloak" "nextcloud")
+options=("nginx-splash" "keycloak" "nextcloud" "jellyfin" "wordpress")
 entrypoint=web
 echo
 menu() {
@@ -240,13 +240,37 @@ docker network create --attachable -d bridge inethi-bridge-traefik
     echo export MYSQL_PASSWORD=$MASTER_PASSWORD >> ./nextcloud/secrets/secret_passwords.env
     echo
     cd ./nextcloud
+    nextcloud_volume="NEXTCLOUD_VOLUME=${STORAGE_FOLDER}/nextcloud"
+    mysql_volume="MYSQL_VOLUME=${STORAGE_FOLDER}/nextcloud-mysql"
+    share_volume="NEXTCLOUD_SHARE_VOLUME=${STORAGE_FOLDER}/share"
+    rshare_volume="NEXTCLOUD_RSHARE_VOLUME=${STORAGE_FOLDER}/share/Rshare"
+    rvideo_volume="NEXTCLOUD_RVIDEO_VOLUME=${STORAGE_FOLDER}/share/Rvideo"
+    rphoto_volume="NEXTCLOUD_RPHOTO_VOLUME=${STORAGE_FOLDER}/share/Rphoto"
+    rmusic_volume="NEXTCLOUD_RMUSIC_VOLUME=${STORAGE_FOLDER}/share/Rmusic"
+    echo $nextcloud_volume >> ./.env|| exit 1
+    echo $mysql_volume >> ./.env|| exit 1
+    echo $rshare_volume >> ./.env|| exit 1
+    echo $share_volume >> ./.env|| exit 1
+    echo $rvideo_volume >> ./.env|| exit 1
+    echo $rphoto_volume >> ./.env|| exit 1
+    echo $rmusic_volume >> ./.env|| exit 1
     ./local_build.sh
     cd ..
 }
 
 [[ "${choices[3]}" ]] && {
-    printf "Building jellyfin docker ... "
+    printf "Building Jellyfin docker ... "
     cd ./jellyfin
+    jellyfin_volume="JELLYFIN_VOLUME=${STORAGE_FOLDER}/jellyfin"
+    rshare_volume="NEXTCLOUD_RSHARE_VOLUME=${STORAGE_FOLDER}/share/Rshare"
+    rvideo_volume="NEXTCLOUD_RVIDEO_VOLUME=${STORAGE_FOLDER}/share/Rvideo"
+    rphoto_volume="NEXTCLOUD_RPHOTO_VOLUME=${STORAGE_FOLDER}/share/Rphoto"
+    rmusic_volume="NEXTCLOUD_RMUSIC_VOLUME=${STORAGE_FOLDER}/share/Rmusic"
+    echo $jellyfin_volume >> ./.env|| exit 1
+    echo $rshare_volume >> ./.env|| exit 1
+    echo $rvideo_volume >> ./.env|| exit 1
+    echo $rphoto_volume >> ./.env|| exit 1
+    echo $rmusic_volume >> ./.env|| exit 1
     ./local_build.sh
     cd ..
 }
@@ -254,6 +278,15 @@ docker network create --attachable -d bridge inethi-bridge-traefik
 [[ "${choices[4]}" ]] && {
     printf "Building wordpress docker ... "
     cd ./wordpress
+    wordpress_volume="WORDPRESS_MOUNT=${STORAGE_FOLDER}/wordpress"
+    mariadb_volume="MARIADB_MOUNT=${STORAGE_FOLDER}/wordpress-mariadb"
+    db_pass="WORDPRESS_DB_PASSWORD=${MASTER_PASSWORD}"
+    mysql_pass="MYSQL_ROOT_PASSWORD=${MASTER_PASSWORD}"
+    echo $wordpress_volume >> ./.env|| exit 1
+    echo $mariadb_volume >> ./.env|| exit 1
+    echo $db_pass >> ./.env|| exit 1
+    echo $mysql_pass >> ./.env|| exit 1
+
     ./local_build.sh
     cd ..
 }
@@ -268,20 +301,6 @@ docker network create --attachable -d bridge inethi-bridge-traefik
 [[ "${choices[6]}" ]] && {
     printf "Building Radiusdesk docker ... "
     cd ./radiusdesk_2docker
-    ./local_build.sh
-    cd ..
-}
-
-[[ "${choices[7]}" ]] && {
-    printf "Building Kiwix system docker ... "
-    cd ./kiwix
-    ./local_build.sh
-    cd ..
-}
-
-[[ "${choices[8]}" ]] && {
-    printf "Building Moodle docker ... "
-    cd ./moodle
     ./local_build.sh
     cd ..
 }
