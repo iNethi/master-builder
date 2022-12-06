@@ -25,9 +25,9 @@ services:
 
   mariadb:
     image: mariadb:latest
-    container_name: inethi-mariadb
+    container_name: inethi-wordpress-mariadb
     volumes:
-      - wordpress_data:/var/lib/mysql
+      - "${MARIADB_MOUNT}:/var/lib/mysql"
     environment:
       - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
       - "MYSQL_USER=${WORDPRESS_DB_USER}"
@@ -42,7 +42,7 @@ services:
 
   adminer:
     image: adminer
-    container_name: inethi-adminer
+    container_name: inethi-wordpress-adminer
     restart: always
     links:
       - mariadb

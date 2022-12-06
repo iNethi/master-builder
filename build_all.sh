@@ -52,7 +52,7 @@ sudo chown  $USER:$USER "$STORAGE_FOLDER" || exit 1;
 ## NOTES
 # Need to add option to capture email for fields in inethi-traefikssl
 
-options=("nginx-splash" "keycloak" "nextcloud" "jellyfin" "wordpress")
+options=("Nginx-Splash" "Keycloak" "Nextcloud" "Jellyfin" "Wordpress" "Radiusdesk")
 entrypoint=web
 echo
 menu() {
@@ -213,7 +213,8 @@ docker network create --attachable -d bridge inethi-bridge-traefik
     printf "Building nginx(splash) docker ... "
     splash_storage="NGINX_VOLUME=${STORAGE_FOLDER}/nginx"
     cd ./nginx-splash
-    echo $splash_storage >> ./.env|| exit 1
+
+    echo export $splash_storage >> ./root.conf || exit 1
     ./local_build.sh
     cd ..
 }
@@ -221,13 +222,14 @@ docker network create --attachable -d bridge inethi-bridge-traefik
 [[ "${choices[1]}" ]] && {
     printf "Building keycloak docker ... with admin user and inethi user"
     my_sql_storage="MYSQLDB_VOLUME=${STORAGE_FOLDER}/mysql_keycloak"
-    cd ./keycloak
     mysql_root_pass="KEYCLOAK_ADMIN_PASSWORD=${MASTER_PASSWORD}"
     mysql_pass="KEYCLOAK_PASSWORD=${MASTER_PASSWORD}"
     mysql_storage="MYSQLDB_VOLUME=${STORAGE_FOLDER}/keycloak"
-    echo $mysql_storage >> ./.env|| exit 1
-    echo $mysql_root_pass >> ./.env|| exit 1
-    echo $mysql_pass >> ./.env|| exit 1
+    echo export $mysql_storage >> ./root.conf || exit 1
+    echo export $mysql_root_pass >> ./root.conf || exit 1
+    echo export $mysql_pass >> ./root.conf || exit 1
+
+    cd ./keycloak
     ./local_build.sh
     cd ..
 }
@@ -238,8 +240,7 @@ docker network create --attachable -d bridge inethi-bridge-traefik
     mkdir -p ./nextcloud/secrets
     echo export MYSQL_ROOT_PASSWORD=$MASTER_PASSWORD > ./nextcloud/secrets/secret_passwords.env
     echo export MYSQL_PASSWORD=$MASTER_PASSWORD >> ./nextcloud/secrets/secret_passwords.env
-    echo
-    cd ./nextcloud
+
     nextcloud_volume="NEXTCLOUD_VOLUME=${STORAGE_FOLDER}/nextcloud"
     mysql_volume="MYSQL_VOLUME=${STORAGE_FOLDER}/nextcloud-mysql"
     share_volume="NEXTCLOUD_SHARE_VOLUME=${STORAGE_FOLDER}/share"
@@ -247,59 +248,59 @@ docker network create --attachable -d bridge inethi-bridge-traefik
     rvideo_volume="NEXTCLOUD_RVIDEO_VOLUME=${STORAGE_FOLDER}/share/Rvideo"
     rphoto_volume="NEXTCLOUD_RPHOTO_VOLUME=${STORAGE_FOLDER}/share/Rphoto"
     rmusic_volume="NEXTCLOUD_RMUSIC_VOLUME=${STORAGE_FOLDER}/share/Rmusic"
-    echo $nextcloud_volume >> ./.env|| exit 1
-    echo $mysql_volume >> ./.env|| exit 1
-    echo $rshare_volume >> ./.env|| exit 1
-    echo $share_volume >> ./.env|| exit 1
-    echo $rvideo_volume >> ./.env|| exit 1
-    echo $rphoto_volume >> ./.env|| exit 1
-    echo $rmusic_volume >> ./.env|| exit 1
+    echo export $nextcloud_volume >> ./root.conf || exit 1
+    echo export $mysql_volume >> ./root.conf || exit 1
+    echo export $rshare_volume >> ./root.conf || exit 1
+    echo export $share_volume >> ./root.conf || exit 1
+    echo export $rvideo_volume >> ./root.conf || exit 1
+    echo export $rphoto_volume >> ./root.conf || exit 1
+    echo export $rmusic_volume >> ./root.conf || exit 1
+
+    cd ./nextcloud
     ./local_build.sh
     cd ..
 }
 
 [[ "${choices[3]}" ]] && {
     printf "Building Jellyfin docker ... "
-    cd ./jellyfin
+
     jellyfin_volume="JELLYFIN_VOLUME=${STORAGE_FOLDER}/jellyfin"
     rshare_volume="NEXTCLOUD_RSHARE_VOLUME=${STORAGE_FOLDER}/share/Rshare"
     rvideo_volume="NEXTCLOUD_RVIDEO_VOLUME=${STORAGE_FOLDER}/share/Rvideo"
     rphoto_volume="NEXTCLOUD_RPHOTO_VOLUME=${STORAGE_FOLDER}/share/Rphoto"
     rmusic_volume="NEXTCLOUD_RMUSIC_VOLUME=${STORAGE_FOLDER}/share/Rmusic"
-    echo $jellyfin_volume >> ./.env|| exit 1
-    echo $rshare_volume >> ./.env|| exit 1
-    echo $rvideo_volume >> ./.env|| exit 1
-    echo $rphoto_volume >> ./.env|| exit 1
-    echo $rmusic_volume >> ./.env|| exit 1
+    echo export $jellyfin_volume >> ./root.conf || exit 1
+    echo export $rshare_volume >> ./root.conf || exit 1
+    echo export $rvideo_volume >> ./root.conf || exit 1
+    echo export $rphoto_volume >> ./root.conf || exit 1
+    echo export $rmusic_volume >> ./root.conf || exit 1
+
+    cd ./jellyfin
     ./local_build.sh
     cd ..
 }
 
 [[ "${choices[4]}" ]] && {
     printf "Building wordpress docker ... "
-    cd ./wordpress
+
     wordpress_volume="WORDPRESS_MOUNT=${STORAGE_FOLDER}/wordpress"
     mariadb_volume="MARIADB_MOUNT=${STORAGE_FOLDER}/wordpress-mariadb"
     db_pass="WORDPRESS_DB_PASSWORD=${MASTER_PASSWORD}"
     mysql_pass="MYSQL_ROOT_PASSWORD=${MASTER_PASSWORD}"
-    echo $wordpress_volume >> ./.env|| exit 1
-    echo $mariadb_volume >> ./.env|| exit 1
-    echo $db_pass >> ./.env|| exit 1
-    echo $mysql_pass >> ./.env|| exit 1
+    echo export $wordpress_volume >> ./root.conf || exit 1
+    echo export $mariadb_volume >> ./root.conf || exit 1
+    echo export $db_pass >> ./root.conf || exit 1
+    echo export $mysql_pass >> ./root.conf || exit 1
 
+    cd ./wordpress
     ./local_build.sh
     cd ..
 }
 
 [[ "${choices[5]}" ]] && {
-    printf "Building Unifi Controller docker ... "
-    cd ./unificontroller
-    ./local_build.sh
-    cd ..
-}
-
-[[ "${choices[6]}" ]] && {
     printf "Building Radiusdesk docker ... "
+    rd_volume="RADIUSDESK_VOLUME=${STORAGE_FOLDER}/radiusdesk"
+    echo export rd_volume >> ./root.conf || exit 1
     cd ./radiusdesk_2docker
     ./local_build.sh
     cd ..
