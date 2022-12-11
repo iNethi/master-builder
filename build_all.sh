@@ -212,9 +212,8 @@ docker network create --attachable -d bridge inethi-bridge-traefik
 [[ "${choices[0]}" ]] && {
     printf "Building nginx(splash) docker ... "
     splash_storage="NGINX_VOLUME=${STORAGE_FOLDER}/nginx"
-    cd ./nginx-splash
-
     echo export $splash_storage >> ./root.conf || exit 1
+    cd ./nginx-splash
     ./local_build.sh
     cd ..
 }
