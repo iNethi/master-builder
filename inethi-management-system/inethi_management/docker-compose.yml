@@ -4,7 +4,7 @@ services:
   inethi-user-management-api:
     container_name: inethi-user-management-api
     build: .
-    restart: always
+    restart: unless-stopped
     command: bash -c "python manage.py runserver 0.0.0.0:8000"
     depends_on:
       - inethi-user-management-mysql
@@ -21,12 +21,12 @@ services:
   inethi-user-management-mysql:
     container_name: inethi-user-management-mysql
     image: mysql
-    restart: always
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: 'inethi-user-management-api'
       MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
     volumes:
-      - inethi_user_management_data:/var/lib/mysql
+      - '${MYSQL_MANAGEMENT_MNT}:/var/lib/mysql'
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.djangomysql.entrypoints=${TRAEFIK_ENTRYPOINT}"

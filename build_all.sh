@@ -50,9 +50,8 @@ sleep 2
 sudo chown  $USER:$USER "$STORAGE_FOLDER" || exit 1;
 
 ## NOTES
-# Need to add option to capture email for fields in inethi-traefikssl
 
-options=("Nginx-Splash" "Keycloak" "Nextcloud" "Jellyfin" "Wordpress" "Radiusdesk")
+options=("Nginx-Splash" "Keycloak" "Nextcloud" "Jellyfin" "Wordpress" "Payment and User Management")
 entrypoint=web
 echo
 menu() {
@@ -94,7 +93,7 @@ select yn in "Yes" "No"; do
 done
 
 # Check if using default domain
-# TODO wget certificate and copy to docker shared folder
+
 
 echo "Do you wish to use the default iNethi domain: inethilocal.net?"
 select yn in "Yes" "No"; do
@@ -300,10 +299,20 @@ docker network create --attachable -d bridge inethi-bridge-traefik
 [[ "${choices[5]}" ]] && {
     printf "Building Radiusdesk docker ... "
     rd_volume="RADIUSDESK_VOLUME=${STORAGE_FOLDER}/radiusdesk"
-    echo export rd_volume >> ./root.conf || exit 1
+    echo export $rd_volume >> ./root.conf || exit 1
     cd ./radiusdesk_2docker
     ./local_build.sh
     cd ..
-}
 
+    django_volume="DJANGO_MNT=${STORAGE_FOLDER}/user_management"
+    mysql_volume="MYSQL_MANAGEMENT_MNT=${STORAGE_FOLDER}/management-mysql"
+    echo export $django_volume >> ./root.conf || exit 1
+    echo export $mysql_volume >> ./root.conf || exit 1
+    cd ./inethi-management-system
+    cd ./inethi_management
+    ./local_build.sh
+    cd ..
+    cd ..
+
+}
 

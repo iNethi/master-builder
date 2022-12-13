@@ -185,3 +185,7 @@ You will receive a login to the global iNethi storage and a Webdav link you will
 - Payment integrations
 - Improved building mechanisms
 - Architecture diagrams
+
+# Useful Docker Commands
+- ```docker stop $(docker ps -a -q)``` - stop all docker containers
+- ```docker rm $(docker ps -a -q)``` - remove all stopped docker containers
