@@ -2,9 +2,23 @@
 echo
 echo "Welcome to the iNethi builder system for Ubuntu"
 sleep 1
+# Detect OS
+# 1 = LINUX
+# 2 = MACOS
+myos=1
+res=$(echo $OSTYPE)
+res3=${res:0:3}
+if [ "$res3" = "dar" ]; then
+    myos=2
+    echo "Operating System discovered: MACOSX"
+else
+    echo "Operating System discovered: LINUX"
+fi
+
+
+
 # install all dependencies
-echo "Docker and Docker compose are needed to build this system"
-echo "Docker needs to be able to run as non-root"
+echo "Docker and Docker compose are needed to build this system (note docker needs to be able to run as non-root)"
 sleep 2
 echo "Do you wish to set this up now? (Yes=1/No=2)"
 select yn in "Yes" "No"; do
@@ -47,7 +61,11 @@ echo "$STORAGE_FOLDER" "is being used as the storage folder"
 sudo mkdir -p "$STORAGE_FOLDER"
 sleep 2
 # make sure all future data in this folder can be created as non root
-sudo chown  $USER:$USER "$STORAGE_FOLDER" || exit 1;
+if [ "$myos" = 1 ]; then
+    sudo chown  $USER:$USER "$STORAGE_FOLDER" || exit 1;
+else
+    sudo chown  $USER:staff "$STORAGE_FOLDER" || exit 1;
+fi
 
 ## NOTES
 
@@ -98,7 +116,7 @@ done
 echo "Do you wish to use the default iNethi domain: inethilocal.net?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) defaultDomain=1; domainName=inethilocal.net; wget https://splash.inethicloud.net/acme.json; break;;
+        Yes ) defaultDomain=1; domainName=inethilocal.net; wget https://splash.inethicloud.net/acme.json -P ./my-certificates; break;;
         No ) defaultDomain=0; read -p 'Domain name: ' domainName; break;;
     esac
 done
@@ -204,7 +222,12 @@ docker network create --attachable -d bridge inethi-bridge-traefik
 [ "$installDNS" = 1 ] && {
     printf "Building iNethi DNS ... "
         cd ./dnsmasq
-        ./local_build.sh
+        if [ "$myos" = 1 ]; then
+            ./local_build.sh
+        else
+            ./local_build_mac.sh
+        fi
+        
         cd ..
 }
 

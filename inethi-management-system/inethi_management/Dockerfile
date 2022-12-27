@@ -21,5 +21,11 @@ COPY . $DockerHOME
 
 # run this command to install all dependencies
 RUN pip install -r requirements.txt
+
+# Just incase requirements needs more upgrades
+RUN pip install --upgrade pip
+#mysql connected - could probably move this to requirements
+RUN pip install mysql-connector-python
+
 # port where the Django app runs
 EXPOSE 8000
