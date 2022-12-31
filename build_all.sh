@@ -23,26 +23,36 @@ sleep 2
 echo "Do you wish to set this up now? (Yes=1/No=2)"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes )  sudo apt-get update || exit 1;
-               sudo apt-get install -y \
+        Yes )  
+                sudo apt-get update || exit 1;
+                sudo apt-get install -y \
                    ca-certificates \
                    curl \
                    gnupg \
                    lsb-release || exit 1;
 
-               sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg || exit 1;
+                sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg || exit 1;
 
-               echo \
-                 "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-                 $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null || exit 1;
+                echo \
+                    "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+                    $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null || exit 1;
 
-               sudo apt-get update || exit 1;
-               sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin || exit 1;
-               sudo apt-get -y install docker-compose || exit 1;
+                sudo apt-get update || exit 1;
+                # For Raspberry PI
+                echo "Is this a Raspberry PI setup (Yes=1/No=2)"
+                select yn in "Yes" "No"; do
+                case $yn in
+                    Yes ) 
+                        curl -fsSL https://get.docker.com -o get-docker.sh || exit 1
+                        sudo sh get-docker.sh || exit 1
+                        break;;
+                    No )
+                        sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin || exit 1;
+                sudo apt-get -y install docker-compose || exit 1;
 
-               # Make docker run as non root
-               sudo usermod -aG docker $USER || echo "Cannot change permissions..."; exit 1;
-               sudo chmod 666 /var/run/docker.sock; echo "Please restart your machine now and rerun the script"; sleep 5; exit 0; break;;
+                # Make docker run as non root
+                sudo usermod -aG docker $USER || echo "Cannot change permissions..."; exit 1;
+                sudo chmod 666 /var/run/docker.sock; echo "Please restart your machine now and rerun the script"; sleep 5; exit 0; break;;
         No ) echo; break;;
     esac
 done

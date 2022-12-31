@@ -26,7 +26,7 @@ services:
       MYSQL_DATABASE: 'inethi-user-management-api'
       MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
     volumes:
-      - '${MYSQL_MANAGEMENT_MNT}:/var/lib/mysql:rw'
+      - inethi_user_management_data:/var/lib/mysql
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.djangomysql.entrypoints=${TRAEFIK_ENTRYPOINT}"
