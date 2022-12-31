@@ -37,14 +37,7 @@ select yn in "Yes" "No"; do
                     $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null || exit 1;
 
                 sudo apt-get update || exit 1;
-                # For Raspberry PI
-                echo "Is this a Raspberry PI setup (Yes=1/No=2)"
-                select yn in "Yes" "No"; do
-                case $yn in
-                    Yes )   curl -fsSL https://get.docker.com -o get-docker.sh || exit 1
-                            sudo sh get-docker.sh || exit 1
-                            break;;
-                    No )    sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin || exit 1;
+                
                 sudo apt-get -y install docker-compose || exit 1;
 
                 # Make docker run as non root
