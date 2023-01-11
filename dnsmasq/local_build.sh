@@ -19,9 +19,9 @@ sed -i "s/YYYY/$SERVERIP/g"  dnsmasq.conf
 #Stop the local dns server
 sudo systemctl disable systemd-resolved.service
 sudo service systemd-resolved stop
-
+sudo rm /etc/resolv.conf
 # replace the local dns nameserver
-sudo sed -i  's/nameserver.*/nameserver 8.8.8.8/g' /etc/resolv.conf
+# sudo sed -i  's/nameserver.*/nameserver 8.8.8.8/g' /etc/resolv.conf
 
 cp dnsmasq.conf /mnt/data/dnsmasq
 docker-compose config
