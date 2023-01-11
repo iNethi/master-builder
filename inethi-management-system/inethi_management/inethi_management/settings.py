@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = ['https://usermanagement.inethilocal.net/']
+CSRF_TRUSTED_ORIGINS = ['https://usermanagement.inethilocal.net']
 
 CORS_ORIGIN_ALLOW_ALL = DEBUG
 
