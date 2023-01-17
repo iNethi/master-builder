@@ -16,5 +16,6 @@ echo Pulling up user management API ....
 docker-compose up -d inethi-user-management-api
 sleep 30
 echo Carrying out database migrations ....
+docker exec -it inethi-user-management-api python manage.py makemigrations inethi_management
 docker exec -it inethi-user-management-api python manage.py migrate
 echo ALL DONE!
