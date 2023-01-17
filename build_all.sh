@@ -45,6 +45,7 @@ select yn in "Yes" "No"; do
                                 sudo sh get-docker.sh || exit 1
                                 break;;
                         No )    sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin || exit 1;
+                                break;;
                     esac
                 done
                 sudo apt-get -y install docker-compose || exit 1;
