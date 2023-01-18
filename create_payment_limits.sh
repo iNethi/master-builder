@@ -26,6 +26,8 @@ echo "Updating database..."
 
 VALUES="1, 4, $PAYMENT_LIMIT, $DURATION"
 
+docker exec -it inethi-user-management-mysql mysql inethi-user-management-api -e "INSERT INTO inethi_management_servicetypes (description, pay_type, service_type_id) VALUES ('Internet', 1, 1);"
+
 docker exec -it inethi-user-management-mysql mysql inethi-user-management-api -e "INSERT INTO inethi_management_defaultpaymentlimits (service_type_id, payment_method, payment_limit, payment_limit_period_sec) VALUES ($VALUES);"
 
 echo "Done"
