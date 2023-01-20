@@ -11,10 +11,7 @@ from rest_framework.response import Response
 from rest_framework import status
 import pytz
 
-PriceToPackageMap = {"1": ["TIME30M", 1800, "1W"], "2": ["TIME1H", 3600, "2W"], "5": [
-    "TIME24H", 10800, "1M"], "10": ["DATA1G", 2592000, "3M"]}
-
-
+PriceToPackageMap = {"1": ["TIME30M", 1800, "1W"], "2": ["TIME1H", 3600, "2W"], "5": ["TIME24H", 10800, "1M"], "10": ["DATA1G", 2592000, "3M"]}
 @api_view(['GET'])
 def check_payment_user_limit(request, format=None):
     if request.method == 'GET':

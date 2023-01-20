@@ -343,8 +343,16 @@ docker network create --attachable -d bridge inethi-bridge-traefik
     cd ./inethi-management-system
     cd ./inethi_management
     ./local_build.sh
+    cd ./inethi_management
+    read -p 'Please set the cost of a 30 minute voucher: '  TIME30M
+    read -p 'Please set the cost of a 1 hour voucher: ' TIME1H
+    read -p 'Please set the cost of a 24 hour voucher: ' TIME24H
+    read -p 'Please set the cost of a 1GB voucher: ' DATA1G
+    PACKAGE_MAP="PriceToPackageMap = {'1': ['TIME30M', $TIME30M, '1W'], '2': ['TIME1H', $TIME1H, '2W'], '5': ['TIME24H', $TIME24H, '1M'], '10': ['DATA1G', $DATA1G, '3M']}"
+    echo $PACKAGE_MAP
+    sed -i "14s/.*/${PACKAGE_MAP//\'/\\\'}/" views.py
     cd ..
     cd ..
-
+    cd ..
 }
 
