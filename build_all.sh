@@ -229,17 +229,7 @@ docker network create --attachable -d bridge inethi-bridge-traefik
 }
 
 
-[ "$installDNS" = 1 ] && {
-    printf "Building iNethi DNS ... "
-        cd ./dnsmasq
-        if [ "$myos" = 1 ]; then
-            ./local_build.sh
-        else
-            ./local_build_mac.sh
-        fi
-        
-        cd ..
-}
+
 
 [[ "${choices[0]}" ]] && {
     printf "Building nginx(splash) docker ... "
@@ -356,3 +346,15 @@ docker network create --attachable -d bridge inethi-bridge-traefik
     cd ..
 }
 
+# Install DNS system last - TODO add a check to see if it works otherwise reverse changes
+[ "$installDNS" = 1 ] && {
+    printf "Building iNethi DNS ... "
+        cd ./dnsmasq
+        if [ "$myos" = 1 ]; then
+            ./local_build.sh
+        else
+            ./local_build_mac.sh
+        fi
+        
+        cd ..
+}
