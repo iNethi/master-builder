@@ -339,12 +339,31 @@ docker network create --attachable -d bridge inethi-bridge-traefik
     read -p 'Please set the cost of a 24 hour voucher: ' TIME24H
     read -p 'Please set the cost of a 1GB voucher: ' DATA1G
     PACKAGE_MAP="PriceToPackageMap = {'1': ['TIME30M', $TIME30M, '1W'], '2': ['TIME1H', $TIME1H, '2W'], '5': ['TIME24H', $TIME24H, '1M'], '10': ['DATA1G', $DATA1G, '3M']}"
-    echo $PACKAGE_MAP
+    # echo $PACKAGE_MAP
     sed -i "14s/.*/${PACKAGE_MAP//\'/\\\'}/" views.py
-    cd ..
-    cd ..
-    cd ..
+    cd ../../..
+    cd payments/services/web/endpoints
+    AMOUNT="        amount=$TIME30M"
+    sed -i "50s/.*/${AMOUNT}/" redeem.py
+    AMOUNT="        amount=$TIME1H"
+    sed -i "52s/.*/${AMOUNT}/" redeem.py
+    AMOUNT="        amount=$TIME24H"
+    sed -i "54s/.*/${AMOUNT}/" redeem.py
+    AMOUNT="        amount=$DATA1G"
+    sed -i "59s/.*/${AMOUNT}/" redeem.py
+    cd ../../..
 }
+
+echo "We will set up you Internet sales default payment limits now."
+echo "How often do you want the default limit to reset (in seconds)?"
+read -p "Reset after: "  DURATION
+read -p "How much can a user spend in this time limit (in units)? " PAYMENT_LIMIT
+echo "Your time limit is $DURATION seconds and your spending limit is $PAYMENT_LIMIT"
+echo "Updating database..."
+VALUES="1, 4, $PAYMENT_LIMIT, $DURATION"
+docker exec -it inethi-user-management-mysql mysql inethi-user-management-api -e "INSERT INTO inethi_management_servicetypes (description, pay_type, service_type_id) VALUES ('Internet', 1, 1);"
+docker exec -it inethi-user-management-mysql mysql inethi-user-management-api -e "INSERT INTO inethi_management_defaultpaymentlimits (service_type_id, payment_method, payment_limit, payment_limit_period_sec) VALUES ($VALUES);"
+echo "Done"
 
 # Install DNS system last - TODO add a check to see if it works otherwise reverse changes
 [ "$installDNS" = 1 ] && {
