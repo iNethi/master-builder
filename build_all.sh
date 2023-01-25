@@ -229,17 +229,7 @@ docker network create --attachable -d bridge inethi-bridge-traefik
 }
 
 
-[ "$installDNS" = 1 ] && {
-    printf "Building iNethi DNS ... "
-        cd ./dnsmasq
-        if [ "$myos" = 1 ]; then
-            ./local_build.sh
-        else
-            ./local_build_mac.sh
-        fi
-        
-        cd ..
-}
+
 
 [[ "${choices[0]}" ]] && {
     printf "Building nginx(splash) docker ... "
@@ -362,15 +352,29 @@ docker network create --attachable -d bridge inethi-bridge-traefik
     AMOUNT="        amount=$DATA1G"
     sed -i "59s/.*/${AMOUNT}/" redeem.py
     cd ../../..
+    echo "We will set up you Internet sales default payment limits now."
+    echo "How often do you want the default limit to reset (in seconds)?"
+    read -p "Reset after: "  DURATION
+    read -p "How much can a user spend in this time limit (in units)? " PAYMENT_LIMIT
+    echo "Your time limit is $DURATION seconds and your spending limit is $PAYMENT_LIMIT"
+    echo "Updating database..."
+    VALUES="1, 4, $PAYMENT_LIMIT, $DURATION"
+    docker exec -it inethi-user-management-mysql mysql inethi-user-management-api -e "INSERT INTO inethi_management_servicetypes (description, pay_type, service_type_id) VALUES ('Internet', 1, 1);"
+    docker exec -it inethi-user-management-mysql mysql inethi-user-management-api -e "INSERT INTO inethi_management_defaultpaymentlimits (service_type_id, payment_method, payment_limit, payment_limit_period_sec) VALUES ($VALUES);"
+    echo "Done"
 }
 
-echo "We will set up you Internet sales default payment limits now."
-echo "How often do you want the default limit to reset (in seconds)?"
-read -p "Reset after: "  DURATION
-read -p "How much can a user spend in this time limit (in units)? " PAYMENT_LIMIT
-echo "Your time limit is $DURATION seconds and your spending limit is $PAYMENT_LIMIT"
-echo "Updating database..."
-VALUES="1, 4, $PAYMENT_LIMIT, $DURATION"
-docker exec -it inethi-user-management-mysql mysql inethi-user-management-api -e "INSERT INTO inethi_management_servicetypes (description, pay_type, service_type_id) VALUES ('Internet', 1, 1);"
-docker exec -it inethi-user-management-mysql mysql inethi-user-management-api -e "INSERT INTO inethi_management_defaultpaymentlimits (service_type_id, payment_method, payment_limit, payment_limit_period_sec) VALUES ($VALUES);"
-echo "Done"
+
+
+# Install DNS system last - TODO add a check to see if it works otherwise reverse changes
+[ "$installDNS" = 1 ] && {
+    printf "Building iNethi DNS ... "
+        cd ./dnsmasq
+        if [ "$myos" = 1 ]; then
+            ./local_build.sh
+        else
+            ./local_build_mac.sh
+        fi
+
+        cd ..
+}

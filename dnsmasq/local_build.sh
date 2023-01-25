@@ -14,8 +14,8 @@ echo
 sed -i "s/XXXX/$inethiDN/g"  dnsmasq.conf
 # INSERT IP
 sed -i "s/YYYY/$SERVERIP/g"  dnsmasq.conf
-
-
+# pull the docker image before stopping local dns
+docker pull jpillora/dnsmasq:latest
 #Stop the local dns server
 sudo systemctl disable systemd-resolved.service
 sudo service systemd-resolved stop
