@@ -1,6 +1,6 @@
 #!/bin/bash
 echo
-echo "Welcome to the iNethi builder system for Ubuntu"
+echo "Welcome to the iNethi builder system for Ubuntu and Mac"
 sleep 1
 # Detect OS
 # 1 = LINUX
