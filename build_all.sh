@@ -20,7 +20,7 @@ fi
 # install all dependencies
 echo "Docker and Docker compose are needed to build this system (note docker needs to be able to run as non-root)"
 sleep 2
-echo "Do you wish to set this up now? (Yes=1/No=2)"
+echo "Is this an Ubuntu System and do you wish to set this up now? (Yes=1/No=2)"
 select yn in "Yes" "No"; do
     case $yn in
         Yes )   sudo apt-get update || exit 1;
@@ -59,7 +59,12 @@ done
 
 # customize with your own.
 STORAGE_FOLDER=/mnt/data
-echo "/mnt/data is set as the main storage directory"
+if [ $myos == 2 ]; then
+  CWD=$(pwd)
+  STORAGE_FOLDER="$CWD/data"
+fi
+
+echo "/mnt/data is set as the main storage directory for Ubuntu and ${STORAGE_FOLDER} is used for Mac"
 echo "Do you wish to change this? (Yes=1/No=2)"
 select yn in "Yes" "No"; do
     case $yn in
@@ -126,7 +131,7 @@ done
 echo "Do you wish to use the default iNethi domain: inethilocal.net?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) defaultDomain=1; domainName=inethilocal.net; wget https://splash.inethicloud.net/acme.json -P ./my-certificates; break;;
+        Yes ) defaultDomain=1; domainName=inethilocal.net; wget https://splash.inethicloud.net/acme.json -P ./my-certificates || exit 1; break;;
         No ) defaultDomain=0; read -p 'Domain name: ' domainName; break;;
     esac
 done
@@ -216,6 +221,10 @@ docker network create --attachable -d bridge inethi-bridge-traefik
 
 [ "$entrypoint" = websecure ] && {
     printf "Building Traefik docker... "
+        traefik_storgage="TRAEFIKSSL_VOLUME=${STORAGE_FOLDER}/traefikssl"
+        traefik_storgage_secrets="TRAEFIKSSL_VOLUME_SECRETS=${STORAGE_FOLDER}/traefikssl"
+        echo export $traefik_storgage >> ./root.conf || exit 1
+        echo export $traefik_storgage_secrets >> ./root.conf || exit 1
         cd ./traefikssl
         ./local_build.sh
         cd ..
@@ -369,6 +378,8 @@ docker network create --attachable -d bridge inethi-bridge-traefik
 # Install DNS system last - TODO add a check to see if it works otherwise reverse changes
 [ "$installDNS" = 1 ] && {
     printf "Building iNethi DNS ... "
+        dnsmasq_volume="DNSMASQ_VOLUME=${STORAGE_FOLDER}/dnsmasq"
+        echo export $dnsmasq_volume >> ./root.conf || exit 1
         cd ./dnsmasq
         if [ "$myos" = 1 ]; then
             ./local_build.sh

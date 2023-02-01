@@ -23,6 +23,6 @@ sed -i '' "s/YYYY/$SERVERIP/g"  dnsmasq.conf
 # replace the local dns nameserver
 # sudo sed -i  's/nameserver.*/nameserver 8.8.8.8/g' /etc/resolv.conf
 
-cp dnsmasq.conf /mnt/data/dnsmasq
+cp dnsmasq.conf $DNSMASQ_VOLUME
 docker-compose config
 docker-compose up -d
