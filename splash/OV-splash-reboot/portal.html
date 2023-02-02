@@ -328,6 +328,18 @@
     <meta property="og:type" content="website">
   </head>
   <body data-home-page="portal.html" data-home-page-title="Captive Portal" class="u-body u-xl-mode" data-lang="en">
+  <p id="status">Checking connection...</p>
+
+  <script>
+    function updateOnlineStatus() {
+      document.getElementById("status").innerHTML = navigator.onLine ? "You have connection to the Internet" : "You do not have connection to the Internet";
+    }
+
+    window.addEventListener("online", updateOnlineStatus);
+    window.addEventListener("offline", updateOnlineStatus);
+
+    updateOnlineStatus();
+  </script>
 
     <section class="u-clearfix u-container-align-center u-custom-color-1 u-section-1" id="sec-e024">
       <div class="u-clearfix u-sheet u-sheet-1">

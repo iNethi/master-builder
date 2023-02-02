@@ -308,6 +308,18 @@
     <meta property="og:type" content="website">
   </head>
   <body data-home-page="FOCUS-CAPTIVE-PORTAL.html" data-home-page-title="FOCUS CAPTIVE PORTAL" class="u-body u-xl-mode">
+  <p id="status">Checking connection...</p>
+
+  <script>
+    function updateOnlineStatus() {
+      document.getElementById("status").innerHTML = navigator.onLine ? "You have connection to the Internet" : "You do not have connection to the Internet";
+    }
+
+    window.addEventListener("online", updateOnlineStatus);
+    window.addEventListener("offline", updateOnlineStatus);
+
+    updateOnlineStatus();
+  </script>
     <section class="u-clearfix u-custom-color-1 u-section-1" id="sec-71a9">
       <div class="u-align-left u-clearfix u-sheet u-sheet-1">
         <img class="u-align-center u-image u-image-1" src="captiveportal-FOCUS1231.png" data-image-width="1112" data-image-height="477">
