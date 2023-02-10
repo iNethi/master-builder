@@ -334,14 +334,12 @@ docker network create --attachable -d bridge inethi-bridge-traefik
     cd ./radiusdesk_2docker
     ./local_build.sh
     cd ..
-
     django_volume="DJANGO_MNT=${STORAGE_FOLDER}/user_management"
     mysql_volume="MYSQL_MANAGEMENT_MNT=${STORAGE_FOLDER}/management-mysql"
     echo export $django_volume >> ./root.conf || exit 1
     echo export $mysql_volume >> ./root.conf || exit 1
     cd ./inethi-management-system
     cd ./inethi_management
-    ./local_build.sh
     cd ./inethi_management
     read -p 'Please set the cost of a 30 minute voucher: '  TIME30M
     read -p 'Please set the cost of a 1 hour voucher: ' TIME1H
@@ -350,7 +348,10 @@ docker network create --attachable -d bridge inethi-bridge-traefik
     PACKAGE_MAP="PriceToPackageMap = {$TIME30M: ['TIME30M', 1800, '1W'], $TIME1H: ['TIME1H', 3600, '2W'], $TIME24H: ['TIME24H', 86400, '1M'], $DATA1G: ['DATA1G', 2592000, '3M']}"
     # echo $PACKAGE_MAP
     sed -i "14s/.*/${PACKAGE_MAP//\'/\\\'}/" views.py
-    cd ../../..
+    cd ../
+    ./local_build.sh
+
+    cd ../../
     cd payments/services/web/endpoints
     AMOUNT="        amount=$TIME30M"
     sed -i "50s/.*/${AMOUNT}/" redeem.py
@@ -361,6 +362,7 @@ docker network create --attachable -d bridge inethi-bridge-traefik
     AMOUNT="        amount=$DATA1G"
     sed -i "59s/.*/${AMOUNT}/" redeem.py
     cd ../../..
+    ./local_build.sh
     echo "We will set up you Internet sales default payment limits now."
     echo "How often do you want the default limit to reset (in seconds)?"
     read -p "Reset after: "  DURATION
