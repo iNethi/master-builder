@@ -110,9 +110,9 @@ Once all the docker are running there are some remaining configurations steps
 Select MySQL/MariaDB (under configure the database)
 
 - Database user: inethi
-- password: iNethi#2021
+- password: <the password you set in the builder>
 - database name: inethi_nextcloud
-- database: inethi-mysql
+- database: inethi-nextcloud-mysql
 
 Once Nextcloud launches login as administrator
 
