@@ -1,0 +1,22 @@
+version: '3'
+
+  openvpn:
+    image: kylemanna/openvpn
+    container_name: inethi-openvpn
+   
+    volumes:
+      - "${OPENVPN_VOLUME}:/etc/openvpn"
+      
+    labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.keycloak.rule=Host(`${OPENVPN_TRAEFIK_API_RULE}`)"
+    - "traefik.http.routers.keycloak.entrypoints=${TRAEFIK_ENTRYPOINT}"
+    #- "traefik.http.routers.keycloak.tls.certresolver=sslresolver"
+    - "traefik.http.services.keycloak.loadbalancer.server.port=8080"
+      
+
+# network for inethi
+networks:
+  default:
+    external:
+      name: "${INETHI_NETWORK}"
