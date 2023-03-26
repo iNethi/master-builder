@@ -9,6 +9,7 @@ docker run -v $OPENVPN_VOLUME:/etc/openvpn --rm kylemanna/openvpn ovpn_genconfig
 docker run -v $OPENVPN_VOLUME:/etc/openvpn --rm -it kylemanna/openvpn ovpn_initpki
 
 #Start OpenVPN server process
+docker-compose up -d 
 
 #docker run -v $OVPN_DATA:/etc/openvpn -d -p 1194:1194/udp --cap-add=NET_ADMIN kylemanna/openvpn
 #Generate a client certificate without a passphrase
