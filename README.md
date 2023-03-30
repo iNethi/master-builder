@@ -2,21 +2,27 @@
 
 This is the starting place to build iNethi on your own server. 
 
-- [Join our iNethi discord](https://discord.gg/ZxTSu7kufr)
+- [Join our iNethi discord](https://discord.gg/ZxTSu7kufr) to ask questions and contribute.
 - [View Contributors](https://github.com/iNethi/master-builder/blob/master/CONTRIBUTORS.md)
 
 ## A collection of awesome self-hosted services
-iNethi creates a platform that brings a lot of awesome self-hosted services together. It provides a secure reverse proxy
-in front of these services using Traefik, creates a nice splash page to access the web services, synchronization of 
-content  between a global iNethi cloud and your iNethi, and will soon provide single sign-on to many of these services.
-A great resource for many self-hosted services that can be ported to iNethi is here 
+iNethi creates a platform that brings a lot of awesome self-hosted services and our bespoke solutions together. It 
+provides a secure reverse proxy in front of these services using Traefik, creates a nice splash page to access the web 
+services, synchronization of content  between a global iNethi cloud and your iNethi, and will soon provide single 
+sign-on to many of these services. A great resource for many self-hosted services that can be ported to iNethi is here 
 [Self hosted servces](https://github.com/awesome-selfhosted/awesome-selfhosted/blob/master/README.md)
 
 # Build
-To build a server and select the services you want to use, run the following from the root folder:
+The flow of an iNethi install process:
+1. Install Ubuntu Server 22 LTS
+2. Clone this repo
+3. Run the following command from the root folder:
 ```
 sudo ./build_all.sh
 ```
+To build a server and select the services you want to use
+4. Make the necessary firewall/host redirects
+5. Set up services
 
 # Usage
 This is an open source solution that is freely available to everyone, just keep it open source! With iNethi you can build 
@@ -69,10 +75,18 @@ like this:
 # To allow the same kube context to work on the host and the container:
 127.0.0.1 kubernetes.docker.internal
 # End of section
-# 192.168.68.105 jellyfin.inethilocal.net
-# 192.168.68.105 treafik.inethilocal.net
-# 192.168.68.105 nextcloud.inethilocal.net
+192.168.68.105 jellyfin.inethilocal.net
+192.168.68.105 treafik.inethilocal.net
+192.168.68.105 nextcloud.inethilocal.net
 ```
+The following three lines were added:
+```
+192.168.68.105 jellyfin.inethilocal.net
+192.168.68.105 treafik.inethilocal.net
+192.168.68.105 nextcloud.inethilocal.net
+```
+Where ```192.168.68.105``` is an example host IP address. Visit services in your browser on the URLs corresponding to 
+your installed services and entries in your host file to see the front end.
 ## Core docker containers
 - nginx: runs splash page
 - traefik: reverse proxy
