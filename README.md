@@ -30,8 +30,7 @@ This is an open source solution that is freely available to everyone, just keep 
 a set of local services to share content amongst your local community and build a small ISP to sell Internet vouchers. 
 [More detail...](https://splashg.inethi.net)
 
-We offer bespoke services, support and payment integrations upon request. Contact us at: keeganthomaswhite@gmail.com,
-davidlloydjohnson@gmail.com or inethi4us@gmail.com.
+We offer bespoke services, support and payment integrations upon request. Contact us at: inethi4us@gmail.com.
 
 # Network notes
 
@@ -157,7 +156,7 @@ Add the following:
 
 ## Jellyfin
 
-- To setup go to [https://jellyfin.inethilocal.net](https://jellyfin.inethilocal.net)
+- To set up go to [https://jellyfin.inethilocal.net](https://jellyfin.inethilocal.net)
 
 ### Complete Tell us about yourself
 
@@ -190,8 +189,8 @@ administrator priveledges and Drag videos to the RWVideo folder or Drag music to
 # Added Synchronization
 
 You can contact iNethi to get some space on the global iNethi cloud - a folder allocated for your organization will 
-synchronize with your local iNethi instance. We will allocate a folder for you. keeganthomaswhite@gmail.com,
-davidlloydjohnson@gmail.com or inethi4us@gmail.com for pricing arrangement if you require global storage options.
+synchronize with your local iNethi instance. We will allocate a folder for you. Contact us at inethi4us@gmail.com for 
+pricing arrangement if you require global storage options.
 
 You will receive a login to the global iNethi storage and a Webdav link you will need to enter when you run the following code
 ```
