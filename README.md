@@ -44,7 +44,7 @@ davidlloydjohnson@gmail.com or inethi4us@gmail.com.
   - keycloak.inethilocal.net
   - jellyfin.inethilocal.net
   - radiusdesk.inethilocal.net
-  - traefik.inethilocal
+  - traefik.inethilocal.net
 
 ## Set Up Firewall/DNS redirect
 - On a firewall on your network like Pfsense, make a widlcard DNS resolve entry. 
