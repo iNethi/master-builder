@@ -20,7 +20,8 @@ The flow of an iNethi install process:
 ```
 sudo ./build_all.sh
 ```
-To build a server and select the services you want to use
+To build a server and select the services you want to use 
+
 4. Make the necessary firewall/host redirects
 5. Set up services
 
