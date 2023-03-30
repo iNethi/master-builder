@@ -1,6 +1,6 @@
 #!/bin/bash
 echo
-echo "Welcome to the iNethi builder system for Ubuntu and Mac"
+echo "Welcome to the iNethi builder system for Ubuntu"
 sleep 1
 # Detect OS
 # 1 = LINUX
@@ -64,7 +64,7 @@ if [ $myos == 2 ]; then
   STORAGE_FOLDER="$CWD/data"
 fi
 
-echo "/mnt/data is set as the main storage directory for Ubuntu and ${STORAGE_FOLDER} is used for Mac"
+echo "/mnt/data is set as the main storage directory for Ubuntu"
 echo "Do you wish to change this? (Yes=1/No=2)"
 select yn in "Yes" "No"; do
     case $yn in

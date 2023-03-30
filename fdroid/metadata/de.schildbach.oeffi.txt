@@ -1,9 +1,0 @@
-License:Unknown
-Web Site:
-Source Code:
-Issue Tracker:
-Changelog:
-Summary:Öffi
-Description:
-Öffi
-.

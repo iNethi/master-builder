@@ -1,78 +1,78 @@
-# iNethi Core Docker Build
+# iNethi Core Build
 
 This is the starting place to build iNethi on your own server. 
 
-- [Join our iNethi discord](https://discord.gg/ZxTSu7kufr) 
-- [View the TODO list](https://github.com/iNethi/master-builder/blob/master/TODO.md)
+- [Join our iNethi discord](https://discord.gg/ZxTSu7kufr)
 - [View Contributors](https://github.com/iNethi/master-builder/blob/master/CONTRIBUTORS.md)
 
-# A collection of awesome self-hosted services
-iNethi essentially creates a platform that brings a lot of awesome self-hosted services together. It provides a secure reverse proxy in front of these services using Traefik, creates a nice splash page to access the web serivces, synchronization of content  between a global iNethi cloud and your iNethi, and will soon provide single sign-on to many of these services. A great resource for many self-hosted services that can be ported to iNethi is here [Self hosted servces](https://github.com/awesome-selfhosted/awesome-selfhosted/blob/master/README.md)
+## A collection of awesome self-hosted services
+iNethi creates a platform that brings a lot of awesome self-hosted services together. It provides a secure reverse proxy
+in front of these services using Traefik, creates a nice splash page to access the web services, synchronization of 
+content  between a global iNethi cloud and your iNethi, and will soon provide single sign-on to many of these services.
+A great resource for many self-hosted services that can be ported to iNethi is here 
+[Self hosted servces](https://github.com/awesome-selfhosted/awesome-selfhosted/blob/master/README.md)
 
-# Usage
-This is an open source solution that is freely available to everyone. With iNethi you can build a set of local services to share content amongst your local community and build a small ISP to sell Internet vouchers. [More detail...](https://splashg.inethi.net)
-
-# How to build a server
-This process is similar to setting up a VM as detailed below. You can follow the [video](https://www.youtube.com/watch?v=EIt8GShQFlQ&ab_channel=KeeganWhite) made for the VM set up and ignore the steps referencing dnsmasq.
-
-## Preparation
-Each folder contains a compose file and environment varaibles. View the environment variables in order to familiarise yourself with the folders the data will be mounted to and the URLs the services will be availible at.
-
-## Build automatically
+# Build
 To build a server and select the services you want to use, run the following from the root folder:
 ```
 sudo ./build_all.sh
 ```
-Note root privileges will be necessary.
 
-## Manual build
-Build a docker bridge for the containers to attach to (it must match all your environment variables that use this network):
-```
-docker network create --attachable -d bridge inethi-bridge-traefik
-```
-Move into the traefik directory and run:
-```
-sudo ./local_build.sh
-```
-Following this run the local build scripts in the directories of the services you want to deploy.
+# Usage
+This is an open source solution that is freely available to everyone, just keep it open source! With iNethi you can build 
+a set of local services to share content amongst your local community and build a small ISP to sell Internet vouchers. 
+[More detail...](https://splashg.inethi.net)
 
-# How to use the Traefik build with Dnsmasq (Recommended for VM's)
-
-[Here's a video of a server being set up with step by step instructions](https://www.youtube.com/watch?v=EIt8GShQFlQ&ab_channel=KeeganWhite), or you can read below.
-
-This build has been tested on both an Ubuntu server and desktop. This is the new architecture that iNethi is adopting. Please make use of it. You can either run the master build script to build all the dockers linked to iNethi or you can build individual dockers that you need. Docker and docker compose need to be installed before running the build script.
-
-To build the whole system on a server simply run the build script and follow the instructions displayed on screen. The majority of the process is automatic but there is one manual step. *Before* you run the build script navigate to master-builder/traefik-with-dnsmasq/dnsmasq/dnsmasq.conf and edit the 6th line of this file to read as follows:
-  address=/inethihome.net/*the ip address of your server*
-Where the 'the ip address of your server' is found using ``` ip a ``` or some equivalent. Find the ip address of the interface that you are connecting to your local network with on screen and use this ip address. This can be 'eth0', 'eth1', 'en0', etc. depending on what OS you are running. This is a vital step as the build script will disable your current dns settings on your device in order for the dnsmasq docker container to bind to port 53. If your system fails to resolve requests following this you may be having errors with the dns servers used by the docker container. These can be changed in the dnsmasq.conf file that has been moved to the /mnt/data/dnsmasq folder. Edit this using ``` sudo nano /mnt/data/dnsmasq/dnsmasq.conf ``` or some equivalent.
-
-Once you have chosen the containers you want to start the build script will create a docker bridge network, download the trafik and dnsmasq docker files and then disable your current dns settings so that the dnsmasq and traefik docker containers can be set up correctly. Following this the rest of the containers will be built.
-
-The build script can be starting by running:
-```
-sudo ./traefik_dnsmasq_build_all.sh
-```
-Note root privileges will be necessary.
-
-# Important notes
-
-If you want to build docker yourself, first build mysql docker and then build other dockers
-
-Local dockers on local server machine are build with the following command in each docker folder
-
-```
-./local_build.sh
-```
+We offer bespoke services, support and payment integrations upon request. Contact us at: keeganthomaswhite@gmail.com,
+davidlloydjohnson@gmail.com or inethi4us@gmail.com.
 
 # Network notes
 
 - iNethi makes use of traefik as a reverse proxy to route hosts to a specific docker container
 - Docker will automatically create a bridged network which bridges traefik to the host Ethernet interface on your computer
-- After installing check the ip address of the traefik container by running
-```
-docker inspect inethi-traefik | grep IPAddress
-```
+- The services will be available at various URLs once you have set up a firewall/dns redirect. The URLs are:
+  - splash.inethilocal.net
+  - nextcloud.inethilocal.net
+  - wordpress.inethilocal.net
+  - keycloak.inethilocal.net
+  - jellyfin.inethilocal.net
+  - radiusdesk.inethilocal.net
+  - traefik.inethilocal
 
+## Set Up Firewall/DNS redirect
+- On a firewall on your network like Pfsense, make a widlcard DNS resolve entry. 
+Under services / dns resolver / general settings enable 'diplay custom options' and enter the follwoing:
+```
+server:
+local-zone: "<URL>" redirect
+local-data: "<URL> 86400 IN A <SERVER IP>"
+```
+where URL is the domain name i.e. for 'nextcloud.inethilocal.net' you would enter 'inethilocal.net' and the 
+'SERVER IP'is the IP address of the device hosting the services you want to redirect to.
+
+_Recommended: set a static IP address for your server_
+
+## Set up a Redirect on your local machine
+To set up a local redirect on a Mac or Ubuntu machine edit your hosts file ```sudo nano /etc/hosts```
+and add an entry for the URL of each service with your local machine's IP address like this to the end of your host file
+like this:
+```
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1       localhost
+255.255.255.255 broadcasthost
+::1             localhost
+# Added by Docker Desktop
+# To allow the same kube context to work on the host and the container:
+127.0.0.1 kubernetes.docker.internal
+# End of section
+# 192.168.68.105 jellyfin.inethilocal.net
+# 192.168.68.105 treafik.inethilocal.net
+# 192.168.68.105 nextcloud.inethilocal.net
+```
 ## Core docker containers
 - nginx: runs splash page
 - traefik: reverse proxy
@@ -83,7 +83,6 @@ docker inspect inethi-traefik | grep IPAddress
 - phpmyadmin: database management
 - mongo: database
 - mysql-keycloak: database - seperate mysql for keycloak
-
 
 ## Elective dockers:
 - nextcloud: File sharing system and collaboration platform
@@ -97,7 +96,7 @@ Once all the docker are running there are some remaining configurations steps
 
 ## Nextcloud
 
-- To setup go to [https://nextcloud.inethilocal.net](https://nextcloud.inethilocal.net)
+- To set up go to [https://nextcloud.inethilocal.net](https://nextcloud.inethilocal.net)
 
 ### Choose a master username and password and storage location
 
@@ -170,21 +169,19 @@ Add the following:
 
 # Add content
 
-To add music and video content that van be viewed on Jellyfin. Open Nextcloud, login as administrator or a user with administrator priveledges and Drag videos to the RWVideo folder or Drag music to the RWMusic folder
+To add music and video content that van be viewed on Jellyfin. Open Nextcloud, login as administrator or a user with 
+administrator priveledges and Drag videos to the RWVideo folder or Drag music to the RWMusic folder
 
 # Added Synchronization
 
-You can contact iNethi to get some space on the global iNethi cloud - a folder allocated for your organization will synchronize with your local iNethi instance. We will allocate a folder for you (with up to 1GB storage). Contact us at inethi4us@gmail.com for pricing arrangement if you require more storage.
+You can contact iNethi to get some space on the global iNethi cloud - a folder allocated for your organization will 
+synchronize with your local iNethi instance. We will allocate a folder for you. keeganthomaswhite@gmail.com,
+davidlloydjohnson@gmail.com or inethi4us@gmail.com for pricing arrangement if you require global storage options.
 
 You will receive a login to the global iNethi storage and a Webdav link you will need to enter when you run the following code
 ```
 ./build_sync.sh
 ```
-
-# Features in the works
-- Payment integrations
-- Improved building mechanisms
-- Architecture diagrams
 
 # Useful Docker Commands
 - ```docker stop $(docker ps -a -q)``` - stop all docker containers

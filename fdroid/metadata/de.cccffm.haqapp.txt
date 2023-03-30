@@ -1,9 +1,0 @@
-License:GPLV3
-Web Site:https://ccc-ffm.de
-Source Code:https://chaos.expert/ccc-ffm/haq-app
-Issue Tracker:https://chaos.expert/ccc-ffm/haq-app/issues
-Changelog:
-Summary:h[a]q app
-Description:
-h[a]q app
-.
