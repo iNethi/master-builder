@@ -1,4 +1,4 @@
-# iNethi Core Build
+# iNethi Core Build (DEPRECIATED)
 
 This is the starting place to build iNethi on your own server. 
 
