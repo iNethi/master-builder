@@ -1,4 +1,5 @@
 # iNethi Core Build (DEPRECIATED)
+**This repo is now archived. Please find an up-to-date version of the codebase [here](https://github.com/iNethi/inethi).**
 
 This is the starting place to build iNethi on your own server. 
 
